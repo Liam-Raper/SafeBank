@@ -30,16 +30,12 @@ header nav {
     text-align: center;
     border-bottom: 0.25vh solid #ffffff;
     position: relative;
-    width: 100vw;
 }
 header nav ul {
     margin: 0;
     padding: 0;
     list-style: none;
     overflow: hidden;
-    width: 8vw;
-    margin-left: auto;
-    margin-right: auto;
 }
 header nav ul li {
     float: left;
