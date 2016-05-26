@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="bb3efbdf-9ae7-4776-832f-75a2815882b9" ChangeDateTime="05/26/2016 19:50:06">
+    <Property Name="ElementName" Value="[Memberships].[User].[IsAppoved]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Memberships].[User]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IsApproved" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="423cd39f-dc36-425d-bf82-a84fc4f8ebef" ChangeDateTime="05/26/2016 20:09:06">
+    <Property Name="ElementName" Value="[Memberships].[User].[SecurityQuestionAnswer]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Memberships].[User]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SecurityQuestionAnswerId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="ce4e9479-885c-4221-bee9-af94d5b7250e" ChangeDateTime="05/26/2016 20:09:31">
+    <Property Name="ElementName" Value="[Memberships].[User].[UserAndPassword]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Memberships].[User]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserAndPasswordId" />
+  </Operation>
+</Operations>

@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SafeBank", "SafeBank\SafeBank.csproj", "{39CC2D0E-4240-42CE-9968-0F80622187AB}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SafeBankDB", "SafeBankDB\SafeBankDB.sqlproj", "{59CE8665-064C-4317-8748-1C1E1D15AB9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,12 @@ Global
 		{39CC2D0E-4240-42CE-9968-0F80622187AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39CC2D0E-4240-42CE-9968-0F80622187AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39CC2D0E-4240-42CE-9968-0F80622187AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59CE8665-064C-4317-8748-1C1E1D15AB9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59CE8665-064C-4317-8748-1C1E1D15AB9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59CE8665-064C-4317-8748-1C1E1D15AB9B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{59CE8665-064C-4317-8748-1C1E1D15AB9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59CE8665-064C-4317-8748-1C1E1D15AB9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59CE8665-064C-4317-8748-1C1E1D15AB9B}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
