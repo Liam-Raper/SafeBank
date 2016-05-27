@@ -172,6 +172,12 @@
   <ItemGroup>
     <Content Include="Views\Authentication\LogIn.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Security\Security.csproj">
+      <Project>{6f7fe610-005a-4c09-ae78-1e031ac3e97e}</Project>
+      <Name>Security</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
