@@ -2,7 +2,7 @@
 
 namespace Data.Security.Membership.Interface
 {
-    public interface IUser<TId> : IRequester<TId>, ICreater, IUpdater<TId>, IDeleter<TId>
+    public interface IUser<TId> : IRequester<TId>, ICreater<TId>, IUpdater<TId>, IDeleter<TId>
     {
          
     }

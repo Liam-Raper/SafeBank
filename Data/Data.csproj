@@ -30,8 +30,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,6 +51,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatabaseModel\MembershipDatabase.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MembershipDatabase.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\MembershipDatabase.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MembershipDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\MembershipDatabase.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MembershipDatabase.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\UserList.cs">
+      <DependentUpon>MembershipDatabase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\Membership\Class\User.cs" />
     <Compile Include="Security\Membership\Interface\IUser.cs" />
@@ -49,6 +78,32 @@
     <Compile Include="Standard\Interfaces\IIdentify.cs" />
     <Compile Include="Standard\Interfaces\IRequester.cs" />
     <Compile Include="Standard\Interfaces\IUpdater.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DatabaseModel\MembershipDatabase.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MembershipDatabase.edmx</DependentUpon>
+      <LastGenOutput>MembershipDatabase.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DatabaseModel\MembershipDatabase.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MembershipDatabase.edmx</DependentUpon>
+      <LastGenOutput>MembershipDatabase.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <EntityDeploy Include="DatabaseModel\MembershipDatabase.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MembershipDatabase.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DatabaseModel\MembershipDatabase.edmx.diagram">
+      <DependentUpon>MembershipDatabase.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

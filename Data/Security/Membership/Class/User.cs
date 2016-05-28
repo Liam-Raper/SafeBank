@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
+using Data.DatabaseModel;
 using Data.Security.Membership.Interface;
 using Data.Standard.Classed;
 using Data.Standard.Interfaces;
@@ -8,6 +10,13 @@ namespace Data.Security.Membership.Class
 {
     public class User : IUser<IntId>
     {
+        private SafeBankDBMembershipEntity _database;
+
+        public User()
+        {
+            _database = new SafeBankDBMembershipEntity();
+        }
+
         public IQueryable GetAll()
         {
             throw new System.NotImplementedException();
@@ -23,12 +32,12 @@ namespace Data.Security.Membership.Class
             throw new System.NotImplementedException();
         }
 
-        public bool AddSingle()
+        public IntId AddSingle()
         {
             throw new System.NotImplementedException();
         }
 
-        public bool AddMany()
+        public IEnumerable<IIdentify<IntId>> AddMany()
         {
             throw new System.NotImplementedException();
         }
@@ -62,5 +71,6 @@ namespace Data.Security.Membership.Class
         {
             throw new System.NotImplementedException();
         }
+
     }
 }

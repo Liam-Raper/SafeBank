@@ -1,8 +1,10 @@
-﻿namespace Data.Standard.Interfaces
+﻿using System.Collections.Generic;
+
+namespace Data.Standard.Interfaces
 {
-    public interface ICreater
+    public interface ICreater<TId>
     {
-        bool AddSingle();
-        bool AddMany();
+        TId AddSingle();
+        IEnumerable<IIdentify<TId>> AddMany();
     }
 }

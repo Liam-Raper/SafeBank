@@ -4,7 +4,7 @@
     [IsApproved] BIT NOT NULL,
     [IsLockedOut] BIT NOT NULL, 
     [CreatedDate] DATETIME NOT NULL, 
-    [LastLoggedInDate] DATETIME NOT NULL, 
+    [LastLoggedInDate] DATETIME NULL, 
     [LastActiveDate] DATETIME NOT NULL, 
     [LastLockedOutDate] DATETIME NULL, 
 )

@@ -8,7 +8,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{59ce8665-064c-4317-8748-1c1e1d15ab9b}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql120DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -61,6 +61,10 @@
     <Folder Include="Schema\Tables" />
     <Folder Include="Schema\Tables\Memberships" />
     <Folder Include="Schema\Schemas" />
+    <Folder Include="Schema\Views" />
+    <Folder Include="Schema\Views\Memberships" />
+    <Folder Include="Schema\StoredProcedure" />
+    <Folder Include="Security" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schema\Tables\Memberships\User.sql" />
@@ -70,8 +74,15 @@
     <Build Include="Schema\Tables\Memberships\UserAndPassword.sql" />
     <Build Include="Schema\Tables\Memberships\UserActivity.sql" />
     <Build Include="Schema\Tables\Memberships\UserDetails.sql" />
+    <Build Include="Schema\StoredProcedure\AddUser.sql" />
+    <Build Include="Security\SafeBankMembershipManager.sql" />
+    <Build Include="Security\MembershipManager.sql" />
+    <Build Include="Schema\Views\Memberships\UserList.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="SafeBankDB.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="VS2015_Deployer.SafeBankDB.publish.publish.xml" />
   </ItemGroup>
 </Project>
