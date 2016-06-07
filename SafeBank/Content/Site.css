@@ -58,6 +58,7 @@ div h1 {
     margin: 0;
     text-align: center;
     text-decoration: underline;
+    font-size: 5vh;
 }
 div p {
     text-align: center;
@@ -65,11 +66,62 @@ div p {
 div h2 {
     text-align: center;
     text-decoration: underline;
+    font-size: 2.5vh;
 }
 div ol {
     text-align: center;
     list-style-position: inside;
     padding: 0;
+}
+div form {
+    width: 25vw;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 2vh;
+}
+div form label {
+    width: 25vw;
+    display: inline-block;
+    text-align: center;
+    font-size: 2vh;
+}
+div form input[type="text"] {
+    padding: 0;
+    border: 0;
+    width: 25vw;
+    font-size: 2vh;
+    text-align: center;
+}
+div form input[type="password"] {
+    padding: 0;
+    border: 0;
+    width: 25vw;
+    font-size: 2vh;
+    text-align: center;
+}
+div form input[type="submit"] {
+    padding: 0;
+    margin: 0;
+    color: #ffffff;
+    background: none;
+    border-top: #ffffff solid 0.05vh;
+    border-bottom: #ffffff solid 0.05vh;
+    border-left: #ffffff solid 0.05vw;
+    border-right: #ffffff solid 0.05vw;
+    width: 12.5vw;
+    margin-left: 6.25vw;
+    font-size: 2vh;
+}
+div form input[type="submit"]:hover {
+    border: #3e5667 solid thin;
+    color: #3e5667;
+    background-color: #ffffff;
+    border: 0;
+}
+div form hr {
+    width: 25vw;
+    height: 0.05vh;
+    border: #ffffff solid 0.05vh;
 }
 footer {
     color: #ffffff;

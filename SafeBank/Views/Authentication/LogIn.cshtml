@@ -1,1 +1,15 @@
-﻿<h1>LogIn</h1>
+﻿@model SafeBank.Models.UserLoginDetails
+<h1>LogIn</h1>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.LabelFor(x => x.Username)
+    <br/>
+    @Html.TextBoxFor(x => x.Username)
+    @Html.LabelFor(x => x.Password)
+    <br/>
+    @Html.PasswordFor(x => x.Password)
+    <hr/>
+    <input type="submit" value="Log In"/>
+}
+

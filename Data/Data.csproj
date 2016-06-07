@@ -73,10 +73,12 @@
     <Compile Include="Security\Membership\Class\User.cs" />
     <Compile Include="Security\Membership\Interface\IUser.cs" />
     <Compile Include="Standard\Classed\IntId.cs" />
+    <Compile Include="Standard\Classed\UnitOfWork.cs" />
     <Compile Include="Standard\Interfaces\ICreater.cs" />
     <Compile Include="Standard\Interfaces\IDeleter.cs" />
     <Compile Include="Standard\Interfaces\IIdentify.cs" />
     <Compile Include="Standard\Interfaces\IRequester.cs" />
+    <Compile Include="Standard\Interfaces\IUnitOfWork.cs" />
     <Compile Include="Standard\Interfaces\IUpdater.cs" />
   </ItemGroup>
   <ItemGroup>

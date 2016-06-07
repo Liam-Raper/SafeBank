@@ -1,9 +1,20 @@
 ﻿using System.Web.Security;
+using Data.Security.Membership.Interface;
+using Data.Standard.Classed;
+using Data.Standard.Interfaces;
 
 namespace Security.Providers
 {
-    class Membership : MembershipProvider
+    public class Membership : MembershipProvider
     {
+
+        private IUser<IntId> _user;
+
+        public Membership(IUnitOfWork unitOfWork)
+        {
+            _user = unitOfWork.User;
+        }
+
         public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer,
             bool isApproved, object providerUserKey, out MembershipCreateStatus status)
         {

@@ -10,11 +10,12 @@ namespace Data.Security.Membership.Class
 {
     public class User : IUser<IntId>
     {
+
         private SafeBankDBMembershipEntity _database;
 
-        public User()
+        public User(SafeBankDBMembershipEntity database)
         {
-            _database = new SafeBankDBMembershipEntity();
+            _database = database;
         }
 
         public IQueryable GetAll()

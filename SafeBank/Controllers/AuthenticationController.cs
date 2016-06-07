@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using SafeBank.Models;
 
 namespace SafeBank.Controllers
 {
@@ -6,7 +7,14 @@ namespace SafeBank.Controllers
     {
         public ActionResult LogIn()
         {
-            return View();
+            return View(new UserLoginDetails());
         }
+
+        [HttpPost]
+        public ActionResult LogIn(UserLoginDetails loginDetails)
+        {
+            return View(loginDetails);
+        }
+
     }
 }
