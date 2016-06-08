@@ -123,6 +123,21 @@ div form hr {
     height: 0.05vh;
     border: #ffffff solid 0.05vh;
 }
+div form div {
+    border: #ffffff solid 0.05vh;
+}
+div form div ul {
+    padding: 0;
+    margin: 0;
+}
+div form div ul li {
+    border-bottom: #ffffff solid 0.05vh;
+    list-style-position: inside;
+}
+div form div ul li:last-child {
+    border: none;
+    list-style-position: inside;
+}
 footer {
     color: #ffffff;
     width: 100vw;

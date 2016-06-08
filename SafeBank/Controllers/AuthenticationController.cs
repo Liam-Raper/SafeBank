@@ -13,7 +13,11 @@ namespace SafeBank.Controllers
         [HttpPost]
         public ActionResult LogIn(UserLoginDetails loginDetails)
         {
-            return View(loginDetails);
+            if (!ModelState.IsValid)
+            {
+                return View(loginDetails);
+            }
+            return RedirectToAction("index", "Home");
         }
 
     }
