@@ -1,6 +1,6 @@
 ﻿@model SafeBank.Models.UserLoginDetails
 <h1>LogIn</h1>
-@using (Html.BeginForm())
+@using (Html.BeginForm("LogIn","Authentication"))
 {
     @Html.AntiForgeryToken()
     @Html.LabelFor(x => x.Username)
