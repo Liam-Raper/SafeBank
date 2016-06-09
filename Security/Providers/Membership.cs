@@ -97,16 +97,56 @@ namespace Security.Providers
             throw new System.NotImplementedException();
         }
 
-        public override bool EnablePasswordRetrieval { get; }
-        public override bool EnablePasswordReset { get; }
-        public override bool RequiresQuestionAndAnswer { get; }
         public override string ApplicationName { get; set; }
-        public override int MaxInvalidPasswordAttempts { get; }
-        public override int PasswordAttemptWindow { get; }
-        public override bool RequiresUniqueEmail { get; }
-        public override MembershipPasswordFormat PasswordFormat { get; }
-        public override int MinRequiredPasswordLength { get; }
-        public override int MinRequiredNonAlphanumericCharacters { get; }
-        public override string PasswordStrengthRegularExpression { get; }
+
+        public override bool EnablePasswordRetrieval
+        {
+            get { return false; }
+        }
+
+        public override bool EnablePasswordReset
+        {
+            get { return true; }
+        }
+
+        public override bool RequiresQuestionAndAnswer
+        {
+            get { return true; }
+        }
+
+        public override int MaxInvalidPasswordAttempts
+        {
+            get { return 3; }
+        }
+
+        public override int PasswordAttemptWindow
+        {
+            get { return 10; }
+        }
+
+        public override bool RequiresUniqueEmail
+        {
+            get { return true; }
+        }
+
+        public override MembershipPasswordFormat PasswordFormat
+        {
+            get { return MembershipPasswordFormat.Hashed; }
+        }
+
+        public override int MinRequiredPasswordLength
+        {
+            get { return 8; }
+        }
+
+        public override int MinRequiredNonAlphanumericCharacters
+        {
+            get { return 1; }
+        }
+
+        public override string PasswordStrengthRegularExpression
+        {
+            get { return "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d$@$!%*?&]{8,}"; }
+        }
     }
 }

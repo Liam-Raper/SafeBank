@@ -2,7 +2,3 @@
 GO
 GRANT CONNECT TO [MembershipManager]
 GO
-GRANT EXECUTE ON [Memberships].[AddUser] TO [MembershipManager]
-GO
-GRANT SELECT ON [Memberships].[UserList] TO [MembershipManager]
-GO
