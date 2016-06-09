@@ -51,27 +51,42 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatabaseModel\MembershipDatabase.Context.cs">
+    <Compile Include="DatabaseModel\SafeBankDatabase.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>MembershipDatabase.Context.tt</DependentUpon>
+      <DependentUpon>SafeBankDatabase.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="DatabaseModel\MembershipDatabase.cs">
+    <Compile Include="DatabaseModel\SafeBankDatabase.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>MembershipDatabase.tt</DependentUpon>
+      <DependentUpon>SafeBankDatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="DatabaseModel\MembershipDatabase.Designer.cs">
+    <Compile Include="DatabaseModel\SafeBankDatabase.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>MembershipDatabase.edmx</DependentUpon>
+      <DependentUpon>SafeBankDatabase.edmx</DependentUpon>
     </Compile>
-    <Compile Include="DatabaseModel\UserList.cs">
-      <DependentUpon>MembershipDatabase.tt</DependentUpon>
+    <Compile Include="DatabaseModel\SecurityQuestion.cs">
+      <DependentUpon>SafeBankDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\User.cs">
+      <DependentUpon>SafeBankDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\UserActivity.cs">
+      <DependentUpon>SafeBankDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\UserAndPassword.cs">
+      <DependentUpon>SafeBankDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\UserDetail.cs">
+      <DependentUpon>SafeBankDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\UserSecurityQuestionAndAnswer.cs">
+      <DependentUpon>SafeBankDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Security\Membership\Class\User.cs" />
-    <Compile Include="Security\Membership\Interface\IUser.cs" />
+    <Compile Include="Security\Membership\Class\UserTables.cs" />
+    <Compile Include="Security\Membership\Interface\IUserTables.cs" />
     <Compile Include="Standard\Classed\IntId.cs" />
     <Compile Include="Standard\Classed\UnitOfWork.cs" />
     <Compile Include="Standard\Interfaces\ICreater.cs" />
@@ -82,31 +97,32 @@
     <Compile Include="Standard\Interfaces\IUpdater.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DatabaseModel\MembershipDatabase.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>MembershipDatabase.edmx</DependentUpon>
-      <LastGenOutput>MembershipDatabase.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DatabaseModel\MembershipDatabase.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>MembershipDatabase.edmx</DependentUpon>
-      <LastGenOutput>MembershipDatabase.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.Config" />
-    <EntityDeploy Include="DatabaseModel\MembershipDatabase.edmx">
+    <EntityDeploy Include="DatabaseModel\SafeBankDatabase.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>MembershipDatabase.Designer.cs</LastGenOutput>
+      <LastGenOutput>SafeBankDatabase.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="DatabaseModel\MembershipDatabase.edmx.diagram">
-      <DependentUpon>MembershipDatabase.edmx</DependentUpon>
+    <None Include="DatabaseModel\SafeBankDatabase.edmx.diagram">
+      <DependentUpon>SafeBankDatabase.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="DatabaseModel\SafeBankDatabase.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SafeBankDatabase.edmx</DependentUpon>
+      <LastGenOutput>SafeBankDatabase.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DatabaseModel\SafeBankDatabase.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SafeBankDatabase.edmx</DependentUpon>
+      <LastGenOutput>SafeBankDatabase.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

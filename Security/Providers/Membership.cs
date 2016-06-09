@@ -1,4 +1,6 @@
-﻿using System.Web.Security;
+﻿using System;
+using System.Web.Security;
+using Data.DatabaseModel;
 using Data.Security.Membership.Interface;
 using Data.Standard.Classed;
 using Data.Standard.Interfaces;
@@ -7,18 +9,53 @@ namespace Security.Providers
 {
     public class Membership : MembershipProvider
     {
-
-        private IUser<IntId> _user;
+        private readonly IUnitOfWork _unitOfWork;
 
         public Membership(IUnitOfWork unitOfWork)
         {
-            _user = unitOfWork.User;
+            _unitOfWork = unitOfWork;
         }
 
         public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer,
             bool isApproved, object providerUserKey, out MembershipCreateStatus status)
         {
-            throw new System.NotImplementedException();
+            var user = new User
+            {
+                UserDetail = new UserDetail
+                {
+                    Username = username,
+                    Email = email
+                },
+                UserActivity = new UserActivity
+                {
+                    CreatedDate = DateTime.Now,
+                    IsApproved = isApproved,
+                    IsLockedOut = false,
+                    LastActiveDate = DateTime.Now
+                },
+                UserAndPassword = new UserAndPassword
+                {
+                    Password = password,
+                    LastChanged = DateTime.Now
+                },
+                UserSecurityQuestionAndAnswer = new UserSecurityQuestionAndAnswer
+                {
+                    Answer = passwordAnswer,
+                    SecurityQuestion = new SecurityQuestion
+                    {
+                        Text = passwordQuestion
+                    }
+                }
+            };
+            var userId = _unitOfWork.User.AddSingle(user);
+            _unitOfWork.Commit();
+            var newUser = _unitOfWork.User.GetSingle(userId);
+            status = MembershipCreateStatus.Success;
+            return new MembershipUser("", newUser.UserDetail.Username, newUser.Id, newUser.UserDetail.Email,
+                newUser.UserSecurityQuestionAndAnswer.SecurityQuestion.Text, newUser.UserDetail.Comment,
+                newUser.UserActivity.IsApproved, newUser.UserActivity.IsLockedOut, newUser.UserActivity.CreatedDate,
+                DateTime.MinValue, newUser.UserActivity.LastActiveDate, newUser.UserAndPassword.LastChanged,
+                DateTime.MinValue);
         }
 
         public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion,
@@ -99,54 +136,24 @@ namespace Security.Providers
 
         public override string ApplicationName { get; set; }
 
-        public override bool EnablePasswordRetrieval
-        {
-            get { return false; }
-        }
+        public override bool EnablePasswordRetrieval => false;
 
-        public override bool EnablePasswordReset
-        {
-            get { return true; }
-        }
+        public override bool EnablePasswordReset => true;
 
-        public override bool RequiresQuestionAndAnswer
-        {
-            get { return true; }
-        }
+        public override bool RequiresQuestionAndAnswer => true;
 
-        public override int MaxInvalidPasswordAttempts
-        {
-            get { return 3; }
-        }
+        public override int MaxInvalidPasswordAttempts => 3;
 
-        public override int PasswordAttemptWindow
-        {
-            get { return 10; }
-        }
+        public override int PasswordAttemptWindow => 10;
 
-        public override bool RequiresUniqueEmail
-        {
-            get { return true; }
-        }
+        public override bool RequiresUniqueEmail => true;
 
-        public override MembershipPasswordFormat PasswordFormat
-        {
-            get { return MembershipPasswordFormat.Hashed; }
-        }
+        public override MembershipPasswordFormat PasswordFormat => MembershipPasswordFormat.Hashed;
 
-        public override int MinRequiredPasswordLength
-        {
-            get { return 8; }
-        }
+        public override int MinRequiredPasswordLength => 8;
 
-        public override int MinRequiredNonAlphanumericCharacters
-        {
-            get { return 1; }
-        }
+        public override int MinRequiredNonAlphanumericCharacters => 1;
 
-        public override string PasswordStrengthRegularExpression
-        {
-            get { return "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d$@$!%*?&]{8,}"; }
-        }
+        public override string PasswordStrengthRegularExpression => "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d$@$!%*?&]{8,}";
     }
 }

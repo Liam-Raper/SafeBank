@@ -3,10 +3,10 @@ using System.Linq;
 
 namespace Data.Standard.Interfaces
 {
-    public interface IRequester<TId>
+    public interface IRequester<in TId, out TDataSet>
     {
-        IQueryable GetAll();
-        IQueryable GetMany(IEnumerable<IIdentify<TId>> ids);
-        IQueryable GetSingle(IIdentify<TId> id);
+        IQueryable<TDataSet> GetAll();
+        IQueryable<TDataSet> GetMany(IEnumerable<TId> ids);
+        TDataSet GetSingle(TId id);
     }
 }

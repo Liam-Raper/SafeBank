@@ -2,9 +2,9 @@
 
 namespace Data.Standard.Interfaces
 {
-    public interface ICreater<TId>
+    public interface ICreater<out TId, in TDataSet>
     {
-        TId AddSingle();
-        IEnumerable<IIdentify<TId>> AddMany();
+        TId AddSingle(TDataSet set);
+        IEnumerable<TId> AddMany(IEnumerable<TDataSet> set);
     }
 }

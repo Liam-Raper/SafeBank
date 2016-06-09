@@ -2,10 +2,10 @@
 
 namespace Data.Standard.Interfaces
 {
-    public interface IDeleter<TId>
+    public interface IDeleter<in TId>
     {
         bool DeleteAll();
-        bool DeleteMany(IEnumerable<IIdentify<TId>> ids);
-        bool DeleteSingle(IIdentify<TId> id);
+        bool DeleteMany(IEnumerable<TId> ids);
+        bool DeleteSingle(TId id);
     }
 }

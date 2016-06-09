@@ -7,7 +7,8 @@
     [UserDetailsId] INT NOT NULL, 
     CONSTRAINT [FK_User_UserSecurityQuestionAndAnswer] FOREIGN KEY ([SecurityQuestionAnswerId]) REFERENCES [Memberships].[UserSecurityQuestionAndAnswer]([Id]), 
     CONSTRAINT [FK_User_UserAndPassword] FOREIGN KEY ([UserAndPasswordId]) REFERENCES [Memberships].[UserAndPassword]([Id]), 
-    CONSTRAINT [FK_User_UserActivity] FOREIGN KEY ([UserActivityId]) REFERENCES [Memberships].[UserActivity]([Id])
+    CONSTRAINT [FK_User_UserActivity] FOREIGN KEY ([UserActivityId]) REFERENCES [Memberships].[UserActivity]([Id]),
+    CONSTRAINT [FK_User_Details] FOREIGN KEY ([UserDetailsId]) REFERENCES [Memberships].[UserDetails]([Id])
 )
 
 GO

@@ -8,15 +8,15 @@ namespace Data.Standard.Classed
     public class UnitOfWork : IUnitOfWork
     {
 
-        private readonly SafeBankDBMembershipEntity _database;
+        private readonly Entities _database;
         
         public UnitOfWork()
         {
-            _database = new SafeBankDBMembershipEntity();
-            User = new User(_database);
+            _database = new Entities();
+            User = new UserTables(_database.Users);
         }
 
-        public IUser<IntId> User { get; private set; }
+        public IUserTables<IntId, User> User { get; }
 
         public void Commit()
         {

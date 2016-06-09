@@ -12,13 +12,17 @@ namespace Data.DatabaseModel
     using System;
     using System.Collections.Generic;
     
-    public partial class UserList
+    public partial class User
     {
         public int Id { get; set; }
-        public string Username { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public int QuestionId { get; set; }
-        public string Answer { get; set; }
+        public int SecurityQuestionAnswerId { get; set; }
+        public int UserAndPasswordId { get; set; }
+        public int UserActivityId { get; set; }
+        public int UserDetailsId { get; set; }
+    
+        public virtual UserDetail UserDetail { get; set; }
+        public virtual UserActivity UserActivity { get; set; }
+        public virtual UserAndPassword UserAndPassword { get; set; }
+        public virtual UserSecurityQuestionAndAnswer UserSecurityQuestionAndAnswer { get; set; }
     }
 }

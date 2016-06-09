@@ -2,10 +2,10 @@
 
 namespace Data.Standard.Interfaces
 {
-    public interface IUpdater<TId>
+    public interface IUpdater<in TId, in TDataSet>
     {
-        bool UpdateAll();
-        bool UpdateMany(IEnumerable<IIdentify<TId>> ids);
-        bool UpdateSingle(IIdentify<TId> id);
+        bool UpdateAll(TDataSet set);
+        bool UpdateMany(IEnumerable<TId> ids, TDataSet set);
+        bool UpdateSingle(TId id, TDataSet set);
     }
 }
