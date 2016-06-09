@@ -16,7 +16,7 @@ namespace Data.Standard.Classed
             User = new User(_database);
         }
 
-        public IUser<IntId> User { get; }
+        public IUser<IntId> User { get; private set; }
 
         public void Commit()
         {

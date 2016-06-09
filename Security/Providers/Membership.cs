@@ -97,16 +97,55 @@ namespace Security.Providers
             throw new System.NotImplementedException();
         }
 
-        public override bool EnablePasswordRetrieval { get; }
-        public override bool EnablePasswordReset { get; }
-        public override bool RequiresQuestionAndAnswer { get; }
-        public override string ApplicationName { get; set; }
-        public override int MaxInvalidPasswordAttempts { get; }
-        public override int PasswordAttemptWindow { get; }
-        public override bool RequiresUniqueEmail { get; }
-        public override MembershipPasswordFormat PasswordFormat { get; }
-        public override int MinRequiredPasswordLength { get; }
-        public override int MinRequiredNonAlphanumericCharacters { get; }
-        public override string PasswordStrengthRegularExpression { get; }
+        public override string ApplicationName                      { get; set; }
+        public override bool EnablePasswordRetrieval
+        {
+            get { throw new System.NotImplementedException(); }
+        }
+
+        public override bool EnablePasswordReset
+        {
+            get { throw new System.NotImplementedException(); }
+        }
+
+        public override bool RequiresQuestionAndAnswer
+        {
+            get { throw new System.NotImplementedException(); }
+        }
+
+        public override int MaxInvalidPasswordAttempts
+        {
+            get { throw new System.NotImplementedException(); }
+        }
+
+        public override int PasswordAttemptWindow
+        {
+            get { throw new System.NotImplementedException(); }
+        }
+
+        public override bool RequiresUniqueEmail
+        {
+            get { throw new System.NotImplementedException(); }
+        }
+
+        public override MembershipPasswordFormat PasswordFormat
+        {
+            get { throw new System.NotImplementedException(); }
+        }
+
+        public override int MinRequiredPasswordLength
+        {
+            get { throw new System.NotImplementedException(); }
+        }
+
+        public override int MinRequiredNonAlphanumericCharacters
+        {
+            get { throw new System.NotImplementedException(); }
+        }
+
+        public override string PasswordStrengthRegularExpression
+        {
+            get { throw new System.NotImplementedException(); }
+        }
     }
 }
