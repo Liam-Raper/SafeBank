@@ -1,13 +1,15 @@
 ﻿using System.Web.Mvc;
+using System.Web.Security;
 using SafeBank.Models;
 
 namespace SafeBank.Controllers
 {
     public class AuthenticationController : Controller
     {
+
         public ActionResult LogIn()
         {
-            return View(new UserLoginDetails());
+            return View("LogIn",new UserLoginDetails());
         }
 
         [HttpPost]
@@ -15,7 +17,7 @@ namespace SafeBank.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(loginDetails);
+                return View("LogIn",loginDetails);
             }
             return RedirectToAction("index", "Home");
         }

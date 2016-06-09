@@ -97,55 +97,56 @@ namespace Security.Providers
             throw new System.NotImplementedException();
         }
 
-        public override string ApplicationName                      { get; set; }
+        public override string ApplicationName { get; set; }
+
         public override bool EnablePasswordRetrieval
         {
-            get { throw new System.NotImplementedException(); }
+            get { return false; }
         }
 
         public override bool EnablePasswordReset
         {
-            get { throw new System.NotImplementedException(); }
+            get { return true; }
         }
 
         public override bool RequiresQuestionAndAnswer
         {
-            get { throw new System.NotImplementedException(); }
+            get { return true; }
         }
 
         public override int MaxInvalidPasswordAttempts
         {
-            get { throw new System.NotImplementedException(); }
+            get { return 3; }
         }
 
         public override int PasswordAttemptWindow
         {
-            get { throw new System.NotImplementedException(); }
+            get { return 10; }
         }
 
         public override bool RequiresUniqueEmail
         {
-            get { throw new System.NotImplementedException(); }
+            get { return true; }
         }
 
         public override MembershipPasswordFormat PasswordFormat
         {
-            get { throw new System.NotImplementedException(); }
+            get { return MembershipPasswordFormat.Hashed; }
         }
 
         public override int MinRequiredPasswordLength
         {
-            get { throw new System.NotImplementedException(); }
+            get { return 8; }
         }
 
         public override int MinRequiredNonAlphanumericCharacters
         {
-            get { throw new System.NotImplementedException(); }
+            get { return 1; }
         }
 
         public override string PasswordStrengthRegularExpression
         {
-            get { throw new System.NotImplementedException(); }
+            get { return "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d$@$!%*?&]{8,}"; }
         }
     }
 }

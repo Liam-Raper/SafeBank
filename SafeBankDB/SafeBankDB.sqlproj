@@ -74,15 +74,14 @@
     <Build Include="Schema\Tables\Memberships\UserAndPassword.sql" />
     <Build Include="Schema\Tables\Memberships\UserActivity.sql" />
     <Build Include="Schema\Tables\Memberships\UserDetails.sql" />
-    <Build Include="Schema\StoredProcedure\AddUser.sql" />
     <Build Include="Security\SafeBankMembershipManager.sql" />
     <Build Include="Security\MembershipManager.sql" />
-    <Build Include="Schema\Views\Memberships\UserList.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="SafeBankDB.refactorlog" />
   </ItemGroup>
   <ItemGroup>
     <None Include="VS2015_Deployer.SafeBankDB.publish.publish.xml" />
+    <None Include="SafeBankDB.publish.xml" />
   </ItemGroup>
 </Project>
