@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using System.Web.Security;
+using csBCrypt;
+using CodeBits;
 using Data.DatabaseModel;
-using Data.Security.Membership.Interface;
-using Data.Standard.Classed;
 using Data.Standard.Interfaces;
 
 namespace Security.Providers
@@ -10,10 +13,11 @@ namespace Security.Providers
     public class Membership : MembershipProvider
     {
         private readonly IUnitOfWork _unitOfWork;
+        private const string ProviderName = "SafeBankMembership";
 
-        public Membership(IUnitOfWork unitOfWork)
+        public Membership()
         {
-            _unitOfWork = unitOfWork;
+            _unitOfWork = DependencyResolver.Current.GetService<IUnitOfWork>();
         }
 
         public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer,
@@ -35,7 +39,7 @@ namespace Security.Providers
                 },
                 UserAndPassword = new UserAndPassword
                 {
-                    Password = password,
+                    Password = GetPasswordToStore(password),
                     LastChanged = DateTime.Now
                 },
                 UserSecurityQuestionAndAnswer = new UserSecurityQuestionAndAnswer
@@ -47,15 +51,17 @@ namespace Security.Providers
                     }
                 }
             };
-            var userId = _unitOfWork.User.AddSingle(user);
+            if (!_unitOfWork.User.Validate(user))
+            {
+                status = MembershipCreateStatus.UserRejected;
+                return GetMembershipUserFromUser(user);
+            }
+            _unitOfWork.User.AddSingle(user);
             _unitOfWork.Commit();
+            var userId = user.Id;
             var newUser = _unitOfWork.User.GetSingle(userId);
             status = MembershipCreateStatus.Success;
-            return new MembershipUser("", newUser.UserDetail.Username, newUser.Id, newUser.UserDetail.Email,
-                newUser.UserSecurityQuestionAndAnswer.SecurityQuestion.Text, newUser.UserDetail.Comment,
-                newUser.UserActivity.IsApproved, newUser.UserActivity.IsLockedOut, newUser.UserActivity.CreatedDate,
-                DateTime.MinValue, newUser.UserActivity.LastActiveDate, newUser.UserAndPassword.LastChanged,
-                DateTime.MinValue);
+            return GetMembershipUserFromUser(newUser);
         }
 
         public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion,
@@ -66,17 +72,42 @@ namespace Security.Providers
 
         public override string GetPassword(string username, string answer)
         {
-            throw new System.NotImplementedException();
+            var userMembership = GetUser(username, false);
+            if (userMembership?.ProviderUserKey == null) return string.Empty;
+            var id = (int)userMembership.ProviderUserKey;
+            var user = _unitOfWork.User.GetSingle(id);
+            return user.UserSecurityQuestionAndAnswer.Answer == answer ? user.UserAndPassword.Password : string.Empty;
         }
 
         public override bool ChangePassword(string username, string oldPassword, string newPassword)
         {
-            throw new System.NotImplementedException();
+            if (!ValidateUser(username, oldPassword)) return false;
+            var userMembership = GetUser(username, false);
+            if (userMembership != null && userMembership.ProviderUserKey == null) return false;
+            if (userMembership?.ProviderUserKey != null)
+            {
+                var id = (int) userMembership.ProviderUserKey;
+                var user = _unitOfWork.User.GetSingle(id);
+                user.UserAndPassword.Password = GetPasswordToStore(newPassword);
+                user.UserAndPassword.LastChanged = DateTime.Now;
+                _unitOfWork.User.UpdateSingle(id, user);
+            }
+            _unitOfWork.Commit();
+            return true;
         }
 
         public override string ResetPassword(string username, string answer)
         {
-            throw new System.NotImplementedException();
+            var userMembership = GetUser(username, false);
+            if (userMembership?.ProviderUserKey == null) return string.Empty;
+            var id = (int)userMembership.ProviderUserKey;
+            var user = _unitOfWork.User.GetSingle(id);
+            var newPassword = GetGeneratedPassword();
+            user.UserAndPassword.Password = GetPasswordToStore(newPassword);
+            user.UserAndPassword.LastChanged = DateTime.Now;
+            _unitOfWork.User.UpdateSingle(id, user);
+            _unitOfWork.Commit();
+            return user.UserSecurityQuestionAndAnswer.Answer == answer ? newPassword : string.Empty;
         }
 
         public override void UpdateUser(MembershipUser user)
@@ -86,52 +117,122 @@ namespace Security.Providers
 
         public override bool ValidateUser(string username, string password)
         {
-            throw new System.NotImplementedException();
+            var userMembership = GetUser(username, false);
+            if (userMembership?.ProviderUserKey == null) return false;
+            var id = (int) userMembership.ProviderUserKey;
+            var userpassword = _unitOfWork.User.GetSingle(id).UserAndPassword.Password;
+            return ValidatePassword(password, userpassword);
         }
 
         public override bool UnlockUser(string userName)
         {
-            throw new System.NotImplementedException();
+            var userMembership = GetUser(userName, false);
+            if (userMembership?.ProviderUserKey == null) return false;
+            var id = (int)userMembership.ProviderUserKey;
+            var user = _unitOfWork.User.GetSingle(id);
+            user.UserActivity.IsLockedOut = false;
+            _unitOfWork.User.UpdateSingle(id, user);
+            _unitOfWork.Commit();
+            return true;
         }
 
         public override MembershipUser GetUser(object providerUserKey, bool userIsOnline)
         {
-            throw new System.NotImplementedException();
+            var id = (int) providerUserKey;
+            var allUser = _unitOfWork.User.GetAll().Where(x => x.Id == id);
+            if (userIsOnline)
+            {
+                allUser = allUser.Where(x => x.UserActivity.LastActiveDate > DateTime.Now.AddHours(-1));
+            }
+            var user = allUser.Single();
+            return GetMembershipUserFromUser(user);
         }
 
         public override MembershipUser GetUser(string username, bool userIsOnline)
         {
-            throw new System.NotImplementedException();
+            var allUser = _unitOfWork.User.GetAll().Where(x => x.UserDetail.Username == username);
+            if (userIsOnline)
+            {
+                allUser = allUser.Where(x => x.UserActivity.LastActiveDate > DateTime.Now.AddHours(-1));
+            }
+            var user = allUser.Single();
+            return GetMembershipUserFromUser(user);
         }
 
         public override string GetUserNameByEmail(string email)
         {
-            throw new System.NotImplementedException();
+            return _unitOfWork.User.GetAll().Single(x => x.UserDetail.Email == email).UserDetail.Username;
         }
 
         public override bool DeleteUser(string username, bool deleteAllRelatedData)
         {
-            throw new System.NotImplementedException();
+            var userMembership = GetUser(username, false);
+            if (userMembership?.ProviderUserKey == null) return false;
+            var id = (int)userMembership.ProviderUserKey;
+            var deleted = _unitOfWork.User.DeleteSingle(id);
+            _unitOfWork.Commit();
+            return deleted;
         }
 
         public override MembershipUserCollection GetAllUsers(int pageIndex, int pageSize, out int totalRecords)
         {
-            throw new System.NotImplementedException();
+            var usersList = _unitOfWork.User.GetAll();
+            totalRecords = usersList.Count();
+            return GetCollectionFromArray(usersList.Take(pageSize).Skip(pageIndex * pageSize).ToArray());
         }
 
         public override int GetNumberOfUsersOnline()
         {
-            throw new System.NotImplementedException();
+            return _unitOfWork.User.GetAll().Count(x => x.UserActivity.LastActiveDate < DateTime.Now.AddHours(-1));
         }
 
         public override MembershipUserCollection FindUsersByName(string usernameToMatch, int pageIndex, int pageSize, out int totalRecords)
         {
-            throw new System.NotImplementedException();
+            var usersList = _unitOfWork.User.GetAll().Where(x => x.UserDetail.Username == usernameToMatch);
+            totalRecords = usersList.Count();
+            return GetCollectionFromArray(usersList.Take(pageSize).Skip(pageIndex * pageSize).ToArray());
         }
 
         public override MembershipUserCollection FindUsersByEmail(string emailToMatch, int pageIndex, int pageSize, out int totalRecords)
         {
-            throw new System.NotImplementedException();
+            var usersList = _unitOfWork.User.GetAll().Where(x => x.UserDetail.Email == emailToMatch);
+            totalRecords = usersList.Count();
+            return GetCollectionFromArray(usersList.Take(pageSize).Skip(pageIndex * pageSize).ToArray());
+        }
+
+        private static MembershipUser GetMembershipUserFromUser(User user)
+        {
+            return new MembershipUser(ProviderName, user.UserDetail.Username, user.Id, user.UserDetail.Email,
+                user.UserSecurityQuestionAndAnswer.SecurityQuestion.Text, user.UserDetail.Comment,
+                user.UserActivity.IsApproved, user.UserActivity.IsLockedOut, user.UserActivity.CreatedDate,
+                user.UserActivity.LastLoggedInDate ?? DateTime.MinValue, user.UserActivity.LastActiveDate,
+                user.UserAndPassword.LastChanged,
+                user.UserActivity.LastLockedOutDate ?? DateTime.MinValue);
+        }
+
+        private static MembershipUserCollection GetCollectionFromArray(IEnumerable<User> users)
+        {
+            var userCollection = new MembershipUserCollection();
+            foreach (var user in users)
+            {
+                userCollection.Add(GetMembershipUserFromUser(user));
+            }
+            return userCollection;
+        }
+
+        private static string GetPasswordToStore(string password)
+        {
+            return BCrypt.CreateHash(password, BCrypt.GenerateSalt(5));
+        }
+
+        private static bool ValidatePassword(string password, string userpassword)
+        {
+            return BCrypt.VerifyPlaintext(password, userpassword);
+        }
+
+        private static string GetGeneratedPassword()
+        {
+            return PasswordGenerator.Generate(12);
         }
 
         public override string ApplicationName { get; set; }

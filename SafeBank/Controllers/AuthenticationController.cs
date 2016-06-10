@@ -15,13 +15,11 @@ namespace SafeBank.Controllers
         [HttpPost]
         public ActionResult LogIn(UserLoginDetails loginDetails)
         {
-            var status = MembershipCreateStatus.ProviderError;
-            Membership.CreateUser("test", "test", "test", "test", "test", true, 0, out status);
             if (!ModelState.IsValid)
             {
-                return View("LogIn",loginDetails);
+                return View("LogIn", loginDetails);
             }
-            return RedirectToAction("index", "Home");
+            return View("LogIn", loginDetails);
         }
 
     }

@@ -10,7 +10,7 @@ using Data.Standard.Interfaces;
 
 namespace Data.Security.Membership.Class
 {
-    public class UserTables : IUserTables<IntId,User>
+    public class UserTables : IUserTables<int,User>
     {
 
         private readonly DbSet<User> _table;
@@ -25,24 +25,24 @@ namespace Data.Security.Membership.Class
             return _table;
         }
 
-        public IQueryable<User> GetMany(IEnumerable<IntId> ids)
+        public IQueryable<User> GetMany(IEnumerable<int> ids)
         {
             var idList = ids.ToList();
             return GetAll().Where(x => idList.Exists(y => y.Equals(x.Id)));
         }
 
-        public User GetSingle(IntId id)
+        public User GetSingle(int id)
         {
-            return GetAll().Single(x => id.Equals(x.Id));
+            return GetAll().Single(x => x.Id == id);
         }
 
-        public IntId AddSingle(User set)
+        public int AddSingle(User set)
         {
             var user = _table.Add(set);
-            return new IntId(user.Id);
+            return user.Id;
         }
 
-        public IEnumerable<IntId> AddMany(IEnumerable<User> set)
+        public IEnumerable<int> AddMany(IEnumerable<User> set)
         {
             return set.Select(AddSingle).ToList();
         }
@@ -50,15 +50,15 @@ namespace Data.Security.Membership.Class
         public bool UpdateAll(User set)
         {
             var users = GetAll().ToArray();
-            return users.Select(user => new IntId(user.Id)).Select(userId => UpdateSingle(userId, set)).All(result => result);
+            return users.Select(user => user.Id).Select(userId => UpdateSingle(userId, set)).All(result => result);
         }
 
-        public bool UpdateMany(IEnumerable<IntId> ids, User set)
+        public bool UpdateMany(IEnumerable<int> ids, User set)
         {
             return ids.Select(intId => UpdateSingle(intId, set)).All(result => result);
         }
 
-        public bool UpdateSingle(IntId id, User set)
+        public bool UpdateSingle(int id, User set)
         {
             try
             {
@@ -97,7 +97,7 @@ namespace Data.Security.Membership.Class
             }
         }
 
-        public bool DeleteMany(IEnumerable<IntId> ids)
+        public bool DeleteMany(IEnumerable<int> ids)
         {
             try
             {
@@ -111,7 +111,7 @@ namespace Data.Security.Membership.Class
             }
         }
 
-        public bool DeleteSingle(IntId id)
+        public bool DeleteSingle(int id)
         {
             try
             {
@@ -123,6 +123,16 @@ namespace Data.Security.Membership.Class
                 //TODO: log exception
                 return false;
             }
+        }
+
+        public bool Validate(User validate)
+        {
+            if (string.IsNullOrEmpty(validate.UserDetail.Username)) return false;
+            if (string.IsNullOrEmpty(validate.UserDetail.Email)) return false;
+            if (string.IsNullOrEmpty(validate.UserAndPassword.Password)) return false;
+            if (string.IsNullOrEmpty(validate.UserSecurityQuestionAndAnswer.Answer)) return false;
+            if (string.IsNullOrEmpty(validate.UserSecurityQuestionAndAnswer.SecurityQuestion.Text)) return false;
+            return true;
         }
     }
 }

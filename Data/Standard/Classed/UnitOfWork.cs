@@ -16,7 +16,7 @@ namespace Data.Standard.Classed
             User = new UserTables(_database.Users);
         }
 
-        public IUserTables<IntId, User> User { get; }
+        public IUserTables<int, User> User { get; }
 
         public void Commit()
         {

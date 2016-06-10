@@ -6,7 +6,7 @@ namespace Data.Standard.Interfaces
 {
     public interface IUnitOfWork
     {
-        IUserTables<IntId,User> User { get; }
+        IUserTables<int,User> User { get; }
         void Commit();
     }
 }
