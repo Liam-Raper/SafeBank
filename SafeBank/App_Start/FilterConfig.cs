@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Mvc;
+using SafeBank.Filters;
 
 namespace SafeBank
 {
@@ -7,6 +8,7 @@ namespace SafeBank
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
+            filters.Add(new UserActivityFilter());
             filters.Add(new HandleErrorAttribute());
         }
     }

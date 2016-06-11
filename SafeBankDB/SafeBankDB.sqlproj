@@ -65,6 +65,8 @@
     <Folder Include="Schema\Views\Memberships" />
     <Folder Include="Schema\StoredProcedure" />
     <Folder Include="Security" />
+    <Folder Include="Data" />
+    <Folder Include="Schema\Tables\Accounts" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schema\Tables\Memberships\User.sql" />
@@ -75,13 +77,24 @@
     <Build Include="Schema\Tables\Memberships\UserActivity.sql" />
     <Build Include="Schema\Tables\Memberships\UserDetails.sql" />
     <Build Include="Security\SafeBankMembershipManager.sql" />
-    <Build Include="Security\MembershipManager.sql" />
+    <Build Include="Schema\Tables\Memberships\Roles.sql" />
+    <Build Include="Schema\Schemas\Accounts.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="SafeBankDB.refactorlog" />
   </ItemGroup>
   <ItemGroup>
     <None Include="VS2015_Deployer.SafeBankDB.publish.publish.xml" />
-    <None Include="SafeBankDB.publish.xml" />
+    <None Include="ClearDownMembership.sql" />
+    <None Include="WithDrift_VS2015_Deployer.SafeBankDB.publish.publish.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data\SecurityQuestions.sql" />
+    <None Include="Data\Roles.sql">
+      <CopyToOutputDirectory>DoNotCopy</CopyToOutputDirectory>
+    </None>
+    <PostDeploy Include="Script.PostDeployment.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </PostDeploy>
   </ItemGroup>
 </Project>

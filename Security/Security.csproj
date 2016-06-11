@@ -46,10 +46,12 @@
   <ItemGroup>
     <Compile Include="Classes\CodeBits\PasswordGenerator.cs" />
     <Compile Include="Classes\SecurityQuestions\SecurityQuestions.cs" />
+    <Compile Include="Classes\User\UserActivities.cs" />
     <Compile Include="Interfaces\SecurityQuestions\ISecurityQuestions.cs" />
+    <Compile Include="Interfaces\User\IUserActivities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\Membership.cs" />
-    <Compile Include="Providers\Role.cs" />
+    <Compile Include="Providers\RoleManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data\Data.csproj">

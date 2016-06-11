@@ -75,6 +75,7 @@ namespace Security.Providers
                 _unitOfWork.Commit();
                 questionId = newQuestion.Id;
             }
+            var customerRoleId = _unitOfWork.Role.GetAll().Where(x => x.Name == "Customer" && x.SystemDefault).Select(x => x.Id).Single();
             var user = new User
             {
                 UserDetail = new UserDetail
@@ -98,7 +99,8 @@ namespace Security.Providers
                 {
                     Answer = passwordAnswer,
                     QuestionId = questionId
-                }
+                },
+                RoleId = customerRoleId
             };
             if (!_unitOfWork.User.Validate(user))
             {

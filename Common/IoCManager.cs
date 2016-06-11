@@ -6,7 +6,9 @@ using System.Web.Mvc;
 using Data.Standard.Classed;
 using Data.Standard.Interfaces;
 using Security.Classes.SecurityQuestions;
+using Security.Classes.User;
 using Security.Interfaces.SecurityQuestions;
+using Security.Interfaces.User;
 
 namespace Common
 {
@@ -45,6 +47,7 @@ namespace Common
                 {
                     registry.For<IUnitOfWork>().Use<UnitOfWork>();
                     registry.For<ISecurityQuestions>().Use<SecurityQuestions>();
+                    registry.For<IUserActivities>().Use<UserActivities>();
                 }
             );
             DependencyResolver.SetResolver(new IoCDependencyResolver(container));

@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="SafeBankDB.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="SystemDefault" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="SecurityQuestion">
           <Key>
             <PropertyRef Name="Id" />
@@ -22,6 +30,7 @@
           <Property Name="UserAndPasswordId" Type="int" Nullable="false" />
           <Property Name="UserActivityId" Type="int" Nullable="false" />
           <Property Name="UserDetailsId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="UserActivity">
           <Key>
@@ -69,6 +78,18 @@
             </Principal>
             <Dependent Role="User">
               <PropertyRef Name="UserDetailsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -121,6 +142,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="SafeBankDBStoreContainer">
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="Memberships" store:Type="Tables" />
           <EntitySet Name="SecurityQuestion" EntityType="Self.SecurityQuestion" Schema="Memberships" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="Memberships" store:Type="Tables" />
           <EntitySet Name="UserActivity" EntityType="Self.UserActivity" Schema="Memberships" store:Type="Tables" />
@@ -129,6 +151,10 @@
           <EntitySet Name="UserSecurityQuestionAndAnswer" EntityType="Self.UserSecurityQuestionAndAnswer" Schema="Memberships" store:Type="Tables" />
           <AssociationSet Name="FK_User_Details" Association="Self.FK_User_Details">
             <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Roles" EntitySet="Roles" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
           <AssociationSet Name="FK_User_UserActivity" Association="Self.FK_User_UserActivity">
@@ -174,6 +200,8 @@
           <NavigationProperty Name="UserActivity" Relationship="Self.FK_User_UserActivity" FromRole="User" ToRole="UserActivity" />
           <NavigationProperty Name="UserAndPassword" Relationship="Self.FK_User_UserAndPassword" FromRole="User" ToRole="UserAndPassword" />
           <NavigationProperty Name="UserSecurityQuestionAndAnswer" Relationship="Self.FK_User_UserSecurityQuestionAndAnswer" FromRole="User" ToRole="UserSecurityQuestionAndAnswer" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="SafeBankDB.FK_User_Role" FromRole="User" ToRole="Role" />
         </EntityType>
         <EntityType Name="UserActivity">
           <Key>
@@ -304,7 +332,33 @@
             <End Role="UserSecurityQuestionAndAnswer" EntitySet="UserSecurityQuestionAndAnswers" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="Roles" EntityType="SafeBankDB.Role" />
+          <AssociationSet Name="FK_User_Role" Association="SafeBankDB.FK_User_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="SafeBankDB.FK_User_Role" FromRole="Role" ToRole="User" />
+          <Property Name="SystemDefault" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_User_Role">
+          <End Type="SafeBankDB.Role" Role="Role" Multiplicity="1" />
+          <End Type="SafeBankDB.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -323,6 +377,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="SafeBankDB.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="SecurityQuestionAnswerId" ColumnName="SecurityQuestionAnswerId" />
                 <ScalarProperty Name="UserAndPasswordId" ColumnName="UserAndPasswordId" />
@@ -369,6 +424,15 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
                 <ScalarProperty Name="Answer" ColumnName="Answer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="SafeBankDB.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="SystemDefault" ColumnName="SystemDefault" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

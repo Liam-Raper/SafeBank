@@ -31,5 +31,6 @@ namespace Data.DatabaseModel
         public virtual DbSet<UserAndPassword> UserAndPasswords { get; set; }
         public virtual DbSet<UserDetail> UserDetails { get; set; }
         public virtual DbSet<UserSecurityQuestionAndAnswer> UserSecurityQuestionAndAnswers { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
     }
 }

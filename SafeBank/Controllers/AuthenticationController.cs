@@ -3,11 +3,18 @@ using System.Web.Mvc;
 using System.Web.Security;
 using SafeBank.Models;
 using Security.Interfaces.SecurityQuestions;
+using Security.Interfaces.User;
 
 namespace SafeBank.Controllers
 {
     public class AuthenticationController : Controller
     {
+        private IUserActivities _userActivities;
+
+        public AuthenticationController(IUserActivities userActivities)
+        {
+            _userActivities = userActivities;
+        }
 
         public ActionResult LogIn()
         {
@@ -21,6 +28,8 @@ namespace SafeBank.Controllers
             {
                 return View("LogIn", loginDetails);
             }
+            _userActivities.UpdateLoggedInDateTime(loginDetails.Username);
+            _userActivities.UpdateLastActionDateTime(loginDetails.Username);
             FormsAuthentication.SetAuthCookie(loginDetails.Username, true);
             return RedirectToAction("Accounts", "Accounts");
         }

@@ -19,10 +19,12 @@ namespace Data.DatabaseModel
         public int UserAndPasswordId { get; set; }
         public int UserActivityId { get; set; }
         public int UserDetailsId { get; set; }
+        public int RoleId { get; set; }
     
         public virtual UserDetail UserDetail { get; set; }
         public virtual UserActivity UserActivity { get; set; }
         public virtual UserAndPassword UserAndPassword { get; set; }
         public virtual UserSecurityQuestionAndAnswer UserSecurityQuestionAndAnswer { get; set; }
+        public virtual Role Role { get; set; }
     }
 }

@@ -4,7 +4,7 @@ namespace SafeBank.Controllers
 {
     public class AccountsController : Controller
     {
-        [Authorize]
+        [Authorize(Roles = "Customer")]
         public ActionResult Accounts()
         {
             return View();

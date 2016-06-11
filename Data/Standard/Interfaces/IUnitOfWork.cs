@@ -7,6 +7,7 @@ namespace Data.Standard.Interfaces
     {
         IUserTables<int,User> User { get; }
         ISecurityQuestionTable<int,SecurityQuestion> SecurityQuestion { get; }
+        IRoleTable<int, Role> Role { get; }
         void Commit();
     }
 }

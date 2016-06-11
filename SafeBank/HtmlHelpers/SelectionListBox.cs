@@ -22,17 +22,15 @@ namespace SafeBank.HtmlHelpers
             var selectList = new TagBuilder("select");
             selectList.Attributes.Add("name", modelPropertyName);
             selectList.Attributes.Add("id", modelPropertyName);
-            if (listItems != null)
+            if (listItems == null) return MvcHtmlString.Create(selectList.ToString());
+            var options = new StringBuilder();
+            foreach (var listItem in listItems)
             {
-                var options = new StringBuilder();
-                foreach (var listItem in listItems)
-                {
-                    var option = new TagBuilder("option") { InnerHtml = listItem.ToString() };
-                    option.Attributes.Add("value", listItem.ToString());
-                    options.AppendLine(option.ToString());
-                }
-                selectList.InnerHtml = options.ToString();
+                var option = new TagBuilder("option") { InnerHtml = listItem.ToString() };
+                option.Attributes.Add("value", listItem.ToString());
+                options.AppendLine(option.ToString());
             }
+            selectList.InnerHtml = options.ToString();
             return MvcHtmlString.Create(selectList.ToString());
         }
         
