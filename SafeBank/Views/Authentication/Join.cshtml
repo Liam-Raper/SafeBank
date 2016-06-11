@@ -1,0 +1,30 @@
+﻿@using SafeBank.HtmlHelpers
+@model SafeBank.Models.UserJoinDetails
+<h1>Join</h1>
+@using (Html.BeginForm("Join", "Authentication"))
+{
+    @Html.AntiForgeryToken()
+    @Html.LabelFor(x => x.Username)
+    <br />
+    @Html.TextBoxFor(x => x.Username)
+    @Html.LabelFor(x => x.Password)
+    <br />
+    @Html.PasswordFor(x => x.Password)
+    @Html.LabelFor(x => x.ConfermePassword)
+    <br />
+    @Html.PasswordFor(x => x.ConfermePassword)
+    @Html.LabelFor(x => x.Email)
+    <br />
+    @Html.TextBoxFor(x => x.Email)
+    @Html.LabelFor(x => x.Question)
+    <br/>
+    @Html.SelectionListBoxFor(x => x.Question,Model.QuestionsList)
+    @Html.LabelFor(x => x.Answer)
+    <br />
+    @Html.TextBoxFor(x => x.Answer)
+    <hr />
+    <input type="submit" value="Join" />
+    <br />
+    <br />
+    @Html.ValidationSummary()
+}

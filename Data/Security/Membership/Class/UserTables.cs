@@ -130,9 +130,7 @@ namespace Data.Security.Membership.Class
             if (string.IsNullOrEmpty(validate.UserDetail.Username)) return false;
             if (string.IsNullOrEmpty(validate.UserDetail.Email)) return false;
             if (string.IsNullOrEmpty(validate.UserAndPassword.Password)) return false;
-            if (string.IsNullOrEmpty(validate.UserSecurityQuestionAndAnswer.Answer)) return false;
-            if (string.IsNullOrEmpty(validate.UserSecurityQuestionAndAnswer.SecurityQuestion.Text)) return false;
-            return true;
+            return !string.IsNullOrEmpty(validate.UserSecurityQuestionAndAnswer.Answer);
         }
     }
 }

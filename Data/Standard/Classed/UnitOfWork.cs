@@ -14,9 +14,11 @@ namespace Data.Standard.Classed
         {
             _database = new Entities();
             User = new UserTables(_database.Users);
+            SecurityQuestion = new SecurityQuestionTables(_database.SecurityQuestions);
         }
 
         public IUserTables<int, User> User { get; }
+        public ISecurityQuestionTable<int, SecurityQuestion> SecurityQuestion { get; }
 
         public void Commit()
         {

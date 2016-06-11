@@ -85,7 +85,9 @@
       <DependentUpon>SafeBankDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\Membership\Class\SecurityQuestionTable.cs" />
     <Compile Include="Security\Membership\Class\UserTables.cs" />
+    <Compile Include="Security\Membership\Interface\ISecurityQuestionTable.cs" />
     <Compile Include="Security\Membership\Interface\IUserTables.cs" />
     <Compile Include="Standard\Classed\UnitOfWork.cs" />
     <Compile Include="Standard\Interfaces\ICreater.cs" />

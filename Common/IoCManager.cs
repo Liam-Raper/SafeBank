@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Data.Standard.Classed;
-using Data.Standard.Interfaces;
 using StructureMap;
 using System.Web.Mvc;
+using Data.Standard.Classed;
+using Data.Standard.Interfaces;
+using Security.Classes.SecurityQuestions;
+using Security.Interfaces.SecurityQuestions;
 
 namespace Common
 {
@@ -42,6 +44,7 @@ namespace Common
             var container = new Container(registry =>
                 {
                     registry.For<IUnitOfWork>().Use<UnitOfWork>();
+                    registry.For<ISecurityQuestions>().Use<SecurityQuestions>();
                 }
             );
             DependencyResolver.SetResolver(new IoCDependencyResolver(container));

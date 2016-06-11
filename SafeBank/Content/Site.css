@@ -91,6 +91,7 @@ div form input[type="text"] {
     width: 25vw;
     font-size: 2vh;
     text-align: center;
+    color: #000000;
 }
 div form input[type="password"] {
     padding: 0;
@@ -98,6 +99,7 @@ div form input[type="password"] {
     width: 25vw;
     font-size: 2vh;
     text-align: center;
+    color: #000000;
 }
 div form input[type="submit"] {
     padding: 0;
@@ -117,6 +119,25 @@ div form input[type="submit"]:hover {
     color: #3e5667;
     background-color: #ffffff;
     border: 0;
+}
+div form select {
+    width: 25vw;
+    font-size: 2vh;
+    border: 0;
+    padding: 0;
+    color: #000000;
+}
+div form select option {
+    background-color: #ffffff;
+    color: #000000;
+}
+div form select option:checked {
+    background-color: #3e5667;
+    color: #ffffff;
+}
+div form select option:hover {
+    background-color: #3e5667;
+    color: #ffffff;
 }
 div form hr {
     width: 25vw;

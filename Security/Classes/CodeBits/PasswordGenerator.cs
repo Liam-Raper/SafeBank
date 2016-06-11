@@ -27,7 +27,7 @@ using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace CodeBits
+namespace Security.Classes.CodeBits
 {
     public static class PasswordGenerator
     {
@@ -35,17 +35,17 @@ namespace CodeBits
             IEnumerable<char> excludeCharacters = null)
         {
             if (length <= 0)
-                throw new ArgumentOutOfRangeException("length", "Password length must be greater than zero");
+                throw new ArgumentOutOfRangeException(nameof(length), "Password length must be greater than zero");
 
             var randomBytes = new byte[length];
             var randomNumberGenerator = new RNGCryptoServiceProvider();
             randomNumberGenerator.GetBytes(randomBytes);
 
-            string allowedCharactersString = GenerateAllowedCharactersString(allowedCharacters, excludeCharacters);
-            int allowedCharactersCount = allowedCharactersString.Length;
+            var allowedCharactersString = GenerateAllowedCharactersString(allowedCharacters, excludeCharacters);
+            var allowedCharactersCount = allowedCharactersString.Length;
 
             var characters = new char[length];
-            for (int i = 0; i < length; i++)
+            for (var i = 0; i < length; i++)
                 characters[i] = allowedCharactersString[randomBytes[i] % allowedCharactersCount];
             return new string(characters);
         }
@@ -54,17 +54,17 @@ namespace CodeBits
             IEnumerable<char> excludedCharacters = null)
         {
             if (length <= 0)
-                throw new ArgumentOutOfRangeException("length", "Password length must be greater than zero");
+                throw new ArgumentOutOfRangeException(nameof(length), "Password length must be greater than zero");
 
             var randomBytes = new byte[length];
             var randomNumberGenerator = new RNGCryptoServiceProvider();
             randomNumberGenerator.GetBytes(randomBytes);
 
-            string allowedCharactersString = GenerateAllowedCharactersString(allowedCharacters, excludedCharacters);
-            int allowedCharactersCount = allowedCharactersString.Length;
+            var allowedCharactersString = GenerateAllowedCharactersString(allowedCharacters, excludedCharacters);
+            var allowedCharactersCount = allowedCharactersString.Length;
 
             var password = new SecureString();
-            for (int i = 0; i < length; i++)
+            for (var i = 0; i < length; i++)
                 password.AppendChar(allowedCharactersString[randomBytes[i] % allowedCharactersCount]);
             password.MakeReadOnly();
             return password;
@@ -73,10 +73,8 @@ namespace CodeBits
         private static string GenerateAllowedCharactersString(PasswordCharacters characters, IEnumerable<char> excludeCharacters)
         {
             var allowedCharactersString = new StringBuilder();
-            foreach (KeyValuePair<PasswordCharacters, string> type in AllowedPasswordCharacters)
+            foreach (var type in AllowedPasswordCharacters.Where(type => (characters & type.Key) == type.Key))
             {
-                if ((characters & type.Key) != type.Key)
-                    continue;
                 if (excludeCharacters == null)
                     allowedCharactersString.Append(type.Value);
                 else

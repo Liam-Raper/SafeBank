@@ -13,29 +13,12 @@ namespace SafeBank
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
-                name: "Home",
-                url: "home",
-                defaults: new { controller = "Home", action = "Index"}
-            );
-
-            routes.MapRoute(
-                name: "About",
-                url: "about",
-                defaults: new { controller = "Home", action = "About" }
-            );
-
-            routes.MapRoute(
-                name: "LogIn",
-                url: "login",
-                defaults: new { controller = "Authentication", action = "LogIn" }
-            );
-
-            routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            );
+            routes.MapRoute("Home",     "home",                       new { controller = "Home",           action = "Index"});
+            routes.MapRoute("About",    "about",                      new { controller = "Home",           action = "About" });
+            routes.MapRoute("LogIn",    "login",                      new { controller = "Authentication", action = "LogIn" });
+            routes.MapRoute("Join",     "join",                       new { controller = "Authentication", action = "Join" });
+            routes.MapRoute("Accounts", "Accounts",                   new { controller = "Accounts",       action = "Accounts" });
+            routes.MapRoute("Default",  "{controller}/{action}/{id}", new { controller = "Home",           action = "Index", id = UrlParameter.Optional });
         }
     }
 }

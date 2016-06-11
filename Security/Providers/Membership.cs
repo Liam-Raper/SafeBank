@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
 using csBCrypt;
-using CodeBits;
 using Data.DatabaseModel;
 using Data.Standard.Interfaces;
+using Security.Classes.CodeBits;
 
 namespace Security.Providers
 {
@@ -14,6 +14,42 @@ namespace Security.Providers
     {
         private readonly IUnitOfWork _unitOfWork;
         private const string ProviderName = "SafeBankMembership";
+
+
+        private static MembershipUser GetMembershipUserFromUser(User user)
+        {
+            return new MembershipUser(ProviderName, user.UserDetail.Username, user.Id, user.UserDetail.Email,
+                user.UserSecurityQuestionAndAnswer.SecurityQuestion.Text, user.UserDetail.Comment,
+                user.UserActivity.IsApproved, user.UserActivity.IsLockedOut, user.UserActivity.CreatedDate,
+                user.UserActivity.LastLoggedInDate ?? DateTime.MinValue, user.UserActivity.LastActiveDate,
+                user.UserAndPassword.LastChanged,
+                user.UserActivity.LastLockedOutDate ?? DateTime.MinValue);
+        }
+
+        private static MembershipUserCollection GetCollectionFromArray(IEnumerable<User> users)
+        {
+            var userCollection = new MembershipUserCollection();
+            foreach (var user in users)
+            {
+                userCollection.Add(GetMembershipUserFromUser(user));
+            }
+            return userCollection;
+        }
+
+        private static string GetPasswordToStore(string password)
+        {
+            return BCrypt.CreateHash(password, BCrypt.GenerateSalt(5));
+        }
+
+        private static bool ValidatePassword(string password, string userpassword)
+        {
+            return BCrypt.VerifyPlaintext(password, userpassword);
+        }
+
+        private static string GetGeneratedPassword()
+        {
+            return PasswordGenerator.Generate(12);
+        }
 
         public Membership()
         {
@@ -23,6 +59,22 @@ namespace Security.Providers
         public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer,
             bool isApproved, object providerUserKey, out MembershipCreateStatus status)
         {
+            int questionId;
+            if (_unitOfWork.SecurityQuestion.GetAll().Any(x => x.Text == passwordQuestion))
+            {
+                var securityQuestion = _unitOfWork.SecurityQuestion.GetAll().Single(x => x.Text == passwordQuestion);
+                questionId = securityQuestion.Id;
+            }
+            else
+            {
+                var newQuestion = new SecurityQuestion
+                {
+                    Text = passwordQuestion
+                };
+                _unitOfWork.SecurityQuestion.AddSingle(newQuestion);
+                _unitOfWork.Commit();
+                questionId = newQuestion.Id;
+            }
             var user = new User
             {
                 UserDetail = new UserDetail
@@ -45,10 +97,7 @@ namespace Security.Providers
                 UserSecurityQuestionAndAnswer = new UserSecurityQuestionAndAnswer
                 {
                     Answer = passwordAnswer,
-                    SecurityQuestion = new SecurityQuestion
-                    {
-                        Text = passwordQuestion
-                    }
+                    QuestionId = questionId
                 }
             };
             if (!_unitOfWork.User.Validate(user))
@@ -67,7 +116,32 @@ namespace Security.Providers
         public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion,
             string newPasswordAnswer)
         {
-            throw new System.NotImplementedException();
+            var isValid = ValidateUser(username, password);
+            if (!isValid) return false;
+            int questionId;
+            if (_unitOfWork.SecurityQuestion.GetAll().Any(x => x.Text == newPasswordQuestion))
+            {
+                var securityQuestion = _unitOfWork.SecurityQuestion.GetAll().Single(x => x.Text == newPasswordQuestion);
+                questionId = securityQuestion.Id;
+            }
+            else
+            {
+                var newQuestion = new SecurityQuestion
+                {
+                    Text = newPasswordQuestion
+                };
+                _unitOfWork.SecurityQuestion.AddSingle(newQuestion);
+                _unitOfWork.Commit();
+                questionId = newQuestion.Id;
+            }
+            var userMembership = GetUser(username, false);
+            if (userMembership?.ProviderUserKey == null) return false;
+            var userId = (int) userMembership.ProviderUserKey;
+            var user = _unitOfWork.User.GetSingle(userId);
+            user.UserSecurityQuestionAndAnswer.QuestionId = questionId;
+            user.UserSecurityQuestionAndAnswer.Answer = newPasswordAnswer;
+            _unitOfWork.Commit();
+            return true;
         }
 
         public override string GetPassword(string username, string answer)
@@ -109,10 +183,10 @@ namespace Security.Providers
             _unitOfWork.Commit();
             return user.UserSecurityQuestionAndAnswer.Answer == answer ? newPassword : string.Empty;
         }
-
+        
         public override void UpdateUser(MembershipUser user)
         {
-            throw new System.NotImplementedException();
+            
         }
 
         public override bool ValidateUser(string username, string password)
@@ -199,42 +273,7 @@ namespace Security.Providers
             totalRecords = usersList.Count();
             return GetCollectionFromArray(usersList.Take(pageSize).Skip(pageIndex * pageSize).ToArray());
         }
-
-        private static MembershipUser GetMembershipUserFromUser(User user)
-        {
-            return new MembershipUser(ProviderName, user.UserDetail.Username, user.Id, user.UserDetail.Email,
-                user.UserSecurityQuestionAndAnswer.SecurityQuestion.Text, user.UserDetail.Comment,
-                user.UserActivity.IsApproved, user.UserActivity.IsLockedOut, user.UserActivity.CreatedDate,
-                user.UserActivity.LastLoggedInDate ?? DateTime.MinValue, user.UserActivity.LastActiveDate,
-                user.UserAndPassword.LastChanged,
-                user.UserActivity.LastLockedOutDate ?? DateTime.MinValue);
-        }
-
-        private static MembershipUserCollection GetCollectionFromArray(IEnumerable<User> users)
-        {
-            var userCollection = new MembershipUserCollection();
-            foreach (var user in users)
-            {
-                userCollection.Add(GetMembershipUserFromUser(user));
-            }
-            return userCollection;
-        }
-
-        private static string GetPasswordToStore(string password)
-        {
-            return BCrypt.CreateHash(password, BCrypt.GenerateSalt(5));
-        }
-
-        private static bool ValidatePassword(string password, string userpassword)
-        {
-            return BCrypt.VerifyPlaintext(password, userpassword);
-        }
-
-        private static string GetGeneratedPassword()
-        {
-            return PasswordGenerator.Generate(12);
-        }
-
+        
         public override string ApplicationName { get; set; }
 
         public override bool EnablePasswordRetrieval => false;
