@@ -52,5 +52,11 @@ namespace SafeBank.Controllers
             return RedirectToAction("LogIn");
         }
 
+        public ActionResult LogOut()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }

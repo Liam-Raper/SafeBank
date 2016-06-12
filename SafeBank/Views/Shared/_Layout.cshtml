@@ -21,7 +21,23 @@
                     }
                     else
                     {
-                        <li>@Html.ActionLink("Accounts", "Accounts", "Accounts")</li>
+                        if (Roles.IsUserInRole("Customer"))
+                        {
+                            <li>@Html.ActionLink("Accounts", "Accounts", "Accounts")</li>
+                        }
+                        if (Roles.IsUserInRole("Banker"))
+                        {
+                            <li>@Html.ActionLink("Custom manager", "Accounts", "Accounts")</li>
+                        }
+                        if (Roles.IsUserInRole("Bank Manager"))
+                        {
+                            <li>@Html.ActionLink("Employee manager", "Accounts", "Accounts")</li>
+                        }
+                        if (Roles.IsUserInRole("Administrator"))
+                        {
+                            <li>@Html.ActionLink("Dashboard", "Accounts", "Accounts")</li>
+                        }
+                        <li>@Html.ActionLink("Log out", "LogOut", "Authentication")</li>
                     }
                 </ul>
             </nav>

@@ -19,6 +19,7 @@ namespace Data.DatabaseModel
         {
             this.UserAccountAccesses = new HashSet<UserAccountAccess>();
             this.Employees = new HashSet<Employee>();
+            this.Customers = new HashSet<Customer>();
         }
     
         public int Id { get; set; }
@@ -37,5 +38,7 @@ namespace Data.DatabaseModel
         public virtual ICollection<UserAccountAccess> UserAccountAccesses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employees { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Customer> Customers { get; set; }
     }
 }

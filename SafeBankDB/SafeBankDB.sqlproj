@@ -68,6 +68,7 @@
     <Folder Include="Schema\Tables\Accounts" />
     <Folder Include="Schema\Tables\Bank" />
     <Folder Include="Schema\Tables\Employee" />
+    <Folder Include="Schema\Tables\Customer" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schema\Tables\Memberships\User.sql" />
@@ -98,6 +99,10 @@
     <Build Include="Schema\Schemas\Employee.sql" />
     <Build Include="Schema\Tables\Employee\Employee.sql" />
     <Build Include="Schema\Tables\Employee\EmployeeDetails.sql" />
+    <Build Include="Schema\Schemas\Customer.sql" />
+    <Build Include="Schema\Tables\Customer\Customer.sql" />
+    <Build Include="Schema\Tables\Customer\CustomerDetails.sql" />
+    <Build Include="Schema\Tables\Accounts\Transactions.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="SafeBankDB.refactorlog" />

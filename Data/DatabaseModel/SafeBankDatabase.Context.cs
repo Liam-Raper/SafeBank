@@ -42,5 +42,8 @@ namespace Data.DatabaseModel
         public virtual DbSet<OrganisationDetail> OrganisationDetails { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<EmployeeDetail> EmployeeDetails { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<CustomerDetail> CustomerDetails { get; set; }
+        public virtual DbSet<Transaction> Transactions { get; set; }
     }
 }

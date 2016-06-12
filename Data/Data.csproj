@@ -69,6 +69,12 @@
     <Compile Include="DatabaseModel\BrancheDetail.cs">
       <DependentUpon>SafeBankDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="DatabaseModel\Customer.cs">
+      <DependentUpon>SafeBankDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\CustomerDetail.cs">
+      <DependentUpon>SafeBankDatabase.tt</DependentUpon>
+    </Compile>
     <Compile Include="DatabaseModel\Employee.cs">
       <DependentUpon>SafeBankDatabase.tt</DependentUpon>
     </Compile>
@@ -99,6 +105,9 @@
     <Compile Include="DatabaseModel\SecurityQuestion.cs">
       <DependentUpon>SafeBankDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="DatabaseModel\Transaction.cs">
+      <DependentUpon>SafeBankDatabase.tt</DependentUpon>
+    </Compile>
     <Compile Include="DatabaseModel\User.cs">
       <DependentUpon>SafeBankDatabase.tt</DependentUpon>
     </Compile>
@@ -118,13 +127,17 @@
       <DependentUpon>SafeBankDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Security\Membership\Class\RoleTable.cs" />
-    <Compile Include="Security\Membership\Class\SecurityQuestionTable.cs" />
-    <Compile Include="Security\Membership\Class\UserTables.cs" />
-    <Compile Include="Security\Membership\Interface\IRoleTable.cs" />
-    <Compile Include="Security\Membership\Interface\ISecurityQuestionTable.cs" />
-    <Compile Include="Security\Membership\Interface\IUserTables.cs" />
-    <Compile Include="Standard\Classed\UnitOfWork.cs" />
+    <Compile Include="Security\Account\Classes\AccountTable.cs" />
+    <Compile Include="Security\Account\Classes\UserAccountAccessTable.cs" />
+    <Compile Include="Security\Account\Interfaces\IAccountTable.cs" />
+    <Compile Include="Security\Account\Interfaces\IUserAccountAccessTable.cs" />
+    <Compile Include="Security\Membership\Classes\RoleTable.cs" />
+    <Compile Include="Security\Membership\Classes\SecurityQuestionTable.cs" />
+    <Compile Include="Security\Membership\Classes\UserTables.cs" />
+    <Compile Include="Security\Membership\Interfaces\IRoleTable.cs" />
+    <Compile Include="Security\Membership\Interfaces\ISecurityQuestionTable.cs" />
+    <Compile Include="Security\Membership\Interfaces\IUserTables.cs" />
+    <Compile Include="Standard\Classes\UnitOfWork.cs" />
     <Compile Include="Standard\Interfaces\ICreater.cs" />
     <Compile Include="Standard\Interfaces\IDeleter.cs" />
     <Compile Include="Standard\Interfaces\IRequester.cs" />

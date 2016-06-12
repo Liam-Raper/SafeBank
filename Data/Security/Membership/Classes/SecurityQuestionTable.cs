@@ -2,9 +2,9 @@
 using System.Data.Entity;
 using System.Linq;
 using Data.DatabaseModel;
-using Data.Security.Membership.Interface;
+using Data.Security.Membership.Interfaces;
 
-namespace Data.Security.Membership.Class
+namespace Data.Security.Membership.Classes
 {
     public class SecurityQuestionTables : ISecurityQuestionTable<int,SecurityQuestion>
     {

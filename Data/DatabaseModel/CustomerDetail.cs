@@ -12,24 +12,21 @@ namespace Data.DatabaseModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Account
+    public partial class CustomerDetail
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Account()
+        public CustomerDetail()
         {
-            this.UserAccountAccesses = new HashSet<UserAccountAccess>();
-            this.Transactions = new HashSet<Transaction>();
+            this.Customers = new HashSet<Customer>();
         }
     
         public int Id { get; set; }
-        public int AccountTypeId { get; set; }
-        public int AccountDetailsId { get; set; }
+        public string Given_name { get; set; }
+        public string Family_name { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
     
-        public virtual AccountDetail AccountDetail { get; set; }
-        public virtual AccountType AccountType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserAccountAccess> UserAccountAccesses { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Transaction> Transactions { get; set; }
+        public virtual ICollection<Customer> Customers { get; set; }
     }
 }

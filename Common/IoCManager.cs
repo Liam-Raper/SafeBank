@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using StructureMap;
 using System.Web.Mvc;
-using Data.Standard.Classed;
+using Business.Classes;
+using Business.Interfaces;
+using Data.Standard.Classes;
 using Data.Standard.Interfaces;
 using Security.Classes.SecurityQuestions;
 using Security.Classes.User;
@@ -48,6 +50,7 @@ namespace Common
                     registry.For<IUnitOfWork>().Use<UnitOfWork>();
                     registry.For<ISecurityQuestions>().Use<SecurityQuestions>();
                     registry.For<IUserActivities>().Use<UserActivities>();
+                    registry.For<IUserService>().Use<UserService>();
                 }
             );
             DependencyResolver.SetResolver(new IoCDependencyResolver(container));

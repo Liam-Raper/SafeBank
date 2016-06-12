@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using Data.DatabaseModel;
-using Data.Security.Membership.Interface;
-using Data.Standard.Classed;
-using Data.Standard.Interfaces;
+using Data.Security.Membership.Interfaces;
 
-namespace Data.Security.Membership.Class
+namespace Data.Security.Membership.Classes
 {
     public class UserTables : IUserTables<int,User>
     {

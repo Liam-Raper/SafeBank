@@ -38,6 +38,15 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
         </EntityType>
+        <EntityType Name="Transactions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccountId" Type="int" Nullable="false" />
+          <Property Name="Deposeted" Type="decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Withdrawn" Type="decimal" Precision="19" Scale="4" Nullable="false" />
+        </EntityType>
         <EntityType Name="UserAccountAccess">
           <Key>
             <PropertyRef Name="Id" />
@@ -73,6 +82,24 @@
           <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Code" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CustomerDetailsId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomerDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Given name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Family name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="14" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="254" Nullable="false" />
+        </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="Id" />
@@ -88,6 +115,8 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Given name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Family name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="14" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="254" Nullable="false" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -249,6 +278,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Customer_EmployeeDetails">
+          <End Role="CustomerDetails" Type="Self.CustomerDetails" Multiplicity="1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="CustomerDetailsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Customer_UserId">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Employee_EmployeeDetails">
           <End Role="EmployeeDetails" Type="Self.EmployeeDetails" Multiplicity="1" />
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
@@ -270,6 +323,18 @@
             </Principal>
             <Dependent Role="Employee">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transactions_AccountId">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="AccountId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -350,10 +415,13 @@
           <EntitySet Name="Account" EntityType="Self.Account" Schema="Accounts" store:Type="Tables" />
           <EntitySet Name="AccountDetails" EntityType="Self.AccountDetails" Schema="Accounts" store:Type="Tables" />
           <EntitySet Name="AccountTypes" EntityType="Self.AccountTypes" Schema="Accounts" store:Type="Tables" />
+          <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="Accounts" store:Type="Tables" />
           <EntitySet Name="UserAccountAccess" EntityType="Self.UserAccountAccess" Schema="Accounts" store:Type="Tables" />
           <EntitySet Name="BankDetails" EntityType="Self.BankDetails" Schema="Bank" store:Type="Tables" />
           <EntitySet Name="BrancheDetails" EntityType="Self.BrancheDetails" Schema="Bank" store:Type="Tables" />
           <EntitySet Name="OrganisationDetails" EntityType="Self.OrganisationDetails" Schema="Bank" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="Customer" store:Type="Tables" />
+          <EntitySet Name="CustomerDetails" EntityType="Self.CustomerDetails" Schema="Customer" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="Employee" store:Type="Tables" />
           <EntitySet Name="EmployeeDetails" EntityType="Self.EmployeeDetails" Schema="Employee" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="Memberships" store:Type="Tables" />
@@ -395,6 +463,14 @@
             <End Role="OrganisationDetails" EntitySet="OrganisationDetails" />
             <End Role="BrancheDetails" EntitySet="BrancheDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK_Customer_EmployeeDetails" Association="Self.FK_Customer_EmployeeDetails">
+            <End Role="CustomerDetails" EntitySet="CustomerDetails" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customer_UserId" Association="Self.FK_Customer_UserId">
+            <End Role="User" EntitySet="User" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
           <AssociationSet Name="FK_Employee_EmployeeDetails" Association="Self.FK_Employee_EmployeeDetails">
             <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
             <End Role="Employee" EntitySet="Employee" />
@@ -402,6 +478,10 @@
           <AssociationSet Name="FK_Employee_UserId" Association="Self.FK_Employee_UserId">
             <End Role="User" EntitySet="User" />
             <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transactions_AccountId" Association="Self.FK_Transactions_AccountId">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Transactions" EntitySet="Transactions" />
           </AssociationSet>
           <AssociationSet Name="FK_User_Details" Association="Self.FK_User_Details">
             <End Role="UserDetails" EntitySet="UserDetails" />
@@ -458,6 +538,7 @@
           <NavigationProperty Name="Role" Relationship="SafeBankDB.FK_User_Role" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="UserAccountAccesses" Relationship="SafeBankDB.FK_AccountAccess_UserId" FromRole="User" ToRole="UserAccountAccess" />
           <NavigationProperty Name="Employees" Relationship="SafeBankDB.FK_Employee_UserId" FromRole="User" ToRole="Employee" />
+          <NavigationProperty Name="Customers" Relationship="SafeBankDB.FK_Customer_UserId" FromRole="User" ToRole="Customer" />
         </EntityType>
         <EntityType Name="UserActivity">
           <Key>
@@ -643,6 +724,21 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Employee" EntitySet="Employees" />
           </AssociationSet>
+          <EntitySet Name="Customers" EntityType="SafeBankDB.Customer" />
+          <EntitySet Name="CustomerDetails" EntityType="SafeBankDB.CustomerDetail" />
+          <AssociationSet Name="FK_Customer_EmployeeDetails" Association="SafeBankDB.FK_Customer_EmployeeDetails">
+            <End Role="CustomerDetail" EntitySet="CustomerDetails" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customer_UserId" Association="SafeBankDB.FK_Customer_UserId">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <EntitySet Name="Transactions" EntityType="SafeBankDB.Transaction" />
+          <AssociationSet Name="FK_Transactions_AccountId" Association="SafeBankDB.FK_Transactions_AccountId">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Transaction" EntitySet="Transactions" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Role">
           <Key>
@@ -683,6 +779,7 @@
           <NavigationProperty Name="AccountDetail" Relationship="SafeBankDB.FK_Account_AccountDetails" FromRole="Account" ToRole="AccountDetail" />
           <NavigationProperty Name="AccountType" Relationship="SafeBankDB.FK_Account_AccountType" FromRole="Account" ToRole="AccountType" />
           <NavigationProperty Name="UserAccountAccesses" Relationship="SafeBankDB.FK_AccountAccess_AccountId" FromRole="Account" ToRole="UserAccountAccess" />
+          <NavigationProperty Name="Transactions" Relationship="SafeBankDB.FK_Transactions_AccountId" FromRole="Account" ToRole="Transaction" />
         </EntityType>
         <EntityType Name="AccountDetail">
           <Key>
@@ -862,6 +959,8 @@
           <Property Name="Given_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Family_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Employees" Relationship="SafeBankDB.FK_Employee_EmployeeDetails" FromRole="EmployeeDetail" ToRole="Employee" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="254" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Employee_EmployeeDetails">
           <End Type="SafeBankDB.EmployeeDetail" Role="EmployeeDetail" Multiplicity="1" />
@@ -884,6 +983,73 @@
             </Principal>
             <Dependent Role="Employee">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CustomerDetailsId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CustomerDetail" Relationship="SafeBankDB.FK_Customer_EmployeeDetails" FromRole="Customer" ToRole="CustomerDetail" />
+          <NavigationProperty Name="User" Relationship="SafeBankDB.FK_Customer_UserId" FromRole="Customer" ToRole="User" />
+        </EntityType>
+        <EntityType Name="CustomerDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Given_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Family_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="254" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Customers" Relationship="SafeBankDB.FK_Customer_EmployeeDetails" FromRole="CustomerDetail" ToRole="Customer" />
+        </EntityType>
+        <Association Name="FK_Customer_EmployeeDetails">
+          <End Type="SafeBankDB.CustomerDetail" Role="CustomerDetail" Multiplicity="1" />
+          <End Type="SafeBankDB.Customer" Role="Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="CustomerDetailsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Customer_UserId">
+          <End Type="SafeBankDB.User" Role="User" Multiplicity="1" />
+          <End Type="SafeBankDB.Customer" Role="Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccountId" Type="Int32" Nullable="false" />
+          <Property Name="Deposeted" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Withdrawn" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Account" Relationship="SafeBankDB.FK_Transactions_AccountId" FromRole="Transaction" ToRole="Account" />
+        </EntityType>
+        <Association Name="FK_Transactions_AccountId">
+          <End Type="SafeBankDB.Account" Role="Account" Multiplicity="1" />
+          <End Type="SafeBankDB.Transaction" Role="Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="AccountId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1052,8 +1218,40 @@
           <EntitySetMapping Name="EmployeeDetails">
             <EntityTypeMapping TypeName="SafeBankDB.EmployeeDetail">
               <MappingFragment StoreEntitySet="EmployeeDetails">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Family_name" ColumnName="Family name" />
                 <ScalarProperty Name="Given_name" ColumnName="Given name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="SafeBankDB.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="CustomerDetailsId" ColumnName="CustomerDetailsId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerDetails">
+            <EntityTypeMapping TypeName="SafeBankDB.CustomerDetail">
+              <MappingFragment StoreEntitySet="CustomerDetails">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Family_name" ColumnName="Family name" />
+                <ScalarProperty Name="Given_name" ColumnName="Given name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transactions">
+            <EntityTypeMapping TypeName="SafeBankDB.Transaction">
+              <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="Withdrawn" ColumnName="Withdrawn" />
+                <ScalarProperty Name="Deposeted" ColumnName="Deposeted" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
