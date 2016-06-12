@@ -4,20 +4,40 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9575dfe8bb50482888f7ab29de7c7503" Name="Diagram1">
+      <Diagram DiagramId="9575dfe8bb50482888f7ab29de7c7503" Name="Diagram1" ZoomLevel="62">
         <EntityTypeShape EntityType="SafeBankDB.SecurityQuestion" Width="1.5" PointX="0.875" PointY="3.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SafeBankDB.User" Width="1.5" PointX="5.375" PointY="2.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SafeBankDB.UserActivity" Width="1.5" PointX="5.375" PointY="6.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SafeBankDB.UserAndPassword" Width="1.5" PointX="7.875" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SafeBankDB.UserDetail" Width="1.5" PointX="7.875" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SafeBankDB.UserActivity" Width="1.5" PointX="3.125" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SafeBankDB.UserAndPassword" Width="1.5" PointX="5.375" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SafeBankDB.UserDetail" Width="1.5" PointX="5.375" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SafeBankDB.UserSecurityQuestionAndAnswer" Width="1.5" PointX="3.125" PointY="3.25" IsExpanded="true" />
         <AssociationConnector Association="SafeBankDB.FK_UserSecurityQuestionAndAnswer_SecurityQuestion" ManuallyRouted="false" />
         <AssociationConnector Association="SafeBankDB.FK_User_Details" ManuallyRouted="false" />
         <AssociationConnector Association="SafeBankDB.FK_User_UserActivity" ManuallyRouted="false" />
         <AssociationConnector Association="SafeBankDB.FK_User_UserAndPassword" ManuallyRouted="false" />
         <AssociationConnector Association="SafeBankDB.FK_User_UserSecurityQuestionAndAnswer" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="SafeBankDB.Role" Width="1.5" PointX="5.375" PointY="0.625" />
+        <EntityTypeShape EntityType="SafeBankDB.Role" Width="1.5" PointX="7.625" PointY="1.5" />
         <AssociationConnector Association="SafeBankDB.FK_User_Role" />
+        <EntityTypeShape EntityType="SafeBankDB.AccessLevel" Width="1.5" PointX="10.625" PointY="5" />
+        <EntityTypeShape EntityType="SafeBankDB.Account" Width="1.5" PointX="10.625" PointY="7.125" />
+        <EntityTypeShape EntityType="SafeBankDB.AccountDetail" Width="1.5" PointX="14.125" PointY="8" />
+        <EntityTypeShape EntityType="SafeBankDB.AccountType" Width="1.5" PointX="14.125" PointY="6.125" />
+        <EntityTypeShape EntityType="SafeBankDB.UserAccountAccess" Width="1.5" PointX="7.875" PointY="5" />
+        <EntityTypeShape EntityType="SafeBankDB.BankDetail" Width="1.5" PointX="14.125" PointY="11" />
+        <EntityTypeShape EntityType="SafeBankDB.BrancheDetail" Width="1.5" PointX="12" PointY="11" />
+        <EntityTypeShape EntityType="SafeBankDB.OrganisationDetail" Width="1.5" PointX="9.75" PointY="11" />
+        <AssociationConnector Association="SafeBankDB.FK_AccountAccess_AccessLevelId" />
+        <AssociationConnector Association="SafeBankDB.FK_Account_AccountDetails" />
+        <AssociationConnector Association="SafeBankDB.FK_Account_AccountType" />
+        <AssociationConnector Association="SafeBankDB.FK_AccountAccess_AccountId" />
+        <AssociationConnector Association="SafeBankDB.FK_AccountDetails_BankId" />
+        <AssociationConnector Association="SafeBankDB.FK_AccountAccess_UserId" />
+        <AssociationConnector Association="SafeBankDB.FK_Bank_Branche" />
+        <AssociationConnector Association="SafeBankDB.FK_Branche_Organisation" />
+        <EntityTypeShape EntityType="SafeBankDB.Employee" Width="1.5" PointX="10.5" PointY="2.5" />
+        <EntityTypeShape EntityType="SafeBankDB.EmployeeDetail" Width="1.5" PointX="12.75" PointY="2.625" />
+        <AssociationConnector Association="SafeBankDB.FK_Employee_EmployeeDetails" />
+        <AssociationConnector Association="SafeBankDB.FK_Employee_UserId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

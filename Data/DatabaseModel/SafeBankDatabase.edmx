@@ -5,6 +5,90 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="SafeBankDB.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AccessLevel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccountTypeId" Type="int" Nullable="false" />
+          <Property Name="AccountDetailsId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AccountDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BankId" Type="int" Nullable="false" />
+          <Property Name="AccountNumber" Type="int" Nullable="false" />
+          <Property Name="AccountName" Type="nvarchar" MaxLength="30" />
+          <Property Name="Balance" Type="decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Overdraft" Type="decimal" Precision="19" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AccountTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserAccountAccess">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccountId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="AccessLevelId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BankDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Code" Type="int" Nullable="false" />
+          <Property Name="BrancheDetailsId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BrancheDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Code" Type="int" Nullable="false" />
+          <Property Name="OrganisationDetailsId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrganisationDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Code" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="EmployeeDetailsId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmployeeDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Given name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Family name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Roles">
           <Key>
             <PropertyRef Name="Id" />
@@ -69,6 +153,126 @@
           <Property Name="QuestionId" Type="int" Nullable="false" />
           <Property Name="Answer" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Account_AccountDetails">
+          <End Role="AccountDetails" Type="Self.AccountDetails" Multiplicity="1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="AccountDetailsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Account_AccountType">
+          <End Role="AccountTypes" Type="Self.AccountTypes" Multiplicity="1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="AccountTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccountAccess_AccessLevelId">
+          <End Role="AccessLevel" Type="Self.AccessLevel" Multiplicity="1" />
+          <End Role="UserAccountAccess" Type="Self.UserAccountAccess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccessLevel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAccountAccess">
+              <PropertyRef Name="AccessLevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccountAccess_AccountId">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="UserAccountAccess" Type="Self.UserAccountAccess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAccountAccess">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccountAccess_UserId">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserAccountAccess" Type="Self.UserAccountAccess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAccountAccess">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccountDetails_BankId">
+          <End Role="BankDetails" Type="Self.BankDetails" Multiplicity="1" />
+          <End Role="AccountDetails" Type="Self.AccountDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BankDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AccountDetails">
+              <PropertyRef Name="BankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bank_Branche">
+          <End Role="BrancheDetails" Type="Self.BrancheDetails" Multiplicity="1" />
+          <End Role="BankDetails" Type="Self.BankDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BrancheDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BankDetails">
+              <PropertyRef Name="BrancheDetailsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Branche_Organisation">
+          <End Role="OrganisationDetails" Type="Self.OrganisationDetails" Multiplicity="1" />
+          <End Role="BrancheDetails" Type="Self.BrancheDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrganisationDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BrancheDetails">
+              <PropertyRef Name="OrganisationDetailsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_EmployeeDetails">
+          <End Role="EmployeeDetails" Type="Self.EmployeeDetails" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="EmployeeDetailsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_UserId">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_Details">
           <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
@@ -142,6 +346,16 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="SafeBankDBStoreContainer">
+          <EntitySet Name="AccessLevel" EntityType="Self.AccessLevel" Schema="Accounts" store:Type="Tables" />
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="Accounts" store:Type="Tables" />
+          <EntitySet Name="AccountDetails" EntityType="Self.AccountDetails" Schema="Accounts" store:Type="Tables" />
+          <EntitySet Name="AccountTypes" EntityType="Self.AccountTypes" Schema="Accounts" store:Type="Tables" />
+          <EntitySet Name="UserAccountAccess" EntityType="Self.UserAccountAccess" Schema="Accounts" store:Type="Tables" />
+          <EntitySet Name="BankDetails" EntityType="Self.BankDetails" Schema="Bank" store:Type="Tables" />
+          <EntitySet Name="BrancheDetails" EntityType="Self.BrancheDetails" Schema="Bank" store:Type="Tables" />
+          <EntitySet Name="OrganisationDetails" EntityType="Self.OrganisationDetails" Schema="Bank" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="Employee" store:Type="Tables" />
+          <EntitySet Name="EmployeeDetails" EntityType="Self.EmployeeDetails" Schema="Employee" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="Memberships" store:Type="Tables" />
           <EntitySet Name="SecurityQuestion" EntityType="Self.SecurityQuestion" Schema="Memberships" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="Memberships" store:Type="Tables" />
@@ -149,6 +363,46 @@
           <EntitySet Name="UserAndPassword" EntityType="Self.UserAndPassword" Schema="Memberships" store:Type="Tables" />
           <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="Memberships" store:Type="Tables" />
           <EntitySet Name="UserSecurityQuestionAndAnswer" EntityType="Self.UserSecurityQuestionAndAnswer" Schema="Memberships" store:Type="Tables" />
+          <AssociationSet Name="FK_Account_AccountDetails" Association="Self.FK_Account_AccountDetails">
+            <End Role="AccountDetails" EntitySet="AccountDetails" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Account_AccountType" Association="Self.FK_Account_AccountType">
+            <End Role="AccountTypes" EntitySet="AccountTypes" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccountAccess_AccessLevelId" Association="Self.FK_AccountAccess_AccessLevelId">
+            <End Role="AccessLevel" EntitySet="AccessLevel" />
+            <End Role="UserAccountAccess" EntitySet="UserAccountAccess" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccountAccess_AccountId" Association="Self.FK_AccountAccess_AccountId">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="UserAccountAccess" EntitySet="UserAccountAccess" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccountAccess_UserId" Association="Self.FK_AccountAccess_UserId">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserAccountAccess" EntitySet="UserAccountAccess" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccountDetails_BankId" Association="Self.FK_AccountDetails_BankId">
+            <End Role="BankDetails" EntitySet="BankDetails" />
+            <End Role="AccountDetails" EntitySet="AccountDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bank_Branche" Association="Self.FK_Bank_Branche">
+            <End Role="BrancheDetails" EntitySet="BrancheDetails" />
+            <End Role="BankDetails" EntitySet="BankDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Branche_Organisation" Association="Self.FK_Branche_Organisation">
+            <End Role="OrganisationDetails" EntitySet="OrganisationDetails" />
+            <End Role="BrancheDetails" EntitySet="BrancheDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_EmployeeDetails" Association="Self.FK_Employee_EmployeeDetails">
+            <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_UserId" Association="Self.FK_Employee_UserId">
+            <End Role="User" EntitySet="User" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
           <AssociationSet Name="FK_User_Details" Association="Self.FK_User_Details">
             <End Role="UserDetails" EntitySet="UserDetails" />
             <End Role="User" EntitySet="User" />
@@ -202,6 +456,8 @@
           <NavigationProperty Name="UserSecurityQuestionAndAnswer" Relationship="Self.FK_User_UserSecurityQuestionAndAnswer" FromRole="User" ToRole="UserSecurityQuestionAndAnswer" />
           <Property Name="RoleId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Role" Relationship="SafeBankDB.FK_User_Role" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="UserAccountAccesses" Relationship="SafeBankDB.FK_AccountAccess_UserId" FromRole="User" ToRole="UserAccountAccess" />
+          <NavigationProperty Name="Employees" Relationship="SafeBankDB.FK_Employee_UserId" FromRole="User" ToRole="Employee" />
         </EntityType>
         <EntityType Name="UserActivity">
           <Key>
@@ -337,6 +593,56 @@
             <End Role="Role" EntitySet="Roles" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="AccessLevels" EntityType="SafeBankDB.AccessLevel" />
+          <EntitySet Name="Accounts" EntityType="SafeBankDB.Account" />
+          <EntitySet Name="AccountDetails" EntityType="SafeBankDB.AccountDetail" />
+          <EntitySet Name="AccountTypes" EntityType="SafeBankDB.AccountType" />
+          <EntitySet Name="UserAccountAccesses" EntityType="SafeBankDB.UserAccountAccess" />
+          <EntitySet Name="BankDetails" EntityType="SafeBankDB.BankDetail" />
+          <EntitySet Name="BrancheDetails" EntityType="SafeBankDB.BrancheDetail" />
+          <EntitySet Name="OrganisationDetails" EntityType="SafeBankDB.OrganisationDetail" />
+          <AssociationSet Name="FK_AccountAccess_AccessLevelId" Association="SafeBankDB.FK_AccountAccess_AccessLevelId">
+            <End Role="AccessLevel" EntitySet="AccessLevels" />
+            <End Role="UserAccountAccess" EntitySet="UserAccountAccesses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Account_AccountDetails" Association="SafeBankDB.FK_Account_AccountDetails">
+            <End Role="AccountDetail" EntitySet="AccountDetails" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Account_AccountType" Association="SafeBankDB.FK_Account_AccountType">
+            <End Role="AccountType" EntitySet="AccountTypes" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccountAccess_AccountId" Association="SafeBankDB.FK_AccountAccess_AccountId">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="UserAccountAccess" EntitySet="UserAccountAccesses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccountDetails_BankId" Association="SafeBankDB.FK_AccountDetails_BankId">
+            <End Role="BankDetail" EntitySet="BankDetails" />
+            <End Role="AccountDetail" EntitySet="AccountDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccountAccess_UserId" Association="SafeBankDB.FK_AccountAccess_UserId">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserAccountAccess" EntitySet="UserAccountAccesses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bank_Branche" Association="SafeBankDB.FK_Bank_Branche">
+            <End Role="BrancheDetail" EntitySet="BrancheDetails" />
+            <End Role="BankDetail" EntitySet="BankDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Branche_Organisation" Association="SafeBankDB.FK_Branche_Organisation">
+            <End Role="OrganisationDetail" EntitySet="OrganisationDetails" />
+            <End Role="BrancheDetail" EntitySet="BrancheDetails" />
+          </AssociationSet>
+          <EntitySet Name="Employees" EntityType="SafeBankDB.Employee" />
+          <EntitySet Name="EmployeeDetails" EntityType="SafeBankDB.EmployeeDetail" />
+          <AssociationSet Name="FK_Employee_EmployeeDetails" Association="SafeBankDB.FK_Employee_EmployeeDetails">
+            <End Role="EmployeeDetail" EntitySet="EmployeeDetails" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_UserId" Association="SafeBankDB.FK_Employee_UserId">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Role">
           <Key>
@@ -356,6 +662,228 @@
             </Principal>
             <Dependent Role="User">
               <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AccessLevel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserAccountAccesses" Relationship="SafeBankDB.FK_AccountAccess_AccessLevelId" FromRole="AccessLevel" ToRole="UserAccountAccess" />
+        </EntityType>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccountTypeId" Type="Int32" Nullable="false" />
+          <Property Name="AccountDetailsId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AccountDetail" Relationship="SafeBankDB.FK_Account_AccountDetails" FromRole="Account" ToRole="AccountDetail" />
+          <NavigationProperty Name="AccountType" Relationship="SafeBankDB.FK_Account_AccountType" FromRole="Account" ToRole="AccountType" />
+          <NavigationProperty Name="UserAccountAccesses" Relationship="SafeBankDB.FK_AccountAccess_AccountId" FromRole="Account" ToRole="UserAccountAccess" />
+        </EntityType>
+        <EntityType Name="AccountDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BankId" Type="Int32" Nullable="false" />
+          <Property Name="AccountNumber" Type="Int32" Nullable="false" />
+          <Property Name="AccountName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Balance" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Overdraft" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Accounts" Relationship="SafeBankDB.FK_Account_AccountDetails" FromRole="AccountDetail" ToRole="Account" />
+          <NavigationProperty Name="BankDetail" Relationship="SafeBankDB.FK_AccountDetails_BankId" FromRole="AccountDetail" ToRole="BankDetail" />
+        </EntityType>
+        <EntityType Name="AccountType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Accounts" Relationship="SafeBankDB.FK_Account_AccountType" FromRole="AccountType" ToRole="Account" />
+        </EntityType>
+        <EntityType Name="UserAccountAccess">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccountId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="AccessLevelId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AccessLevel" Relationship="SafeBankDB.FK_AccountAccess_AccessLevelId" FromRole="UserAccountAccess" ToRole="AccessLevel" />
+          <NavigationProperty Name="Account" Relationship="SafeBankDB.FK_AccountAccess_AccountId" FromRole="UserAccountAccess" ToRole="Account" />
+          <NavigationProperty Name="User" Relationship="SafeBankDB.FK_AccountAccess_UserId" FromRole="UserAccountAccess" ToRole="User" />
+        </EntityType>
+        <EntityType Name="BankDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="Int32" Nullable="false" />
+          <Property Name="BrancheDetailsId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AccountDetails" Relationship="SafeBankDB.FK_AccountDetails_BankId" FromRole="BankDetail" ToRole="AccountDetail" />
+          <NavigationProperty Name="BrancheDetail" Relationship="SafeBankDB.FK_Bank_Branche" FromRole="BankDetail" ToRole="BrancheDetail" />
+        </EntityType>
+        <EntityType Name="BrancheDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="Int32" Nullable="false" />
+          <Property Name="OrganisationDetailsId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BankDetails" Relationship="SafeBankDB.FK_Bank_Branche" FromRole="BrancheDetail" ToRole="BankDetail" />
+          <NavigationProperty Name="OrganisationDetail" Relationship="SafeBankDB.FK_Branche_Organisation" FromRole="BrancheDetail" ToRole="OrganisationDetail" />
+        </EntityType>
+        <EntityType Name="OrganisationDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BrancheDetails" Relationship="SafeBankDB.FK_Branche_Organisation" FromRole="OrganisationDetail" ToRole="BrancheDetail" />
+        </EntityType>
+        <Association Name="FK_AccountAccess_AccessLevelId">
+          <End Type="SafeBankDB.AccessLevel" Role="AccessLevel" Multiplicity="1" />
+          <End Type="SafeBankDB.UserAccountAccess" Role="UserAccountAccess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccessLevel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAccountAccess">
+              <PropertyRef Name="AccessLevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Account_AccountDetails">
+          <End Type="SafeBankDB.AccountDetail" Role="AccountDetail" Multiplicity="1" />
+          <End Type="SafeBankDB.Account" Role="Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="AccountDetailsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Account_AccountType">
+          <End Type="SafeBankDB.AccountType" Role="AccountType" Multiplicity="1" />
+          <End Type="SafeBankDB.Account" Role="Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="AccountTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccountAccess_AccountId">
+          <End Type="SafeBankDB.Account" Role="Account" Multiplicity="1" />
+          <End Type="SafeBankDB.UserAccountAccess" Role="UserAccountAccess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAccountAccess">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccountDetails_BankId">
+          <End Type="SafeBankDB.BankDetail" Role="BankDetail" Multiplicity="1" />
+          <End Type="SafeBankDB.AccountDetail" Role="AccountDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BankDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AccountDetail">
+              <PropertyRef Name="BankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccountAccess_UserId">
+          <End Type="SafeBankDB.User" Role="User" Multiplicity="1" />
+          <End Type="SafeBankDB.UserAccountAccess" Role="UserAccountAccess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAccountAccess">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bank_Branche">
+          <End Type="SafeBankDB.BrancheDetail" Role="BrancheDetail" Multiplicity="1" />
+          <End Type="SafeBankDB.BankDetail" Role="BankDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BrancheDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BankDetail">
+              <PropertyRef Name="BrancheDetailsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Branche_Organisation">
+          <End Type="SafeBankDB.OrganisationDetail" Role="OrganisationDetail" Multiplicity="1" />
+          <End Type="SafeBankDB.BrancheDetail" Role="BrancheDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrganisationDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BrancheDetail">
+              <PropertyRef Name="OrganisationDetailsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeDetailsId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EmployeeDetail" Relationship="SafeBankDB.FK_Employee_EmployeeDetails" FromRole="Employee" ToRole="EmployeeDetail" />
+          <NavigationProperty Name="User" Relationship="SafeBankDB.FK_Employee_UserId" FromRole="Employee" ToRole="User" />
+        </EntityType>
+        <EntityType Name="EmployeeDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Given_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Family_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employees" Relationship="SafeBankDB.FK_Employee_EmployeeDetails" FromRole="EmployeeDetail" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK_Employee_EmployeeDetails">
+          <End Type="SafeBankDB.EmployeeDetail" Role="EmployeeDetail" Multiplicity="1" />
+          <End Type="SafeBankDB.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="EmployeeDetailsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_UserId">
+          <End Type="SafeBankDB.User" Role="User" Multiplicity="1" />
+          <End Type="SafeBankDB.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -432,6 +960,100 @@
               <MappingFragment StoreEntitySet="Roles">
                 <ScalarProperty Name="SystemDefault" ColumnName="SystemDefault" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccessLevels">
+            <EntityTypeMapping TypeName="SafeBankDB.AccessLevel">
+              <MappingFragment StoreEntitySet="AccessLevel">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="SafeBankDB.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="AccountDetailsId" ColumnName="AccountDetailsId" />
+                <ScalarProperty Name="AccountTypeId" ColumnName="AccountTypeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccountDetails">
+            <EntityTypeMapping TypeName="SafeBankDB.AccountDetail">
+              <MappingFragment StoreEntitySet="AccountDetails">
+                <ScalarProperty Name="Overdraft" ColumnName="Overdraft" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
+                <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
+                <ScalarProperty Name="BankId" ColumnName="BankId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccountTypes">
+            <EntityTypeMapping TypeName="SafeBankDB.AccountType">
+              <MappingFragment StoreEntitySet="AccountTypes">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAccountAccesses">
+            <EntityTypeMapping TypeName="SafeBankDB.UserAccountAccess">
+              <MappingFragment StoreEntitySet="UserAccountAccess">
+                <ScalarProperty Name="AccessLevelId" ColumnName="AccessLevelId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BankDetails">
+            <EntityTypeMapping TypeName="SafeBankDB.BankDetail">
+              <MappingFragment StoreEntitySet="BankDetails">
+                <ScalarProperty Name="BrancheDetailsId" ColumnName="BrancheDetailsId" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BrancheDetails">
+            <EntityTypeMapping TypeName="SafeBankDB.BrancheDetail">
+              <MappingFragment StoreEntitySet="BrancheDetails">
+                <ScalarProperty Name="OrganisationDetailsId" ColumnName="OrganisationDetailsId" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrganisationDetails">
+            <EntityTypeMapping TypeName="SafeBankDB.OrganisationDetail">
+              <MappingFragment StoreEntitySet="OrganisationDetails">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="SafeBankDB.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="EmployeeDetailsId" ColumnName="EmployeeDetailsId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeDetails">
+            <EntityTypeMapping TypeName="SafeBankDB.EmployeeDetail">
+              <MappingFragment StoreEntitySet="EmployeeDetails">
+                <ScalarProperty Name="Family_name" ColumnName="Family name" />
+                <ScalarProperty Name="Given_name" ColumnName="Given name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -32,5 +32,15 @@ namespace Data.DatabaseModel
         public virtual DbSet<UserDetail> UserDetails { get; set; }
         public virtual DbSet<UserSecurityQuestionAndAnswer> UserSecurityQuestionAndAnswers { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<AccessLevel> AccessLevels { get; set; }
+        public virtual DbSet<Account> Accounts { get; set; }
+        public virtual DbSet<AccountDetail> AccountDetails { get; set; }
+        public virtual DbSet<AccountType> AccountTypes { get; set; }
+        public virtual DbSet<UserAccountAccess> UserAccountAccesses { get; set; }
+        public virtual DbSet<BankDetail> BankDetails { get; set; }
+        public virtual DbSet<BrancheDetail> BrancheDetails { get; set; }
+        public virtual DbSet<OrganisationDetail> OrganisationDetails { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<EmployeeDetail> EmployeeDetails { get; set; }
     }
 }

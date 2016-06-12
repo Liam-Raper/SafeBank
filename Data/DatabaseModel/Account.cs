@@ -12,30 +12,21 @@ namespace Data.DatabaseModel
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Account
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
+        public Account()
         {
             this.UserAccountAccesses = new HashSet<UserAccountAccess>();
-            this.Employees = new HashSet<Employee>();
         }
     
         public int Id { get; set; }
-        public int SecurityQuestionAnswerId { get; set; }
-        public int UserAndPasswordId { get; set; }
-        public int UserActivityId { get; set; }
-        public int UserDetailsId { get; set; }
-        public int RoleId { get; set; }
+        public int AccountTypeId { get; set; }
+        public int AccountDetailsId { get; set; }
     
-        public virtual UserDetail UserDetail { get; set; }
-        public virtual UserActivity UserActivity { get; set; }
-        public virtual UserAndPassword UserAndPassword { get; set; }
-        public virtual UserSecurityQuestionAndAnswer UserSecurityQuestionAndAnswer { get; set; }
-        public virtual Role Role { get; set; }
+        public virtual AccountDetail AccountDetail { get; set; }
+        public virtual AccountType AccountType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserAccountAccess> UserAccountAccesses { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee> Employees { get; set; }
     }
 }

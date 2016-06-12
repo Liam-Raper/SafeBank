@@ -51,6 +51,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatabaseModel\AccessLevel.cs">
+      <DependentUpon>SafeBankDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\Account.cs">
+      <DependentUpon>SafeBankDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\AccountDetail.cs">
+      <DependentUpon>SafeBankDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\AccountType.cs">
+      <DependentUpon>SafeBankDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\BankDetail.cs">
+      <DependentUpon>SafeBankDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\BrancheDetail.cs">
+      <DependentUpon>SafeBankDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\Employee.cs">
+      <DependentUpon>SafeBankDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\EmployeeDetail.cs">
+      <DependentUpon>SafeBankDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\OrganisationDetail.cs">
+      <DependentUpon>SafeBankDatabase.tt</DependentUpon>
+    </Compile>
     <Compile Include="DatabaseModel\Role.cs">
       <DependentUpon>SafeBankDatabase.tt</DependentUpon>
     </Compile>
@@ -73,6 +100,9 @@
       <DependentUpon>SafeBankDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="DatabaseModel\User.cs">
+      <DependentUpon>SafeBankDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\UserAccountAccess.cs">
       <DependentUpon>SafeBankDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="DatabaseModel\UserActivity.cs">

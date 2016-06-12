@@ -62,11 +62,12 @@
     <Folder Include="Schema\Tables\Memberships" />
     <Folder Include="Schema\Schemas" />
     <Folder Include="Schema\Views" />
-    <Folder Include="Schema\Views\Memberships" />
     <Folder Include="Schema\StoredProcedure" />
     <Folder Include="Security" />
     <Folder Include="Data" />
     <Folder Include="Schema\Tables\Accounts" />
+    <Folder Include="Schema\Tables\Bank" />
+    <Folder Include="Schema\Tables\Employee" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schema\Tables\Memberships\User.sql" />
@@ -79,6 +80,24 @@
     <Build Include="Security\SafeBankMembershipManager.sql" />
     <Build Include="Schema\Tables\Memberships\Roles.sql" />
     <Build Include="Schema\Schemas\Accounts.sql" />
+    <Build Include="Schema\Tables\Accounts\Account.sql" />
+    <Build Include="Schema\Tables\Accounts\AccountTypes.sql" />
+    <Build Include="Schema\Tables\Accounts\UserAccountAccess.sql" />
+    <Build Include="Schema\Tables\Accounts\AccessLevel.sql" />
+    <Build Include="Schema\Tables\Accounts\AccountDetails.sql" />
+    <Build Include="Schema\Schemas\Bank.sql" />
+    <Build Include="Schema\Tables\Bank\BankDetails.sql" />
+    <Build Include="Schema\Tables\Bank\BrancheDetails.sql" />
+    <Build Include="Schema\Tables\Bank\OrganisationDetails.sql" />
+    <None Include="Data\AccountAccessLevels.sql">
+      <CopyToOutputDirectory>DoNotCopy</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\AccountTypes.sql">
+      <CopyToOutputDirectory>DoNotCopy</CopyToOutputDirectory>
+    </None>
+    <Build Include="Schema\Schemas\Employee.sql" />
+    <Build Include="Schema\Tables\Employee\Employee.sql" />
+    <Build Include="Schema\Tables\Employee\EmployeeDetails.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="SafeBankDB.refactorlog" />
