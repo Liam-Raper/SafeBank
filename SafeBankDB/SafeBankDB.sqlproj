@@ -103,6 +103,10 @@
     <Build Include="Schema\Tables\Customer\Customer.sql" />
     <Build Include="Schema\Tables\Customer\CustomerDetails.sql" />
     <Build Include="Schema\Tables\Accounts\Transactions.sql" />
+    <Build Include="Schema\Tables\Employee\EmployeeLocations.sql" />
+    <None Include="Data\AddSafeBankAdmin.sql">
+      <CopyToOutputDirectory>DoNotCopy</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="SafeBankDB.refactorlog" />

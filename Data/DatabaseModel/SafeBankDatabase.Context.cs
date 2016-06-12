@@ -45,5 +45,6 @@ namespace Data.DatabaseModel
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<CustomerDetail> CustomerDetails { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<EmployeeLocation> EmployeeLocations { get; set; }
     }
 }

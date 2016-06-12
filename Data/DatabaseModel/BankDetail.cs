@@ -18,6 +18,7 @@ namespace Data.DatabaseModel
         public BankDetail()
         {
             this.AccountDetails = new HashSet<AccountDetail>();
+            this.EmployeeLocations = new HashSet<EmployeeLocation>();
         }
     
         public int Id { get; set; }
@@ -28,5 +29,7 @@ namespace Data.DatabaseModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AccountDetail> AccountDetails { get; set; }
         public virtual BrancheDetail BrancheDetail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EmployeeLocation> EmployeeLocations { get; set; }
     }
 }

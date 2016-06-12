@@ -118,6 +118,14 @@
           <Property Name="Phone" Type="nvarchar" MaxLength="14" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="254" Nullable="false" />
         </EntityType>
+        <EntityType Name="EmployeeLocations">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="BankId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Roles">
           <Key>
             <PropertyRef Name="Id" />
@@ -326,6 +334,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmployeeLocations_BankId">
+          <End Role="BankDetails" Type="Self.BankDetails" Multiplicity="1" />
+          <End Role="EmployeeLocations" Type="Self.EmployeeLocations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BankDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeLocations">
+              <PropertyRef Name="BankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeLocations_EmployeeId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EmployeeLocations" Type="Self.EmployeeLocations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeLocations">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Transactions_AccountId">
           <End Role="Account" Type="Self.Account" Multiplicity="1" />
           <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
@@ -424,6 +456,7 @@
           <EntitySet Name="CustomerDetails" EntityType="Self.CustomerDetails" Schema="Customer" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="Employee" store:Type="Tables" />
           <EntitySet Name="EmployeeDetails" EntityType="Self.EmployeeDetails" Schema="Employee" store:Type="Tables" />
+          <EntitySet Name="EmployeeLocations" EntityType="Self.EmployeeLocations" Schema="Employee" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="Memberships" store:Type="Tables" />
           <EntitySet Name="SecurityQuestion" EntityType="Self.SecurityQuestion" Schema="Memberships" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="Memberships" store:Type="Tables" />
@@ -478,6 +511,14 @@
           <AssociationSet Name="FK_Employee_UserId" Association="Self.FK_Employee_UserId">
             <End Role="User" EntitySet="User" />
             <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeLocations_BankId" Association="Self.FK_EmployeeLocations_BankId">
+            <End Role="BankDetails" EntitySet="BankDetails" />
+            <End Role="EmployeeLocations" EntitySet="EmployeeLocations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeLocations_EmployeeId" Association="Self.FK_EmployeeLocations_EmployeeId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmployeeLocations" EntitySet="EmployeeLocations" />
           </AssociationSet>
           <AssociationSet Name="FK_Transactions_AccountId" Association="Self.FK_Transactions_AccountId">
             <End Role="Account" EntitySet="Account" />
@@ -739,6 +780,15 @@
             <End Role="Account" EntitySet="Accounts" />
             <End Role="Transaction" EntitySet="Transactions" />
           </AssociationSet>
+          <EntitySet Name="EmployeeLocations" EntityType="SafeBankDB.EmployeeLocation" />
+          <AssociationSet Name="FK_EmployeeLocations_BankId" Association="SafeBankDB.FK_EmployeeLocations_BankId">
+            <End Role="BankDetail" EntitySet="BankDetails" />
+            <End Role="EmployeeLocation" EntitySet="EmployeeLocations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeLocations_EmployeeId" Association="SafeBankDB.FK_EmployeeLocations_EmployeeId">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmployeeLocation" EntitySet="EmployeeLocations" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Role">
           <Key>
@@ -824,6 +874,7 @@
           <Property Name="BrancheDetailsId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AccountDetails" Relationship="SafeBankDB.FK_AccountDetails_BankId" FromRole="BankDetail" ToRole="AccountDetail" />
           <NavigationProperty Name="BrancheDetail" Relationship="SafeBankDB.FK_Bank_Branche" FromRole="BankDetail" ToRole="BrancheDetail" />
+          <NavigationProperty Name="EmployeeLocations" Relationship="SafeBankDB.FK_EmployeeLocations_BankId" FromRole="BankDetail" ToRole="EmployeeLocation" />
         </EntityType>
         <EntityType Name="BrancheDetail">
           <Key>
@@ -950,6 +1001,7 @@
           <Property Name="EmployeeDetailsId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="EmployeeDetail" Relationship="SafeBankDB.FK_Employee_EmployeeDetails" FromRole="Employee" ToRole="EmployeeDetail" />
           <NavigationProperty Name="User" Relationship="SafeBankDB.FK_Employee_UserId" FromRole="Employee" ToRole="User" />
+          <NavigationProperty Name="EmployeeLocations" Relationship="SafeBankDB.FK_EmployeeLocations_EmployeeId" FromRole="Employee" ToRole="EmployeeLocation" />
         </EntityType>
         <EntityType Name="EmployeeDetail">
           <Key>
@@ -1050,6 +1102,40 @@
             </Principal>
             <Dependent Role="Transaction">
               <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="EmployeeLocation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="BankId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BankDetail" Relationship="SafeBankDB.FK_EmployeeLocations_BankId" FromRole="EmployeeLocation" ToRole="BankDetail" />
+          <NavigationProperty Name="Employee" Relationship="SafeBankDB.FK_EmployeeLocations_EmployeeId" FromRole="EmployeeLocation" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK_EmployeeLocations_BankId">
+          <End Type="SafeBankDB.BankDetail" Role="BankDetail" Multiplicity="1" />
+          <End Type="SafeBankDB.EmployeeLocation" Role="EmployeeLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BankDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeLocation">
+              <PropertyRef Name="BankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeLocations_EmployeeId">
+          <End Type="SafeBankDB.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="SafeBankDB.EmployeeLocation" Role="EmployeeLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeLocation">
+              <PropertyRef Name="EmployeeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1252,6 +1338,15 @@
                 <ScalarProperty Name="Withdrawn" ColumnName="Withdrawn" />
                 <ScalarProperty Name="Deposeted" ColumnName="Deposeted" />
                 <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeLocations">
+            <EntityTypeMapping TypeName="SafeBankDB.EmployeeLocation">
+              <MappingFragment StoreEntitySet="EmployeeLocations">
+                <ScalarProperty Name="BankId" ColumnName="BankId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

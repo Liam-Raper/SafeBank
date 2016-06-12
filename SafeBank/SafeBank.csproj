@@ -139,8 +139,11 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\AccountsController.cs" />
+    <Compile Include="Controllers\AdministratorController.cs" />
     <Compile Include="Controllers\AuthenticationController.cs" />
+    <Compile Include="Controllers\BankerController.cs" />
+    <Compile Include="Controllers\BankManagerController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\UserActivityFilter.cs" />
     <Compile Include="Global.asax.cs">
@@ -202,7 +205,16 @@
     <Content Include="Views\Authentication\Join.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Accounts\Accounts.cshtml" />
+    <Content Include="Views\Customer\Accounts.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Banker\CustomerManager.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\BankManager\EmployeeManager.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Administrator\Dashboard.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

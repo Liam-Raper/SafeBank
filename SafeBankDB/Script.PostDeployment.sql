@@ -2,3 +2,4 @@
 :r ".\Data\SecurityQuestions.sql"
 :r ".\Data\AccountAccessLevels.sql"
 :r ".\Data\AccountTypes.sql"
+:r ".\Data\AddSafeBankAdmin.sql"

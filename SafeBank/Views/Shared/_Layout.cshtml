@@ -23,19 +23,19 @@
                     {
                         if (Roles.IsUserInRole("Customer"))
                         {
-                            <li>@Html.ActionLink("Accounts", "Accounts", "Accounts")</li>
+                            <li>@Html.ActionLink("Accounts", "Accounts", "Customer")</li>
                         }
                         if (Roles.IsUserInRole("Banker"))
                         {
-                            <li>@Html.ActionLink("Custom manager", "Accounts", "Accounts")</li>
+                            <li>@Html.ActionLink("Custom manager", "CustomerManager", "Banker")</li>
                         }
                         if (Roles.IsUserInRole("Bank Manager"))
                         {
-                            <li>@Html.ActionLink("Employee manager", "Accounts", "Accounts")</li>
+                            <li>@Html.ActionLink("Employee manager", "EmployeeManager", "BankManager")</li>
                         }
                         if (Roles.IsUserInRole("Administrator"))
                         {
-                            <li>@Html.ActionLink("Dashboard", "Accounts", "Accounts")</li>
+                            <li>@Html.ActionLink("Dashboard", "Dashboard", "Administrator")</li>
                         }
                         <li>@Html.ActionLink("Log out", "LogOut", "Authentication")</li>
                     }

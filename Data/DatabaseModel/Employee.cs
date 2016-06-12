@@ -14,11 +14,19 @@ namespace Data.DatabaseModel
     
     public partial class Employee
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Employee()
+        {
+            this.EmployeeLocations = new HashSet<EmployeeLocation>();
+        }
+    
         public int Id { get; set; }
         public int UserId { get; set; }
         public int EmployeeDetailsId { get; set; }
     
         public virtual EmployeeDetail EmployeeDetail { get; set; }
         public virtual User User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EmployeeLocation> EmployeeLocations { get; set; }
     }
 }
