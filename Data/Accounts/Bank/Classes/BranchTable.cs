@@ -2,66 +2,66 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using Data.Security.Account.Interfaces;
+using Data.Accounts.Bank.Interfaces;
+using Data.DatabaseModel;
 
-namespace Data.Security.Account.Classes
+namespace Data.Accounts.Bank.Classes
 {
-    public class AccountTable : IAccountTable<int,DatabaseModel.Account>
+    public class BranchTable : IBranchTable<int,BrancheDetail>
     {
 
-        private readonly DbSet<DatabaseModel.Account> _table;
+        private readonly DbSet<BrancheDetail> _table;
 
-        public AccountTable(DbSet<DatabaseModel.Account> table)
+        public BranchTable(DbSet<BrancheDetail> table)
         {
             _table = table;
         }
 
-        public IQueryable<DatabaseModel.Account> GetAll()
+        public IQueryable<BrancheDetail> GetAll()
         {
             return _table;
         }
 
-        public IQueryable<DatabaseModel.Account> GetMany(IEnumerable<int> ids)
+        public IQueryable<BrancheDetail> GetMany(IEnumerable<int> ids)
         {
             var idList = ids.ToList();
             return GetAll().Where(x => idList.Exists(y => y.Equals(x.Id)));
         }
 
-        public DatabaseModel.Account GetSingle(int id)
+        public BrancheDetail GetSingle(int id)
         {
             return GetAll().Single(x => x.Id == id);
         }
 
-        public int AddSingle(DatabaseModel.Account set)
+        public int AddSingle(BrancheDetail set)
         {
-            var account = _table.Add(set);
-            return account.Id;
+            var added = _table.Add(set);
+            return added.Id;
         }
 
-        public IEnumerable<int> AddMany(IEnumerable<DatabaseModel.Account> set)
+        public IEnumerable<int> AddMany(IEnumerable<BrancheDetail> set)
         {
             return set.Select(AddSingle).ToList();
         }
 
-        public bool UpdateAll(DatabaseModel.Account set)
+        public bool UpdateAll(BrancheDetail set)
         {
-            var accounts = GetAll().ToArray();
-            return accounts.Select(account => account.Id).Select(accountId => UpdateSingle(accountId, set)).All(result => result);
+            var allRecords = GetAll().ToArray();
+            return allRecords.Select(all => all.Id).Select(singleId => UpdateSingle(singleId, set)).All(result => result);
         }
 
-        public bool UpdateMany(IEnumerable<int> ids, DatabaseModel.Account set)
+        public bool UpdateMany(IEnumerable<int> ids, BrancheDetail set)
         {
             return ids.Select(intId => UpdateSingle(intId, set)).All(result => result);
         }
 
-        public bool UpdateSingle(int id, DatabaseModel.Account set)
+        public bool UpdateSingle(int id, BrancheDetail set)
         {
             try
             {
-                var account = GetSingle(id);
-                account.AccountDetail.AccountName = set.AccountDetail.AccountName;
-                account.AccountDetail.Balance = set.AccountDetail.Balance;
-                account.AccountDetail.Overdraft = set.AccountDetail.Overdraft;
+                var record = GetSingle(id);
+                record.Name = set.Name;
+                record.Code = set.Code;
                 return true;
             }
             catch (Exception e)

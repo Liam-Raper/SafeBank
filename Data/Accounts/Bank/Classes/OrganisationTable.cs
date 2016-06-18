@@ -2,62 +2,66 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using Data.Security.Account.Interfaces;
+using Data.Accounts.Bank.Interfaces;
+using Data.DatabaseModel;
 
-namespace Data.Security.Account.Classes
+namespace Data.Accounts.Bank.Classes
 {
-    public class UserAccountAccessTable : IUserAccountAccessTable<int, DatabaseModel.UserAccountAccess>
+    public class OrganisationTable : IOrganisationTable<int,OrganisationDetail>
     {
 
-        private readonly DbSet<DatabaseModel.UserAccountAccess> _table;
+        private readonly DbSet<OrganisationDetail> _table;
 
-        public UserAccountAccessTable(DbSet<DatabaseModel.UserAccountAccess> table)
+        public OrganisationTable(DbSet<OrganisationDetail> table)
         {
             _table = table;
         }
 
-        public IQueryable<DatabaseModel.UserAccountAccess> GetAll()
+        public IQueryable<OrganisationDetail> GetAll()
         {
             return _table;
         }
 
-        public IQueryable<DatabaseModel.UserAccountAccess> GetMany(IEnumerable<int> ids)
+        public IQueryable<OrganisationDetail> GetMany(IEnumerable<int> ids)
         {
             var idList = ids.ToList();
-            return GetAll().Where(x => idList.Exists(y => y.Equals(x.Id)));
+            return GetAll().Where(x => idList.Exists(y => y.Equals(x.Id))); 
         }
 
-        public DatabaseModel.UserAccountAccess GetSingle(int id)
+        public OrganisationDetail GetSingle(int id)
         {
             return GetAll().Single(x => x.Id == id);
         }
 
-        public int AddSingle(DatabaseModel.UserAccountAccess set)
+        public int AddSingle(OrganisationDetail set)
         {
-            var subtable = _table.Add(set);
-            return subtable.Id;
+            var org = _table.Add(set);
+            return org.Id;
         }
 
-        public IEnumerable<int> AddMany(IEnumerable<DatabaseModel.UserAccountAccess> set)
+        public IEnumerable<int> AddMany(IEnumerable<OrganisationDetail> set)
         {
             return set.Select(AddSingle).ToList();
         }
 
-        public bool UpdateAll(DatabaseModel.UserAccountAccess set)
+        public bool UpdateAll(OrganisationDetail set)
         {
-            var subtable = GetAll().ToArray();
-            return subtable.Select(subselection => subselection.Id).Select(subselectionId => UpdateSingle(subselectionId, set)).All(result => result);
+            var orgs = GetAll().ToArray();
+            return orgs.Select(org => org.Id).Select(orgId => UpdateSingle(orgId, set)).All(result => result);
         }
 
-        public bool UpdateMany(IEnumerable<int> ids, DatabaseModel.UserAccountAccess set)
+        public bool UpdateMany(IEnumerable<int> ids, OrganisationDetail set)
         {
             return ids.Select(intId => UpdateSingle(intId, set)).All(result => result);
         }
 
-        public bool UpdateSingle(int id, DatabaseModel.UserAccountAccess set)
+        public bool UpdateSingle(int id, OrganisationDetail set)
         {
             try
             {
+                var org = GetSingle(id);
+                org.Name = set.Name;
+                org.Code = set.Code;
                 return true;
             }
             catch (Exception e)

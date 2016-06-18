@@ -21,12 +21,13 @@ BEGIN
 		(@SecurityQuestionId,'')
 		SET @UserSecurityQuestionAndAnswerId = @@IDENTITY
 
+		--Admin password Admin1234
 		INSERT INTO [Memberships].[UserAndPassword]
 		([Password],[LastChanged])
 		VALUES
-		('$2a$05$Q623kKAviQlSJjAJMxqUMeSTOvt.nTAOM2.XDQ4kjuP/AqYqqUhXS',GETDATE())
+		('$2a$05$ViiCeg9QFXDyOUzTFqHKI.SkpD7pSiqxOjDNybJ/DJ51aGhJRB.4K',GETDATE())
 		SET @UserAndPasswordId = @@IDENTITY
-
+		
 		INSERT INTO [Memberships].[UserActivity]
 		([IsApproved],[IsLockedOut],[CreatedDate],[LastLoggedInDate],[LastActiveDate],[LastLockedOutDate])
 		VALUES

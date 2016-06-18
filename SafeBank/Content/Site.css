@@ -159,6 +159,66 @@ div form div ul li:last-child {
     border: none;
     list-style-position: inside;
 }
+div .CustomListCenter {
+    width: 25vw;
+    margin-left: auto;
+    margin-right: auto;
+    height: 65vh;
+    overflow: auto;
+    padding-right: 1vw;
+}
+div .CustomListCenter a {
+    padding: 0;
+    padding-left: 0.25vw;
+    padding-right: 0.25vw;
+    margin: 0;
+    color: #ffffff;
+    background: none;
+    border-top: #ffffff solid 0.05vh;
+    border-bottom: #ffffff solid 0.05vh;
+    border-left: #ffffff solid 0.05vw;
+    border-right: #ffffff solid 0.05vw;
+    width: 12.5vw;
+    margin-left: 10.5vw;
+    font-size: 2vh;
+    text-decoration: none;
+}
+div .CustomListCenter a:hover {
+    border: #3e5667 solid thin;
+    color: #3e5667;
+    background-color: #ffffff;
+    border: 0;
+}
+div .CustomListCenter div {
+    border-top: #ffffff solid 0.05vh;
+    border-bottom: #ffffff solid 0.05vh;
+    border-left: #ffffff solid 0.05vw;
+    border-right: #ffffff solid 0.05vw;
+}
+div .CustomListCenter div a {
+    padding: 0;
+    padding-left: 0.25vw;
+    padding-right: 0.25vw;
+    margin: 0;
+    color: #ffffff;
+    background: none;
+    border: none;
+    border-top: #ffffff solid 0.05vh;
+    border-right: #ffffff solid 0.05vw;
+    border-left: #ffffff solid 0.05vw;
+    width: 12.5vw;
+    font-size: 2vh;
+}
+div .CustomListCenter div span:first-of-type a {
+    border-left: none;
+}
+div .CustomListCenter div a:hover {
+    color: #3e5667;
+    border: none;
+    text-decoration: none;
+    background-color: #ffffff;
+    border: 0;
+}
 footer {
     color: #ffffff;
     width: 100vw;

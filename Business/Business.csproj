@@ -40,10 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\UserService.cs" />
-    <Compile Include="Interfaces\IUserService.cs" />
-    <Compile Include="Models\UserAccountBO.cs" />
-    <Compile Include="Models\UserAccountsBO.cs" />
+    <Compile Include="Classes\BranchService.cs" />
+    <Compile Include="Classes\OrganisationService.cs" />
+    <Compile Include="Interfaces\IBranchService.cs" />
+    <Compile Include="Interfaces\IOrganisationService.cs" />
+    <Compile Include="Models\BranchBO.cs" />
+    <Compile Include="Models\OrganisationBO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

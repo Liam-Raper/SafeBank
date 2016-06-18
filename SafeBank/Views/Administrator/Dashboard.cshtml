@@ -1,2 +1,25 @@
-﻿<h1>Dashboard</h1>
-
+﻿@model SafeBank.Models.AdministratorDashboardDetails
+<h1>Dashboard</h1>
+<h2>Organisations</h2>
+<div class="CustomListCenter">
+    @Html.ActionLink("Add new", "AddOrganisation", "Administrator")
+    <br />
+    <br />
+    @foreach (var Organisation in Model.OrganisationsDetailses)
+    {
+        <div>
+            <span>Name: @Organisation.Name</span>
+            <br/>
+            <span>Code: @Organisation.Code</span>
+            <br/>
+            <span>@Html.ActionLink("Edit", "EditOrganisation", new { organisationId = Organisation.Id })</span>
+            <span>@Html.ActionLink("Delete", "DeleteOrganisation", new { organisationId = Organisation.Id })</span>
+            <span>@Html.ActionLink("Branches", "OrganisationBranchesList", new {organisationId = Organisation.Id})</span>
+        </div>
+        <br/>
+    }
+    @if (Model.OrganisationsDetailses.Count() >= 8)
+    {
+        @Html.ActionLink("Add new", "AddOrganisation", "Administrator")
+    }
+</div>

@@ -51,6 +51,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Accounts\Bank\Classes\BranchTable.cs" />
+    <Compile Include="Accounts\Bank\Classes\OrganisationTable.cs" />
+    <Compile Include="Accounts\Bank\Interfaces\IBranchTable.cs" />
+    <Compile Include="Accounts\Bank\Interfaces\IOrganisationTable.cs" />
     <Compile Include="DatabaseModel\AccessLevel.cs">
       <DependentUpon>SafeBankDatabase.tt</DependentUpon>
     </Compile>
@@ -130,10 +134,6 @@
       <DependentUpon>SafeBankDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Security\Account\Classes\AccountTable.cs" />
-    <Compile Include="Security\Account\Classes\UserAccountAccessTable.cs" />
-    <Compile Include="Security\Account\Interfaces\IAccountTable.cs" />
-    <Compile Include="Security\Account\Interfaces\IUserAccountAccessTable.cs" />
     <Compile Include="Security\Membership\Classes\RoleTable.cs" />
     <Compile Include="Security\Membership\Classes\SecurityQuestionTable.cs" />
     <Compile Include="Security\Membership\Classes\UserTables.cs" />

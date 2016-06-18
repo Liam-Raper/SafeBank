@@ -35,8 +35,8 @@ namespace Data.Security.Membership.Classes
 
         public int AddSingle(Role set)
         {
-            var user = _table.Add(set);
-            return user.Id;
+            var role = _table.Add(set);
+            return role.Id;
         }
 
         public IEnumerable<int> AddMany(IEnumerable<Role> set)
