@@ -13,7 +13,10 @@
             <span>Code: @Organisation.Code</span>
             <br/>
             <span>@Html.ActionLink("Edit", "EditOrganisation", new { organisationId = Organisation.Id })</span>
-            <span>@Html.ActionLink("Delete", "DeleteOrganisation", new { organisationId = Organisation.Id })</span>
+            @if (Organisation.CanDelete)
+            {
+                <span>@Html.ActionLink("Delete", "DeleteOrganisation", new {organisationId = Organisation.Id})</span>
+            }
             <span>@Html.ActionLink("Branches", "OrganisationBranchesList", new {organisationId = Organisation.Id})</span>
         </div>
         <br/>

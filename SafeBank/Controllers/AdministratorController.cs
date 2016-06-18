@@ -24,7 +24,7 @@ namespace SafeBank.Controllers
             var model = new AdministratorDashboardDetails
             {
                 OrganisationsDetailses = _organisationService.GetOrganisations()
-                    .Select(x => new OrganisationDetails {Id = x.Id, Name = x.Name, Code = x.Code})
+                    .Select(x => new OrganisationDetails {Id = x.Id, Name = x.Name, Code = x.Code, CanDelete = x.BranchCount == 0})
                     .ToArray()
             };
             return View(model);
@@ -109,6 +109,32 @@ namespace SafeBank.Controllers
                 Code = model.Code ?? 0
             });
             return RedirectToAction("OrganisationBranchesList",new { organisationId = model.OrganisationId });
+        }
+
+        public ActionResult EditBranch(int branchId, int organisationId)
+        {
+            if (!_branchService.BranchIdExists(branchId)) return RedirectToAction("OrganisationBranchesList",new { organisationId });
+            var model = new EditBranchDetails();
+            var branch = _branchService.GetBranch(branchId);
+            model.Id = branch.Id;
+            model.Name = branch.Name;
+            model.Code = branch.Code;
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult EditBranch(EditBranchDetails model)
+        {
+            if (!ModelState.IsValid || !_branchService.BranchIdExists(model.Id)) return View(model);
+            _branchService.UpdateBranch(new BranchBO { Id = model.Id, Code = model.Code ?? 0, Name = model.Name });
+            return RedirectToAction("OrganisationBranchesList",
+                new {organisationId = _branchService.GetOrganisationId(model.Id)});
+        }
+
+        public ActionResult DeleteBranch(int branchId, int organisationId)
+        {
+            _branchService.DeleteBranch(branchId);
+            return RedirectToAction("OrganisationBranchesList", new {organisationId});
         }
 
         public ActionResult BankesList(int branchId)

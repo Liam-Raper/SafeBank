@@ -159,6 +159,26 @@ div form div ul li:last-child {
     border: none;
     list-style-position: inside;
 }
+div a {
+    padding: 0;
+    margin: 0;
+    color: #ffffff;
+    background: none;
+    border-top: #ffffff solid 0.05vh;
+    border-bottom: #ffffff solid 0.05vh;
+    border-left: #ffffff solid 0.05vw;
+    border-right: #ffffff solid 0.05vw;
+    width: 12.5vw;
+    margin-left: 45.75vw;
+    font-size: 2vh;
+    text-decoration: none;
+}
+div a:hover {
+    border: #3e5667 solid thin;
+    color: #3e5667;
+    background-color: #ffffff;
+    border: 0;
+}
 div .CustomListCenter {
     width: 25vw;
     margin-left: auto;
@@ -179,7 +199,6 @@ div .CustomListCenter a {
     border-left: #ffffff solid 0.05vw;
     border-right: #ffffff solid 0.05vw;
     width: 12.5vw;
-    margin-left: 10.5vw;
     font-size: 2vh;
     text-decoration: none;
 }

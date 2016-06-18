@@ -30,6 +30,13 @@ namespace Business.Classes
                     }).ToArray();
         }
 
+        public int GetNumberOfBranches(int organisationId)
+        {
+            return _unitOfWork.OrganisationTable.GetAll()
+                .Single(x => x.Id == organisationId)
+                .BrancheDetails.Count;
+        }
+
         public bool BranchExist(int organisationId, string name)
         {
             return _unitOfWork.BranchTable.GetAll().Any(x => x.Name == name && x.OrganisationDetailsId == organisationId);
@@ -53,6 +60,39 @@ namespace Business.Classes
                 Name = branch.Name,
                 OrganisationDetailsId = organisationId
             });
+            _unitOfWork.Commit();
+        }
+
+        public void UpdateBranch(BranchBO branch)
+        {
+            var branchDetails = new BrancheDetail
+            {
+                Name = branch.Name,
+                Code = branch.Code
+            };
+            _unitOfWork.BranchTable.UpdateSingle(branch.Id, branchDetails);
+            _unitOfWork.Commit();
+        }
+
+        public BranchBO GetBranch(int id)
+        {
+            var branch = _unitOfWork.BranchTable.GetSingle(id);
+            return new BranchBO
+            {
+                Id = branch.Id,
+                Code = branch.Code,
+                Name = branch.Name
+            };
+        }
+
+        public int GetOrganisationId(int branchId)
+        {
+            return _unitOfWork.BranchTable.GetSingle(branchId).OrganisationDetailsId;
+        }
+
+        public void DeleteBranch(int id)
+        {
+            _unitOfWork.BranchTable.DeleteSingle(id);
             _unitOfWork.Commit();
         }
     }

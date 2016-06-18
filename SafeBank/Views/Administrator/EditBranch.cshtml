@@ -1,0 +1,17 @@
+﻿@model SafeBank.Models.EditBranchDetails
+<h1>Dashboard</h1>
+<h2>Edit Branch</h2>
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(x => x.Id)
+    @Html.LabelFor(x => x.Name)
+    @Html.TextBoxFor(x => x.Name)
+    @Html.LabelFor(x => x.Code)
+    @Html.TextBoxFor(x => x.Code)
+    <br />
+    <br />
+    <input type="submit" value="Update now" />
+    <br />
+    <br />
+    @Html.ValidationSummary()
+}

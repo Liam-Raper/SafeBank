@@ -20,7 +20,7 @@ namespace Business.Classes
         public IEnumerable<OrganisationBO> GetOrganisations()
         {
             return _unitOfWork.OrganisationTable.GetAll()
-                .Select(x => new OrganisationBO {Id = x.Id, Code = x.Code, Name = x.Name})
+                .Select(x => new OrganisationBO {Id = x.Id, Code = x.Code, Name = x.Name, BranchCount = x.BrancheDetails.Count})
                 .ToArray();
         }
 
