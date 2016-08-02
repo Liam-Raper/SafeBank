@@ -11,6 +11,7 @@ namespace Data.Standard.Interfaces
         IRoleTable<int, Role> Role { get; }
         IOrganisationTable<int, OrganisationDetail> OrganisationTable { get; }
         IBranchTable<int, BrancheDetail> BranchTable { get; }
+        IBankTable<int, BankDetail> BankTable { get; }
         void Commit();
     }
 }

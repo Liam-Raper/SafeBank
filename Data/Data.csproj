@@ -51,8 +51,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Accounts\Bank\Classes\BankTable.cs" />
     <Compile Include="Accounts\Bank\Classes\BranchTable.cs" />
     <Compile Include="Accounts\Bank\Classes\OrganisationTable.cs" />
+    <Compile Include="Accounts\Bank\Interfaces\IBankTable.cs" />
     <Compile Include="Accounts\Bank\Interfaces\IBranchTable.cs" />
     <Compile Include="Accounts\Bank\Interfaces\IOrganisationTable.cs" />
     <Compile Include="DatabaseModel\AccessLevel.cs">

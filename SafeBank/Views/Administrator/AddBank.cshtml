@@ -1,0 +1,17 @@
+﻿@model SafeBank.Models.AddBankDetails
+<h1>Dashboard</h1>
+<h2>Add Bank</h2>
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(x => x.BranchId)
+    @Html.LabelFor(x => x.Name)
+    @Html.TextBoxFor(x => x.Name)
+    @Html.LabelFor(x => x.Code)
+    @Html.TextBoxFor(x => x.Code)
+    <br />
+    <br />
+    <input type="submit" value="Add new" />
+    <br />
+    <br />
+    @Html.ValidationSummary()
+}

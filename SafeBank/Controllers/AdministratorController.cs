@@ -12,11 +12,13 @@ namespace SafeBank.Controllers
 
         private IOrganisationService _organisationService;
         private IBranchService _branchService;
+        private IBankService _bankService;
 
-        public AdministratorController(IOrganisationService organisationService, IBranchService branchService)
+        public AdministratorController(IOrganisationService organisationService, IBranchService branchService, IBankService bankService)
         {
             _organisationService = organisationService;
             _branchService = branchService;
+            _bankService = bankService;
         }
 
         public ActionResult Dashboard()
@@ -139,8 +141,39 @@ namespace SafeBank.Controllers
 
         public ActionResult BankesList(int branchId)
         {
-            return View();
+            var model = new BankesDetails
+            {
+                BranchId = branchId,
+                OrganisationId = _branchService.GetOrganisationId(branchId),
+                BankDetailses =
+                    _bankService.GetAllBanksUnderABranch(branchId).Select(x => new BankDetails
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        Code = x.Code
+                    })
+            };
+            return View(model);
         }
 
+        public ActionResult AddBank(int branchId)
+        {
+            var model = new AddBankDetails { BranchId = branchId };
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AddBank(AddBankDetails model)
+        {
+            if (!ModelState.IsValid || _bankService.BankExist(model.BranchId, model.Name) ||
+                _bankService.BankCodeExist(model.BranchId, model.Code ?? 0)) return View(model);
+            _bankService.AddBank(model.BranchId, new BankBO
+            {
+                Name = model.Name,
+                Code = model.Code ?? 0
+            });
+            return RedirectToAction("BankesList", new { branchId = model.BranchId });
+        }
+        
     }
 }

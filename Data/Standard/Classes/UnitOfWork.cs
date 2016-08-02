@@ -1,4 +1,5 @@
-﻿using Data.Accounts.Bank.Classes;
+﻿using System;
+using Data.Accounts.Bank.Classes;
 using Data.Accounts.Bank.Interfaces;
 using Data.DatabaseModel;
 using Data.Security.Membership.Classes;
@@ -20,6 +21,7 @@ namespace Data.Standard.Classes
             Role = new RoleTable(_database.Roles);
             OrganisationTable = new OrganisationTable(_database.OrganisationDetails);
             BranchTable = new BranchTable(_database.BrancheDetails);
+            BankTable = new BankTable(_database.BankDetails);
         }
 
         public IUserTables<int, User> User { get; }
@@ -27,6 +29,7 @@ namespace Data.Standard.Classes
         public IRoleTable<int, Role> Role { get; }
         public IOrganisationTable<int, OrganisationDetail> OrganisationTable { get; }
         public IBranchTable<int, BrancheDetail> BranchTable { get; }
+        public IBankTable<int, BankDetail> BankTable { get; }
 
         public void Commit()
         {

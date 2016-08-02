@@ -21,7 +21,9 @@ namespace SafeBank
             routes.MapRoute("Customer_Accounts",      "accounts",                     new { controller = "Customer",       action = "Accounts" });
             routes.MapRoute("Banker_Accounts",        "customermanager",              new { controller = "Banker",         action = "CustomerManager" });
             routes.MapRoute("Bank_Manager_Accounts",  "employeemanager",              new { controller = "BankManager",    action = "EmployeeManager" });
-            routes.MapRoute("Administrator_Accounts", "Dashboard",                    new { controller = "Administrator",  action = "Dashboard" });
+            routes.MapRoute("Administrator_Accounts", "Admin/Dashboard",                    new { controller = "Administrator",  action = "Dashboard" });
+            routes.MapRoute("Administrator_Branches", "Admin/Branches",                     new { controller = "Administrator",  action = "OrganisationBranchesList" });
+            routes.MapRoute("Administrator_Banks",    "Admin/Banks",                        new { controller = "Administrator",  action = "BankesList" });
             routes.MapRoute("Default",                "{controller}/{action}/{id}",   new { controller = "Home",           action = "Index", id = UrlParameter.Optional });
         }
     }
