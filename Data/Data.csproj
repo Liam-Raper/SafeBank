@@ -51,12 +51,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Accounts\Bank\Classes\BankTable.cs" />
-    <Compile Include="Accounts\Bank\Classes\BranchTable.cs" />
-    <Compile Include="Accounts\Bank\Classes\OrganisationTable.cs" />
-    <Compile Include="Accounts\Bank\Interfaces\IBankTable.cs" />
-    <Compile Include="Accounts\Bank\Interfaces\IBranchTable.cs" />
-    <Compile Include="Accounts\Bank\Interfaces\IOrganisationTable.cs" />
+    <Compile Include="Bank\Classes\BankTable.cs" />
+    <Compile Include="Bank\Classes\BranchTable.cs" />
+    <Compile Include="Bank\Classes\OrganisationTable.cs" />
+    <Compile Include="Bank\Interfaces\IBankTable.cs" />
+    <Compile Include="Bank\Interfaces\IBranchTable.cs" />
+    <Compile Include="Bank\Interfaces\IOrganisationTable.cs" />
     <Compile Include="DatabaseModel\AccessLevel.cs">
       <DependentUpon>SafeBankDatabase.tt</DependentUpon>
     </Compile>
@@ -176,7 +176,10 @@
       <LastGenOutput>SafeBankDatabase.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Employees\Classes\" />
+    <Folder Include="Employees\Interfaces\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

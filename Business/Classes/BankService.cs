@@ -59,7 +59,8 @@ namespace Business.Classes
                     {
                         Id = bankDetail.Id,
                         Name = bankDetail.Name,
-                        Code = bankDetail.Code
+                        Code = bankDetail.Code,
+                        EmployeeCount = bankDetail.EmployeeLocations.Count
                     }).ToArray();
         }
 

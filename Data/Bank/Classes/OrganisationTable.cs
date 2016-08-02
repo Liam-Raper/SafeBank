@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using Data.Accounts.Bank.Interfaces;
+using Data.Bank.Interfaces;
 using Data.DatabaseModel;
 
-namespace Data.Accounts.Bank.Classes
+namespace Data.Bank.Classes
 {
     public class OrganisationTable : IOrganisationTable<int,OrganisationDetail>
     {

@@ -151,7 +151,8 @@ namespace SafeBank.Controllers
                     {
                         Id = x.Id,
                         Name = x.Name,
-                        Code = x.Code
+                        Code = x.Code,
+                        
                     })
             };
             return View(model);
@@ -200,5 +201,8 @@ namespace SafeBank.Controllers
             _bankService.DeleteBank(bankId);
             return RedirectToAction("BankesList", new { branchId = branchId });
         }
+
+
+
     }
 }

@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using Data.Accounts.Bank.Interfaces;
+using Data.Bank.Interfaces;
 
-namespace Data.Accounts.Bank.Classes
+namespace Data.Bank.Classes
 {
     class BankTable : IBankTable<int, BankDetail>
     {
