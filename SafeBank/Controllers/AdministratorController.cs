@@ -88,7 +88,8 @@ namespace SafeBank.Controllers
                     {
                         Id = x.Id,
                         Name = x.Name,
-                        Code = x.Code
+                        Code = x.Code,
+                        CanDelete = x.BankCount == 0
                     })
             };
             return View(model);
@@ -175,5 +176,29 @@ namespace SafeBank.Controllers
             return RedirectToAction("BankesList", new { branchId = model.BranchId });
         }
         
+        public ActionResult EditBank(int branchId, int bankId)
+        {
+            if (!_bankService.BankIdExists(bankId)) return RedirectToAction("BankesList", new { branchId });
+            var model = new EditBankDetails();
+            var bank = _bankService.GetBank(bankId);
+            model.Id = bank.Id;
+            model.Name = bank.Name;
+            model.Code = bank.Code;
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult EditBank(EditBankDetails model)
+        {
+            if (!ModelState.IsValid || !_bankService.BankIdExists(model.Id)) return View(model);
+            _bankService.UpdateBranch(new BankBO { Id = model.Id, Code = model.Code ?? 0, Name = model.Name });
+            return RedirectToAction("BankesList", new { branchId = _bankService.GetBranchId(model.Id) });
+        }
+
+        public ActionResult DeleteBank(int bankId, int branchId)
+        {
+            _bankService.DeleteBank(bankId);
+            return RedirectToAction("BankesList", new { branchId = branchId });
+        }
     }
 }

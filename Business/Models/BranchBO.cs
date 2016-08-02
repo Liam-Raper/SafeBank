@@ -5,5 +5,6 @@
         public int Id;
         public string Name;
         public int Code;
+        public int BankCount;
     }
 }

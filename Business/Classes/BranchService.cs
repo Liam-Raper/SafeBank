@@ -26,7 +26,8 @@ namespace Business.Classes
                     {
                         Id = brancheDetail.Id,
                         Name = brancheDetail.Name,
-                        Code = brancheDetail.Code
+                        Code = brancheDetail.Code,
+                        BankCount = brancheDetail.BankDetails.Count
                     }).ToArray();
         }
 

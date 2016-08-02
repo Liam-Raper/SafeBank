@@ -16,7 +16,10 @@
             <span>Code: @branch.Code</span>
             <br/>
             <span>@Html.ActionLink("Edit", "EditBranch", new { branchId = branch.Id, organisationId = Model.OrganisationId })</span>
-            <span>@Html.ActionLink("Delete", "DeleteBranch", new { branchId = branch.Id, organisationId = Model.OrganisationId})</span>
+            @if (branch.CanDelete)
+            {
+                <span>@Html.ActionLink("Delete", "DeleteBranch", new { branchId = branch.Id, organisationId = Model.OrganisationId })</span>
+            }
             <span>@Html.ActionLink("Banks", "BankesList", new { branchId = branch.Id})</span>
         </div>
     }

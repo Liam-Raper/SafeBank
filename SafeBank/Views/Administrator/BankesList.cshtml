@@ -15,13 +15,13 @@
             <br />
             <span>Code: @bank.Code</span>
             <br />
-            <span>@Html.ActionLink("Edit", "EditOrganisation", new { bankId = bank.Id })</span>
-            <span>@Html.ActionLink("Delete", "DeleteOrganisation", new { bankId = bank.Id })</span>
-            <span>@Html.ActionLink("Employees", "OrganisationBranchesList", new { bankId = bank.Id })</span>
+            <span>@Html.ActionLink("Edit", "EditBank", new { branchId = Model.BranchId, bankId = bank.Id })</span>
+            <span>@Html.ActionLink("Delete", "DeleteBank", new { bankId = bank.Id, branchId = Model.BranchId })</span>
+            <span>@Html.ActionLink("Employees", "Employees", new { bankId = bank.Id })</span>
         </div>
     }
     @if (Model.BankDetailses.Count() >= 8)
     {
-        Html.ActionLink("Add new", "AddBank", new { branchId = Model.BranchId })
+        @Html.ActionLink("Add new", "AddBank", new { branchId = Model.BranchId })
     }
 </div>
