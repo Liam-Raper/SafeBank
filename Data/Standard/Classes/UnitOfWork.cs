@@ -1,7 +1,8 @@
-﻿using System;
-using Data.Accounts.Bank.Classes;
-using Data.Accounts.Bank.Interfaces;
+﻿using Data.Bank.Classes;
+using Data.Bank.Interfaces;
 using Data.DatabaseModel;
+using Data.Employees.Classes;
+using Data.Employees.Interfaces;
 using Data.Security.Membership.Classes;
 using Data.Security.Membership.Interfaces;
 using Data.Standard.Interfaces;
@@ -22,6 +23,7 @@ namespace Data.Standard.Classes
             OrganisationTable = new OrganisationTable(_database.OrganisationDetails);
             BranchTable = new BranchTable(_database.BrancheDetails);
             BankTable = new BankTable(_database.BankDetails);
+            EmployeeTable = new EmployeeTable(_database.Employees);
         }
 
         public IUserTables<int, User> User { get; }
@@ -30,7 +32,7 @@ namespace Data.Standard.Classes
         public IOrganisationTable<int, OrganisationDetail> OrganisationTable { get; }
         public IBranchTable<int, BrancheDetail> BranchTable { get; }
         public IBankTable<int, BankDetail> BankTable { get; }
-
+        public IEmployeeTable<int, Employee> EmployeeTable { get; }
         public void Commit()
         {
             _database.SaveChanges();

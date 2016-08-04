@@ -1,5 +1,6 @@
-﻿using Data.Accounts.Bank.Interfaces;
+﻿using Data.Bank.Interfaces;
 using Data.DatabaseModel;
+using Data.Employees.Interfaces;
 using Data.Security.Membership.Interfaces;
 
 namespace Data.Standard.Interfaces
@@ -12,6 +13,7 @@ namespace Data.Standard.Interfaces
         IOrganisationTable<int, OrganisationDetail> OrganisationTable { get; }
         IBranchTable<int, BrancheDetail> BranchTable { get; }
         IBankTable<int, BankDetail> BankTable { get; }
+        IEmployeeTable<int, Employee> EmployeeTable { get; }
         void Commit();
     }
 }
