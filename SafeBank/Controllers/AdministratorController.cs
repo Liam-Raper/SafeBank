@@ -202,7 +202,10 @@ namespace SafeBank.Controllers
             return RedirectToAction("BankesList", new { branchId = branchId });
         }
 
-
+        public ActionResult BankEmployeeList(int bankId)
+        {
+            return View();
+        }
 
     }
 }
