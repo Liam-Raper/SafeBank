@@ -105,6 +105,7 @@ namespace Data.Employees.Classes
                 record.EmployeeDetail.Given_name = set.EmployeeDetail.Given_name;
                 record.EmployeeDetail.Phone = set.EmployeeDetail.Phone;
                 record.EmployeeDetail.Email = set.EmployeeDetail.Email;
+                record.EmployeeDetail.Code = set.EmployeeDetail.Code;
                 record.User.UserActivity.IsApproved = set.User.UserActivity.IsApproved;
                 record.User.UserActivity.IsLockedOut = set.User.UserActivity.IsLockedOut;
                 record.User.UserDetail.Email = set.User.UserDetail.Email;

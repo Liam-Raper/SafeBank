@@ -150,17 +150,21 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HtmlHelpers\SelectionListBox.cs" />
+    <Compile Include="Models\AddEmployeeDetails.cs" />
     <Compile Include="Models\AddBankDetails.cs" />
     <Compile Include="Models\AddBranchDetails.cs" />
     <Compile Include="Models\AddOrganisationDetails.cs" />
     <Compile Include="Models\AdministratorDashboardDetails.cs" />
     <Compile Include="Models\BankDetails.cs" />
-    <Compile Include="Models\BankesDetails.cs" />
+    <Compile Include="Models\BanksDetails.cs" />
     <Compile Include="Models\BranchDetails.cs" />
     <Compile Include="Models\BranchesDetails.cs" />
+    <Compile Include="Models\EditEmployeeDetails.cs" />
     <Compile Include="Models\EditBankDetails.cs" />
     <Compile Include="Models\EditBranchDetails.cs" />
     <Compile Include="Models\EditOrganisationDetails.cs" />
+    <Compile Include="Models\EmployeeDetails.cs" />
+    <Compile Include="Models\EmployeesDetails.cs" />
     <Compile Include="Models\OrganisationDetails.cs" />
     <Compile Include="Models\UserJoinDetails.cs" />
     <Compile Include="Models\UserLoginDetails.cs" />
@@ -239,7 +243,7 @@
     <Content Include="Views\Administrator\AddBranch.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Administrator\BankesList.cshtml" />
+    <Content Include="Views\Administrator\BanksList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Administrator\EditBranch.cshtml" />
@@ -252,6 +256,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Administrator\BankEmployeeList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Administrator\AddEmployee.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Administrator\EditEmployee.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

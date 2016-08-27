@@ -1,27 +1,30 @@
-﻿@model SafeBank.Models.BankesDetails
+﻿@model SafeBank.Models.EmployeesDetails
 <h1>Dashboard</h1>
 <h2>Employees</h2>
 <div class="CustomListCenter">
-    @Html.ActionLink("Branches", "OrganisationBranchesList", new { organisationId = Model.OrganisationId })
+    @Html.ActionLink("Banks", "BanksList", new { branchId = Model.BranchId })
     <br />
     <br />
-    @Html.ActionLink("Add new", "AddBank", new { branchId = Model.BranchId })
+    @Html.ActionLink("Add new", "AddEmployee", new { BankId = Model.BankId })
     <br />
     <br />
-    @foreach (var bank in Model.BankDetailses)
+    @foreach (var employee in Model.EmployeeDetailses)
     {
         <div>
-            <span>Name: @bank.Name</span>
+            <span>Code: @employee.Code</span>
             <br />
-            <span>Code: @bank.Code</span>
-            <br />
-            <span>@Html.ActionLink("Edit", "EditBank", new { branchId = Model.BranchId, bankId = bank.Id })</span>
-            <span>@Html.ActionLink("Delete", "DeleteBank", new { bankId = bank.Id, branchId = Model.BranchId })</span>
-            <span>@Html.ActionLink("Employees", "BankEmployeeList", new { bankId = bank.Id })</span>
+            <span>Name: @employee.FullName</span>
+            <br/>
+            <span>Phone: @employee.Phone</span>
+            <br/>
+            <span>Email: @employee.Email</span>
+            <br/>
+            <span>@Html.ActionLink("Edit", "EditEmployee", new {bankId = Model.BankId, employeeCode = employee.Code})</span>
+            <span>@Html.ActionLink("Delete", "DeleteEmployee", new {bankId = Model.BankId, employeeId = employee.Id})</span>
         </div>
     }
-    @if (Model.BankDetailses.Count() >= 8)
+    @if (Model.EmployeeDetailses.Count() >= 8)
     {
-        @Html.ActionLink("Add new", "AddBank", new { branchId = Model.BranchId })
+        @Html.ActionLink("Add new", "AddEmployee", new { BankId = Model.BankId })
     }
 </div>

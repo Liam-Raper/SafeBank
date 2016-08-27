@@ -2,7 +2,7 @@
 
 namespace SafeBank.Models
 {
-    public class BankesDetails
+    public class BanksDetails
     {
         public int BranchId { get; set; }
         public int OrganisationId { get; set; }

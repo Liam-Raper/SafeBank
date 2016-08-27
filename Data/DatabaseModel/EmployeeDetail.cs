@@ -25,6 +25,7 @@ namespace Data.DatabaseModel
         public string Family_name { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
+        public int Code { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employees { get; set; }

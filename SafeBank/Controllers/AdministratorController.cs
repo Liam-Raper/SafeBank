@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.Security;
 using Business.Interfaces;
 using Business.Models;
 using SafeBank.Models;
+using Security.Providers;
+using Membership = System.Web.Security.Membership;
 
 namespace SafeBank.Controllers
 {
@@ -13,12 +16,14 @@ namespace SafeBank.Controllers
         private IOrganisationService _organisationService;
         private IBranchService _branchService;
         private IBankService _bankService;
+        private IEmployeeService _employeeService;
 
-        public AdministratorController(IOrganisationService organisationService, IBranchService branchService, IBankService bankService)
+        public AdministratorController(IOrganisationService organisationService, IBranchService branchService, IBankService bankService, IEmployeeService employeeService)
         {
             _organisationService = organisationService;
             _branchService = branchService;
             _bankService = bankService;
+            _employeeService = employeeService;
         }
 
         public ActionResult Dashboard()
@@ -140,9 +145,9 @@ namespace SafeBank.Controllers
             return RedirectToAction("OrganisationBranchesList", new {organisationId});
         }
 
-        public ActionResult BankesList(int branchId)
+        public ActionResult BanksList(int branchId)
         {
-            var model = new BankesDetails
+            var model = new BanksDetails
             {
                 BranchId = branchId,
                 OrganisationId = _branchService.GetOrganisationId(branchId),
@@ -152,7 +157,7 @@ namespace SafeBank.Controllers
                         Id = x.Id,
                         Name = x.Name,
                         Code = x.Code,
-                        
+                        CanDelete = x.EmployeeCount == 0
                     })
             };
             return View(model);
@@ -174,12 +179,12 @@ namespace SafeBank.Controllers
                 Name = model.Name,
                 Code = model.Code ?? 0
             });
-            return RedirectToAction("BankesList", new { branchId = model.BranchId });
+            return RedirectToAction("BanksList", new { branchId = model.BranchId });
         }
         
         public ActionResult EditBank(int branchId, int bankId)
         {
-            if (!_bankService.BankIdExists(bankId)) return RedirectToAction("BankesList", new { branchId });
+            if (!_bankService.BankIdExists(bankId)) return RedirectToAction("BanksList", new { branchId });
             var model = new EditBankDetails();
             var bank = _bankService.GetBank(bankId);
             model.Id = bank.Id;
@@ -192,19 +197,95 @@ namespace SafeBank.Controllers
         public ActionResult EditBank(EditBankDetails model)
         {
             if (!ModelState.IsValid || !_bankService.BankIdExists(model.Id)) return View(model);
-            _bankService.UpdateBranch(new BankBO { Id = model.Id, Code = model.Code ?? 0, Name = model.Name });
-            return RedirectToAction("BankesList", new { branchId = _bankService.GetBranchId(model.Id) });
+            _bankService.UpdateBank(new BankBO { Id = model.Id, Code = model.Code ?? 0, Name = model.Name });
+            return RedirectToAction("BanksList", new { branchId = _bankService.GetBranchId(model.Id) });
         }
 
         public ActionResult DeleteBank(int bankId, int branchId)
         {
             _bankService.DeleteBank(bankId);
-            return RedirectToAction("BankesList", new { branchId = branchId });
+            return RedirectToAction("BanksList", new { branchId = branchId });
         }
 
         public ActionResult BankEmployeeList(int bankId)
         {
-            return View();
+            var model = new EmployeesDetails
+            {
+                BankId = bankId,
+                BranchId = _bankService.GetBranchId(bankId),
+                EmployeeDetailses = _employeeService.GetAllEmployeesAtABank(bankId).Select(x => new EmployeeDetails
+                {
+                    FamilyName = x.FamilyName,
+                    GivenName = x.GivenName,
+                    Email = x.Email,
+                    Phone = x.Phone,
+                    Code = x.Code,
+                    Id = x.Id
+                })
+            };
+            return View(model);
+        }
+
+        public ActionResult AddEmployee(int bankId)
+        {
+            var model = new AddEmployeeDetails {BankId = bankId};
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AddEmployee(AddEmployeeDetails model)
+        {
+            if (!ModelState.IsValid || _employeeService.EmployeeExist(model.BankId, model.EmployeeCode ?? 0))
+            {
+                return View(model);
+            }
+            MembershipCreateStatus status;
+            Membership.CreateUser(model.Username, model.Password, model.Email, model.Question, model.Answer, true, out status);
+            if (!ModelState.IsValid || status != MembershipCreateStatus.Success)
+            {
+                return View(model);
+            }
+            _employeeService.AddEmployee(model.BankId,new EmployeeBO
+            {
+                Code = model.EmployeeCode ?? 0,
+                GivenName = model.GivenName,
+                FamilyName = model.FamilyName,
+                Phone = model.Phone,
+                Email = model.Email,
+                Username = model.Username
+            });
+            return RedirectToAction("BankEmployeeList", new { bankId = model.BankId });
+        }
+
+        public ActionResult EditEmployee(int bankId, int employeeCode)
+        {
+            if(!_employeeService.EmployeeExist(bankId, employeeCode)) return RedirectToAction("BankEmployeeList", new { bankId });
+            var model = new EditEmployeeDetails();
+            var employeeId = _employeeService.GetEmployeeId(bankId, employeeCode);
+            var employee = _employeeService.GetEmployee(employeeId);
+            model.Id = employee.Id;
+            model.GivenName = employee.GivenName;
+            model.FamilyName = employee.FamilyName;
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult EditEmployee(EditEmployeeDetails model)
+        {
+            if (!ModelState.IsValid || !_employeeService.EmployeeExist(model.Id)) return View(model);
+            _employeeService.UpdateEmployee(new EmployeeBO
+            {
+                Id = model.Id,
+                FamilyName = model.FamilyName,
+                GivenName = model.GivenName
+            });
+            return RedirectToAction("BankEmployeeList", new { bankId = _employeeService.GetBankId(model.Id) });
+        }
+
+        public ActionResult DeleteEmployee(int bankId, int employeeId)
+        {
+            _employeeService.DeleteEmployee(employeeId);
+            return RedirectToAction("BankEmployeeList", new {bankId = bankId});
         }
 
     }

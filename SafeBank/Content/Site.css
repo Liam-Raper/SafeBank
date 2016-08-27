@@ -146,6 +146,8 @@ div form hr {
 }
 div form div {
     border: #ffffff solid 0.05vh;
+    max-height: 100px;
+    overflow: auto;
 }
 div form div ul {
     padding: 0;
@@ -248,4 +250,5 @@ footer {
     padding: 0;
     text-align: center;
     font-size: 3.5vh;
+    background-color: #3e5667;
 }

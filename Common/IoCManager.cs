@@ -53,6 +53,7 @@ namespace Common
                     registry.For<IOrganisationService>().Use<OrganisationService>();
                     registry.For<IBranchService>().Use<BranchService>();
                     registry.For<IBankService>().Use<BankService>();
+                    registry.For<IEmployeeService>().Use<EmployeeService>();
                 }
             );
             DependencyResolver.SetResolver(new IoCDependencyResolver(container));

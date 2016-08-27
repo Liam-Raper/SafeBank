@@ -117,6 +117,7 @@
           <Property Name="Family name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Phone" Type="nvarchar" MaxLength="14" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="254" Nullable="false" />
+          <Property Name="Code" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="EmployeeLocations">
           <Key>
@@ -1013,6 +1014,7 @@
           <NavigationProperty Name="Employees" Relationship="SafeBankDB.FK_Employee_EmployeeDetails" FromRole="EmployeeDetail" ToRole="Employee" />
           <Property Name="Phone" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_Employee_EmployeeDetails">
           <End Type="SafeBankDB.EmployeeDetail" Role="EmployeeDetail" Multiplicity="1" />
@@ -1304,6 +1306,7 @@
           <EntitySetMapping Name="EmployeeDetails">
             <EntityTypeMapping TypeName="SafeBankDB.EmployeeDetail">
               <MappingFragment StoreEntitySet="EmployeeDetails">
+                <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Family_name" ColumnName="Family name" />

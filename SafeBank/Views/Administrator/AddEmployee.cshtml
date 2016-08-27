@@ -1,0 +1,34 @@
+﻿@using SafeBank.HtmlHelpers
+@model SafeBank.Models.AddEmployeeDetails
+<h1>Dashboard</h1>
+<h2>Add Employee</h2>
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(x => x.BankId)
+    @Html.LabelFor(x => x.EmployeeCode)
+    @Html.TextBoxFor(x => x.EmployeeCode)
+    @Html.LabelFor(x => x.GivenName)
+    @Html.TextBoxFor(x => x.GivenName)
+    @Html.LabelFor(x => x.FamilyName)
+    @Html.TextBoxFor(x => x.FamilyName)
+    @Html.LabelFor(x => x.Phone)
+    @Html.TextBoxFor(x => x.Phone)
+    @Html.LabelFor(x => x.Username)
+    @Html.TextBoxFor(x => x.Username)
+    @Html.LabelFor(x => x.Password)
+    @Html.PasswordFor(x => x.Password)
+    @Html.LabelFor(x => x.ConfermePassword)
+    @Html.PasswordFor(x => x.ConfermePassword)
+    @Html.LabelFor(x => x.Email)
+    @Html.TextBoxFor(x => x.Email)
+    @Html.LabelFor(x => x.Question)
+    @Html.SelectionListBoxFor(x => x.Question, Model.QuestionsList)
+    @Html.LabelFor(x => x.Answer)
+    @Html.TextBoxFor(x => x.Answer)
+    <br />
+    <br />
+    <input type="submit" value="Add new" />
+    <br />
+    <br />
+    @Html.ValidationSummary()
+}

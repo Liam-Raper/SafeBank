@@ -20,7 +20,7 @@
             {
                 <span>@Html.ActionLink("Delete", "DeleteBranch", new { branchId = branch.Id, organisationId = Model.OrganisationId })</span>
             }
-            <span>@Html.ActionLink("Banks", "BankesList", new { branchId = branch.Id})</span>
+            <span>@Html.ActionLink("Banks", "BanksList", new { branchId = branch.Id})</span>
         </div>
     }
     @if (Model.BranchDetailses.Count() >= 8)

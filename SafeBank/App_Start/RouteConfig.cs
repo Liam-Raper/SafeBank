@@ -29,10 +29,14 @@ namespace SafeBank
             routes.MapRoute("Administrator_Branches_Add",           "Admin/Branches/Add",           new { controller = "Administrator",  action = "AddBranch" });
             routes.MapRoute("Administrator_Branches_Edit",          "Admin/Branches/Edit",          new { controller = "Administrator",  action = "EditBranch" });
             routes.MapRoute("Administrator_Branches_Delete",        "Admin/Branches/Delete",        new { controller = "Administrator",  action = "DeleteBranch" });
-            routes.MapRoute("Administrator_Banks",                  "Admin/Banks",                  new { controller = "Administrator",  action = "BankesList" });
+            routes.MapRoute("Administrator_Banks",                  "Admin/Banks",                  new { controller = "Administrator",  action = "BanksList" });
             routes.MapRoute("Administrator_Banks_Add",              "Admin/Banks/Add",              new { controller = "Administrator",  action = "AddBank" });
             routes.MapRoute("Administrator_Banks_Edit",             "Admin/Banks/Edit",             new { controller = "Administrator",  action = "EditBank" });
             routes.MapRoute("Administrator_Banks_Delete",           "Admin/Banks/Delete",           new { controller = "Administrator",  action = "DeleteBank" });
+            routes.MapRoute("Administrator_Employees",              "Admin/Employees",              new { controller = "Administrator",  action = "BankEmployeeList" });
+            routes.MapRoute("Administrator_Employees_Add",          "Admin/Employees/Add",          new { controller = "Administrator",  action = "AddEmployee" });
+            routes.MapRoute("Administrator_Employees_Edit",         "Admin/Employees/Edit",         new { controller = "Administrator",  action = "EditEmployee" });
+            routes.MapRoute("Administrator_Employees_Delete",       "Admin/Employees/Delete",       new { controller = "Administrator",  action = "DeleteEmployee" });
             routes.MapRoute("Default",                              "{controller}/{action}/{id}",   new { controller = "Home",           action = "Index", id = UrlParameter.Optional });
         }
     }

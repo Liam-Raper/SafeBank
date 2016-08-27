@@ -14,6 +14,7 @@ namespace Data.Standard.Interfaces
         IBranchTable<int, BrancheDetail> BranchTable { get; }
         IBankTable<int, BankDetail> BankTable { get; }
         IEmployeeTable<int, Employee> EmployeeTable { get; }
+        IEmployeeLocationTable<int, EmployeeLocation> EmployeeLocationTable { get; }
         void Commit();
     }
 }

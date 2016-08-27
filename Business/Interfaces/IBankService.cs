@@ -5,13 +5,13 @@ namespace Business.Interfaces
 {
     public interface IBankService
     {
-        IEnumerable<BankBO> GetAllBanksUnderABranch(int BranchId);
-        bool BankExist(int BranchId, string name);
-        bool BankCodeExist(int BranchId, int code);
+        IEnumerable<BankBO> GetAllBanksUnderABranch(int branchId);
+        bool BankExist(int branchId, string name);
+        bool BankCodeExist(int branchId, int code);
         bool BankIdExists(int id);
-        void AddBank(int BranchId, BankBO bank);
+        void AddBank(int branchId, BankBO bank);
         BankBO GetBank(int id);
-        void UpdateBranch(BankBO bank);
+        void UpdateBank(BankBO bank);
         int GetBranchId(int bankId);
         void DeleteBank(int id);
     }

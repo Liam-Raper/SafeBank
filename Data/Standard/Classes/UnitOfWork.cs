@@ -24,6 +24,7 @@ namespace Data.Standard.Classes
             BranchTable = new BranchTable(_database.BrancheDetails);
             BankTable = new BankTable(_database.BankDetails);
             EmployeeTable = new EmployeeTable(_database.Employees);
+            EmployeeLocationTable = new EmployeeLocationTable(_database.EmployeeLocations);
         }
 
         public IUserTables<int, User> User { get; }
@@ -33,6 +34,8 @@ namespace Data.Standard.Classes
         public IBranchTable<int, BrancheDetail> BranchTable { get; }
         public IBankTable<int, BankDetail> BankTable { get; }
         public IEmployeeTable<int, Employee> EmployeeTable { get; }
+        public IEmployeeLocationTable<int, EmployeeLocation> EmployeeLocationTable { get; }
+
         public void Commit()
         {
             _database.SaveChanges();

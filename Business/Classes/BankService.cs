@@ -4,7 +4,6 @@ using System.Linq;
 using Business.Models;
 using Data.DatabaseModel;
 using Data.Standard.Interfaces;
-using System;
 
 namespace Business.Classes
 {
@@ -18,25 +17,25 @@ namespace Business.Classes
             _unitOfWork = unitOfWork;
         }
 
-        public void AddBank(int BranchId, BankBO bank)
+        public void AddBank(int branchId, BankBO bank)
         {
             _unitOfWork.BankTable.AddSingle(new BankDetail
             {
                 Code = bank.Code,
                 Name = bank.Name,
-                BrancheDetailsId = BranchId
+                BrancheDetailsId = branchId
             });
             _unitOfWork.Commit();
         }
         
-        public bool BankCodeExist(int BranchId, int code)
+        public bool BankCodeExist(int branchId, int code)
         {
-            return _unitOfWork.BankTable.GetAll().Any(x => x.Code == code && x.BrancheDetailsId == BranchId);
+            return _unitOfWork.BankTable.GetAll().Any(x => x.Code == code && x.BrancheDetailsId == branchId);
         }
 
-        public bool BankExist(int BranchId, string name)
+        public bool BankExist(int branchId, string name)
         {
-            return _unitOfWork.BankTable.GetAll().Any(x => x.Name == name && x.BrancheDetailsId == BranchId);
+            return _unitOfWork.BankTable.GetAll().Any(x => x.Name == name && x.BrancheDetailsId == branchId);
         }
 
         public bool BankIdExists(int id)
@@ -50,11 +49,11 @@ namespace Business.Classes
             _unitOfWork.Commit();
         }
 
-        public IEnumerable<BankBO> GetAllBanksUnderABranch(int BranchId)
+        public IEnumerable<BankBO> GetAllBanksUnderABranch(int branchId)
         {
             return
                 _unitOfWork.BranchTable.GetAll()
-                    .Single(x => x.Id == BranchId)
+                    .Single(x => x.Id == branchId)
                     .BankDetails.Select(bankDetail => new BankBO
                     {
                         Id = bankDetail.Id,
@@ -80,7 +79,7 @@ namespace Business.Classes
             return _unitOfWork.BankTable.GetSingle(bankId).BrancheDetailsId;
         }
 
-        public void UpdateBranch(BankBO bank)
+        public void UpdateBank(BankBO bank)
         {
             var bankDetails = new BankDetail
             {

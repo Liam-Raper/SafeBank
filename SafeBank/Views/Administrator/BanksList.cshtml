@@ -1,6 +1,6 @@
-﻿@model SafeBank.Models.BankesDetails
+﻿@model SafeBank.Models.BanksDetails
 <h1>Dashboard</h1>
-<h2>Bankes</h2>
+<h2>Banks</h2>
 <div class="CustomListCenter">
     @Html.ActionLink("Branches", "OrganisationBranchesList", new { organisationId = Model.OrganisationId })
     <br />
@@ -15,8 +15,11 @@
             <br />
             <span>Code: @bank.Code</span>
             <br />
-            <span>@Html.ActionLink("Edit", "EditBank", new { branchId = Model.BranchId, bankId = bank.Id })</span>
-            <span>@Html.ActionLink("Delete", "DeleteBank", new { bankId = bank.Id, branchId = Model.BranchId })</span>
+            <span>@Html.ActionLink("Edit", "EditBank", new {branchId = Model.BranchId, bankId = bank.Id})</span>
+            @if (bank.CanDelete)
+            {
+                <span>@Html.ActionLink("Delete", "DeleteBank", new {bankId = bank.Id, branchId = Model.BranchId})</span>
+            }
             <span>@Html.ActionLink("Employees", "BankEmployeeList", new { bankId = bank.Id })</span>
         </div>
     }

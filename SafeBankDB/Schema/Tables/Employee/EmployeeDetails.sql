@@ -4,7 +4,8 @@
     [Given name] NVARCHAR(50) NOT NULL, 
     [Family name] NVARCHAR(50) NOT NULL, 
     [Phone] NVARCHAR(14) NOT NULL, 
-    [Email] NVARCHAR(254) NOT NULL
+    [Email] NVARCHAR(254) NOT NULL, 
+    [Code] INT NOT NULL
 )
 
 GO
@@ -52,3 +53,12 @@ EXEC sp_addextendedproperty @name = N'MS_Description',
     @level1name = N'EmployeeDetails',
     @level2type = N'COLUMN',
     @level2name = N'Email'
+GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'The employees code',
+    @level0type = N'SCHEMA',
+    @level0name = N'Employee',
+    @level1type = N'TABLE',
+    @level1name = N'EmployeeDetails',
+    @level2type = N'COLUMN',
+    @level2name = N'Code'

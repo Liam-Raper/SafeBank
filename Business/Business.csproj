@@ -42,12 +42,15 @@
   <ItemGroup>
     <Compile Include="Classes\BankService.cs" />
     <Compile Include="Classes\BranchService.cs" />
+    <Compile Include="Classes\EmployeeService.cs" />
     <Compile Include="Classes\OrganisationService.cs" />
     <Compile Include="Interfaces\IBankService.cs" />
     <Compile Include="Interfaces\IBranchService.cs" />
+    <Compile Include="Interfaces\IEmployeeService.cs" />
     <Compile Include="Interfaces\IOrganisationService.cs" />
     <Compile Include="Models\BankBO.cs" />
     <Compile Include="Models\BranchBO.cs" />
+    <Compile Include="Models\EmployeeBO.cs" />
     <Compile Include="Models\OrganisationBO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
