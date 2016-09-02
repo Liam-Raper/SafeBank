@@ -235,7 +235,8 @@ namespace SafeBank.Controllers
         [HttpPost]
         public ActionResult AddEmployee(AddEmployeeDetails model)
         {
-            if (!ModelState.IsValid || _employeeService.EmployeeExist(model.BankId, model.EmployeeCode ?? 0))
+            if (!ModelState.IsValid ||
+                _employeeService.EmployeeExist(model.BankId, model.EmployeeCode ?? 0))
             {
                 return View(model);
             }
@@ -245,6 +246,7 @@ namespace SafeBank.Controllers
             {
                 return View(model);
             }
+            Roles.AddUserToRole(model.Username, "Banker");
             _employeeService.AddEmployee(model.BankId,new EmployeeBO
             {
                 Code = model.EmployeeCode ?? 0,
