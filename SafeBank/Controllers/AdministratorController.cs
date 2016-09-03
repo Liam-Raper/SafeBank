@@ -5,6 +5,7 @@ using System.Web.Security;
 using Business.Interfaces;
 using Business.Models;
 using SafeBank.Models;
+using Security.Interfaces.User;
 using Security.Providers;
 using Membership = System.Web.Security.Membership;
 
@@ -17,13 +18,15 @@ namespace SafeBank.Controllers
         private IBranchService _branchService;
         private IBankService _bankService;
         private IEmployeeService _employeeService;
+        private IUserManager _userManager;
 
-        public AdministratorController(IOrganisationService organisationService, IBranchService branchService, IBankService bankService, IEmployeeService employeeService)
+        public AdministratorController(IOrganisationService organisationService, IBranchService branchService, IBankService bankService, IEmployeeService employeeService, IUserManager userManager)
         {
             _organisationService = organisationService;
             _branchService = branchService;
             _bankService = bankService;
             _employeeService = employeeService;
+            _userManager = userManager;
         }
 
         public ActionResult Dashboard()
@@ -220,7 +223,8 @@ namespace SafeBank.Controllers
                     Email = x.Email,
                     Phone = x.Phone,
                     Code = x.Code,
-                    Id = x.Id
+                    Id = x.Id,
+                    Role = Roles.GetRolesForUser(x.Username).Single()
                 })
             };
             return View(model);
@@ -235,9 +239,18 @@ namespace SafeBank.Controllers
         [HttpPost]
         public ActionResult AddEmployee(AddEmployeeDetails model)
         {
-            if (!ModelState.IsValid ||
-                _employeeService.EmployeeExist(model.BankId, model.EmployeeCode ?? 0))
+            if (!ModelState.IsValid)
             {
+                return View(model);
+            }
+            if (_employeeService.EmployeeExist(model.BankId, model.EmployeeCode ?? 0))
+            {
+                ModelState.AddModelError("Employee","The employee code is already in use.");
+                return View(model);
+            }
+            if (_userManager.DoseUserExist(model.Username))
+            {
+                ModelState.AddModelError("User","The username is already taken.");
                 return View(model);
             }
             MembershipCreateStatus status;
@@ -288,6 +301,34 @@ namespace SafeBank.Controllers
         {
             _employeeService.DeleteEmployee(employeeId);
             return RedirectToAction("BankEmployeeList", new {bankId = bankId});
+        }
+
+        public ActionResult EditEmployeeRole(int bankId, int employeeCode)
+        {
+            if (!_employeeService.EmployeeExist(bankId, employeeCode)) return RedirectToAction("BankEmployeeList", new { bankId });
+            var employeeId = _employeeService.GetEmployeeId(bankId, employeeCode);
+            var employee = _employeeService.GetEmployee(employeeId);
+            var model = new EditEmployeeRole
+            {
+                EmployeeId = employeeId,
+                EmployeeName = employee.GivenName + ", " + employee.FamilyName,
+                Username = employee.Username,
+                Role = Roles.GetRolesForUser(employee.Username).Single(),
+                Roles = Roles.GetAllRoles().ToArray().Where(x => x != "Customer" && x != "Administrator").Select(allRole => new RolesDetails
+                {
+                    Name = allRole
+                }).ToList()
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult EditEmployeeRole(EditEmployeeRole model)
+        {
+            if (!ModelState.IsValid || !_employeeService.EmployeeExist(model.EmployeeId)) return View(model);
+            var employee = _employeeService.GetEmployee(model.EmployeeId);
+            Roles.AddUserToRole(employee.Username, model.Role);
+            return RedirectToAction("BankEmployeeList", new { bankId = _employeeService.GetBankId(model.EmployeeId) });
         }
 
     }

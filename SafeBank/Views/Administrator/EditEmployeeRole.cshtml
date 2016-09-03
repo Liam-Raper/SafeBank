@@ -1,0 +1,20 @@
+﻿@using SafeBank.HtmlHelpers
+@model SafeBank.Models.EditEmployeeRole
+<h1>Dashboard</h1>
+<h2>Edit Employee Role</h2>
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(x => x.EmployeeId)
+    <span>Name: @Model.EmployeeName</span>
+    <br />
+    <span>Username: @Model.Username</span>
+    <br />
+    @Html.LabelFor(x => x.Role)
+    @Html.SelectionListBoxFor(x => x.Role,Model.Roles.Select(x => x.Name))
+    <br />
+    <br />
+    <input type="submit" value="Update now" />
+    <br />
+    <br />
+    @Html.ValidationSummary()
+}

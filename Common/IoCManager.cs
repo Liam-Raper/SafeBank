@@ -50,6 +50,7 @@ namespace Common
                     registry.For<IUnitOfWork>().Use<UnitOfWork>();
                     registry.For<ISecurityQuestions>().Use<SecurityQuestions>();
                     registry.For<IUserActivities>().Use<UserActivities>();
+                    registry.For<IUserManager>().Use<UserManager>();
                     registry.For<IOrganisationService>().Use<OrganisationService>();
                     registry.For<IBranchService>().Use<BranchService>();
                     registry.For<IBankService>().Use<BankService>();

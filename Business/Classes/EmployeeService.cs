@@ -29,7 +29,8 @@ namespace Business.Classes
                         GivenName = employeeInfo.EmployeeDetail.Given_name,
                         FamilyName = employeeInfo.EmployeeDetail.Family_name,
                         Email = employeeInfo.EmployeeDetail.Email,
-                        Phone = employeeInfo.EmployeeDetail.Phone
+                        Phone = employeeInfo.EmployeeDetail.Phone,
+                        Username = employeeInfo.User.UserDetail.Username
                     });
         }
 

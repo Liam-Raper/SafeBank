@@ -162,10 +162,12 @@
     <Compile Include="Models\EditEmployeeDetails.cs" />
     <Compile Include="Models\EditBankDetails.cs" />
     <Compile Include="Models\EditBranchDetails.cs" />
+    <Compile Include="Models\EditEmployeeRole.cs" />
     <Compile Include="Models\EditOrganisationDetails.cs" />
     <Compile Include="Models\EmployeeDetails.cs" />
     <Compile Include="Models\EmployeesDetails.cs" />
     <Compile Include="Models\OrganisationDetails.cs" />
+    <Compile Include="Models\RolesDetails.cs" />
     <Compile Include="Models\UserJoinDetails.cs" />
     <Compile Include="Models\UserLoginDetails.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -262,6 +264,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Administrator\EditEmployee.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Administrator\EditEmployeeRole.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

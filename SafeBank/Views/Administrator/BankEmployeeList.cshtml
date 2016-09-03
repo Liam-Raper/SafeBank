@@ -19,8 +19,11 @@
             <br/>
             <span>Email: @employee.Email</span>
             <br/>
+            <span>Role: @employee.Role</span>
+            <br />
             <span>@Html.ActionLink("Edit", "EditEmployee", new {bankId = Model.BankId, employeeCode = employee.Code})</span>
             <span>@Html.ActionLink("Delete", "DeleteEmployee", new {bankId = Model.BankId, employeeId = employee.Id})</span>
+            <span>@Html.ActionLink("Change Role", "EditEmployeeRole", new { bankId = Model.BankId, employeeCode = employee.Code })</span>
         </div>
     }
     @if (Model.EmployeeDetailses.Count() >= 8)

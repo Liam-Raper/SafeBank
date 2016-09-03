@@ -28,6 +28,10 @@ namespace SafeBank.HtmlHelpers
             {
                 var option = new TagBuilder("option") { InnerHtml = listItem.ToString() };
                 option.Attributes.Add("value", listItem.ToString());
+                if (metadata.Model != null && metadata.Model.ToString() == listItem.ToString())
+                {
+                    option.Attributes.Add("selected","");
+                }
                 options.AppendLine(option.ToString());
             }
             selectList.InnerHtml = options.ToString();
