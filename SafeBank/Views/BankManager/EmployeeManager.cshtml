@@ -1,2 +1,54 @@
-﻿<h1>EmployeeManager</h1>
-
+﻿@model SafeBank.Models.EmployeesDetails
+<h1>Employee Manager</h1>
+<h2>Employees</h2>
+<div class="CustomListCenter">
+    @Html.ActionLink("Add new", "AddEmployee", new { BankId = Model.BankId })
+    <br />
+    <br />
+    @foreach (var employee in Model.EmployeeDetailses.Where(x => x.Role == "Bank Manager"))
+    {
+        <div>
+            <span>Code: @employee.Code</span>
+            <br/>
+            <span>Name: @employee.FullName</span>
+            <br/>
+            <span>Phone: @employee.Phone</span>
+            <br/>
+            <span>Email: @employee.Email</span>
+            <br/>
+            <span>Role: @employee.Role</span>
+            <br/>
+            <span>@Html.ActionLink("Edit", "EditEmployee", new {bankId = Model.BankId, employeeCode = employee.Code})</span>
+            @if (Model.LoggedInEmployeeId != employee.Id)
+            {
+                <span>@Html.ActionLink("Delete", "DeleteEmployee", new {bankId = Model.BankId, employeeId = employee.Id})</span>
+                <span>@Html.ActionLink("Change Role", "EditEmployeeRole", new {bankId = Model.BankId, employeeCode = employee.Code})</span>
+            }
+        </div>
+    }
+    @foreach (var employee in Model.EmployeeDetailses.Where(x => x.Role == "Banker"))
+    {
+        <div>
+            <span>Code: @employee.Code</span>
+            <br />
+            <span>Name: @employee.FullName</span>
+            <br />
+            <span>Phone: @employee.Phone</span>
+            <br />
+            <span>Email: @employee.Email</span>
+            <br />
+            <span>Role: @employee.Role</span>
+            <br />
+            <span>@Html.ActionLink("Edit", "EditEmployee", new { bankId = Model.BankId, employeeCode = employee.Code })</span>
+            @if (Model.LoggedInEmployeeId != employee.Id)
+            {
+                <span>@Html.ActionLink("Delete", "DeleteEmployee", new { bankId = Model.BankId, employeeId = employee.Id })</span>
+                <span>@Html.ActionLink("Change Role", "EditEmployeeRole", new { bankId = Model.BankId, employeeCode = employee.Code })</span>
+            }
+        </div>
+    }
+    @if (Model.EmployeeDetailses.Count() >= 8)
+    {
+        @Html.ActionLink("Add new", "AddEmployee", new { BankId = Model.BankId })
+    }
+</div>

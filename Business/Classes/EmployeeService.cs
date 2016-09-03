@@ -87,6 +87,11 @@ namespace Business.Classes
                     .Single(x => x.EmployeeLocations.Any(y => y.BankId == bankId)).Id;
         }
 
+        public int GetEmployeeId(string username)
+        {
+            return _unitOfWork.EmployeeTable.GetAll().Single(x => x.User.UserDetail.Username == username).Id;
+        }
+
         public EmployeeBO GetEmployee(int id)
         {
             var employee = _unitOfWork.EmployeeTable.GetSingle(id);

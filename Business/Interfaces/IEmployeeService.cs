@@ -11,6 +11,7 @@ namespace Business.Interfaces
         void AddEmployee(int bankId, EmployeeBO employee);
         void DeleteEmployee(int id);
         int GetEmployeeId(int bankId, int employeeCode);
+        int GetEmployeeId(string username);
         EmployeeBO GetEmployee(int id);
         void UpdateEmployee(EmployeeBO employee);
         int GetBankId(int id);

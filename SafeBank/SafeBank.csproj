@@ -268,6 +268,15 @@
   <ItemGroup>
     <Content Include="Views\Administrator\EditEmployeeRole.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\BankManager\EditEmployee.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\BankManager\EditEmployeeRole.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\BankManager\AddEmployee.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
