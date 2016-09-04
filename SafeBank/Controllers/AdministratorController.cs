@@ -1,17 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
 using Business.Interfaces;
 using Business.Models;
-using SafeBank.Models;
 using SafeBank.Models.Bank;
 using SafeBank.Models.Branch;
 using SafeBank.Models.Employee;
 using SafeBank.Models.Organisation;
 using SafeBank.Models.User;
 using Security.Interfaces.User;
-using Security.Providers;
 using Membership = System.Web.Security.Membership;
 
 namespace SafeBank.Controllers

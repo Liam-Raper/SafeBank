@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-
-namespace Data.Standard.Interfaces
+﻿namespace Data.Standard.Interfaces
 {
     public interface IValidate<in TDataSet>
     {

@@ -1,2 +1,37 @@
-﻿<h1>Customer Manager</h1>
+﻿@using SafeBank.HtmlHelpers
+@model SafeBank.Models.Customer.AddCustomerDetails
+<h1>Customer Manager</h1>
 <h2>Add Customer</h2>
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(x => x.GivenName)
+    @Html.TextBoxFor(x => x.GivenName)
+    @Html.LabelFor(x => x.FamilyName)
+    @Html.TextBoxFor(x => x.FamilyName)
+    @Html.LabelFor(x => x.Phone)
+    @Html.TextBoxFor(x => x.Phone)
+    @Html.LabelFor(x => x.UserDetails.Username)
+    @Html.TextBoxFor(x => x.UserDetails.Username)
+    @Html.LabelFor(x => x.UserDetails.Password)
+    @Html.PasswordFor(x => x.UserDetails.Password)
+    @Html.LabelFor(x => x.UserDetails.ConfermePassword)
+    @Html.PasswordFor(x => x.UserDetails.ConfermePassword)
+    @Html.LabelFor(x => x.UserDetails.Email)
+    @Html.TextBoxFor(x => x.UserDetails.Email)
+    @Html.LabelFor(x => x.UserDetails.Question)
+    @Html.SelectionListBoxFor(x => x.UserDetails.Question, Model.UserDetails.QuestionsList)
+    @Html.LabelFor(x => x.UserDetails.Answer)
+    @Html.TextBoxFor(x => x.UserDetails.Answer)
+    @Html.LabelFor(x => x.AccountDetails.AccountType)
+    @Html.SelectionListBoxFor(x => x.AccountDetails.AccountType, Model.AccountDetails.AccountTypesList)
+    @Html.LabelFor(x => x.AccountDetails.AccountNumber)
+    @Html.TextBoxFor(x => x.AccountDetails.AccountNumber)
+    @Html.LabelFor(x => x.AccountDetails.AccountName)
+    @Html.TextBoxFor(x => x.AccountDetails.AccountName)
+    <br />
+    <br />
+    <input type="submit" value="Add new" />
+    <br />
+    <br />
+    @Html.ValidationSummary()
+}

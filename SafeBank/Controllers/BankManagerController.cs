@@ -3,7 +3,6 @@ using System.Web.Mvc;
 using System.Web.Security;
 using Business.Interfaces;
 using Business.Models;
-using SafeBank.Models;
 using SafeBank.Models.Employee;
 using SafeBank.Models.User;
 using Security.Interfaces.User;

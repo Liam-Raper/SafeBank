@@ -40,16 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\AccountService.cs" />
     <Compile Include="Classes\BankService.cs" />
     <Compile Include="Classes\BranchService.cs" />
     <Compile Include="Classes\CustomerService.cs" />
     <Compile Include="Classes\EmployeeService.cs" />
     <Compile Include="Classes\OrganisationService.cs" />
+    <Compile Include="Interfaces\IAccountService.cs" />
     <Compile Include="Interfaces\IBankService.cs" />
     <Compile Include="Interfaces\IBranchService.cs" />
     <Compile Include="Interfaces\ICustomerService.cs" />
     <Compile Include="Interfaces\IEmployeeService.cs" />
     <Compile Include="Interfaces\IOrganisationService.cs" />
+    <Compile Include="Models\AccountType.cs" />
     <Compile Include="Models\BankBO.cs" />
     <Compile Include="Models\BranchBO.cs" />
     <Compile Include="Models\CustomerBO.cs" />

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using Business.Interfaces;
-using SafeBank.Models;
 using SafeBank.Models.Customer;
 
 namespace SafeBank.Controllers
@@ -41,8 +37,14 @@ namespace SafeBank.Controllers
 
         public ActionResult AddCustomer(int bankId)
         {
-            return View();
+            var model = new AddCustomerDetails();
+            return View(model);
         }
 
+        [HttpPost]
+        public ActionResult AddCustomer(AddCustomerDetails model)
+        {
+            return View(model);
+        }
     }
 }

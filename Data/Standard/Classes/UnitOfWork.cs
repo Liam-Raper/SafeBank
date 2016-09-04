@@ -1,4 +1,6 @@
-﻿using Data.Bank.Classes;
+﻿using Data.Account.Classes;
+using Data.Account.Interfaces;
+using Data.Bank.Classes;
 using Data.Bank.Interfaces;
 using Data.Customer.Classes;
 using Data.Customer.Interfaces;
@@ -28,6 +30,8 @@ namespace Data.Standard.Classes
             EmployeeTable = new EmployeeTable(_database.Employees);
             EmployeeLocationTable = new EmployeeLocationTable(_database.EmployeeLocations);
             CustomerTable = new CustomerTable(_database.Customers);
+            AccountTable = new AccountTable();
+            AccountTypeTable = new AccountTypeTable(_database.AccountTypes);
         }
 
         public IUserTables<int, User> User { get; }
@@ -39,6 +43,8 @@ namespace Data.Standard.Classes
         public IEmployeeTable<int, Employee> EmployeeTable { get; }
         public IEmployeeLocationTable<int, EmployeeLocation> EmployeeLocationTable { get; }
         public ICustomerTable<int, DatabaseModel.Customer> CustomerTable { get; }
+        public IAccountTable<int, DatabaseModel.Account> AccountTable { get; }
+        public IAccountTypeTable<int, AccountType> AccountTypeTable { get; }
 
         public void Commit()
         {

@@ -150,6 +150,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HtmlHelpers\SelectionListBox.cs" />
+    <Compile Include="Models\Accounts\AddAccountDetails.cs" />
+    <Compile Include="Models\Customer\AddCustomerDetails.cs" />
     <Compile Include="Models\Employee\AddEmployeeDetails.cs" />
     <Compile Include="Models\Bank\AddBankDetails.cs" />
     <Compile Include="Models\Branch\AddBranchDetails.cs" />
