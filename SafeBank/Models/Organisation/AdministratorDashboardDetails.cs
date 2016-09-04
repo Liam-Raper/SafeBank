@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SafeBank.Models
+namespace SafeBank.Models.Organisation
 {
     public class AdministratorDashboardDetails
     {

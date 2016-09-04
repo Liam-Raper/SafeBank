@@ -1,15 +1,14 @@
-﻿namespace SafeBank.Models
+﻿namespace SafeBank.Models.Customer
 {
-    public class EmployeeDetails
+    public class CustomerDetails
     {
-        public int Id { get; set; }
-        public int Code { get; set; }
+        public int id;
         public string GivenName { private get; set; }
         public string FamilyName { private get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public string Role { get; set; }
 
         public string FullName => GivenName + ", " + FamilyName;
+
     }
 }

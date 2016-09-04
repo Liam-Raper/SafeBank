@@ -1,4 +1,4 @@
-﻿namespace SafeBank.Models
+﻿namespace SafeBank.Models.User
 {
     public class RolesDetails
     {

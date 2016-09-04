@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Security;
 using SafeBank.Models;
+using SafeBank.Models.User;
 using Security.Interfaces.User;
 
 namespace SafeBank.Controllers

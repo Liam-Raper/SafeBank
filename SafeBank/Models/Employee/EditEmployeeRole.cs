@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using SafeBank.Models.User;
 
-namespace SafeBank.Models
+namespace SafeBank.Models.Employee
 {
     public class EditEmployeeRole
     {

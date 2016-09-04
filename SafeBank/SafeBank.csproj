@@ -150,28 +150,28 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HtmlHelpers\SelectionListBox.cs" />
-    <Compile Include="Models\AddEmployeeDetails.cs" />
-    <Compile Include="Models\AddBankDetails.cs" />
-    <Compile Include="Models\AddBranchDetails.cs" />
-    <Compile Include="Models\AddOrganisationDetails.cs" />
-    <Compile Include="Models\AdministratorDashboardDetails.cs" />
-    <Compile Include="Models\BankDetails.cs" />
-    <Compile Include="Models\BanksDetails.cs" />
-    <Compile Include="Models\BranchDetails.cs" />
-    <Compile Include="Models\BranchesDetails.cs" />
-    <Compile Include="Models\CustomerDetails.cs" />
-    <Compile Include="Models\CustomersDetails.cs" />
-    <Compile Include="Models\EditEmployeeDetails.cs" />
-    <Compile Include="Models\EditBankDetails.cs" />
-    <Compile Include="Models\EditBranchDetails.cs" />
-    <Compile Include="Models\EditEmployeeRole.cs" />
-    <Compile Include="Models\EditOrganisationDetails.cs" />
-    <Compile Include="Models\EmployeeDetails.cs" />
-    <Compile Include="Models\EmployeesDetails.cs" />
-    <Compile Include="Models\OrganisationDetails.cs" />
-    <Compile Include="Models\RolesDetails.cs" />
-    <Compile Include="Models\UserJoinDetails.cs" />
-    <Compile Include="Models\UserLoginDetails.cs" />
+    <Compile Include="Models\Employee\AddEmployeeDetails.cs" />
+    <Compile Include="Models\Bank\AddBankDetails.cs" />
+    <Compile Include="Models\Branch\AddBranchDetails.cs" />
+    <Compile Include="Models\Organisation\AddOrganisationDetails.cs" />
+    <Compile Include="Models\Organisation\AdministratorDashboardDetails.cs" />
+    <Compile Include="Models\Bank\BankDetails.cs" />
+    <Compile Include="Models\Bank\BanksDetails.cs" />
+    <Compile Include="Models\Branch\BranchDetails.cs" />
+    <Compile Include="Models\Branch\BranchesDetails.cs" />
+    <Compile Include="Models\Customer\CustomerDetails.cs" />
+    <Compile Include="Models\Customer\CustomersDetails.cs" />
+    <Compile Include="Models\Employee\EditEmployeeDetails.cs" />
+    <Compile Include="Models\Bank\EditBankDetails.cs" />
+    <Compile Include="Models\Branch\EditBranchDetails.cs" />
+    <Compile Include="Models\Employee\EditEmployeeRole.cs" />
+    <Compile Include="Models\Organisation\EditOrganisationDetails.cs" />
+    <Compile Include="Models\Employee\EmployeeDetails.cs" />
+    <Compile Include="Models\Employee\EmployeesDetails.cs" />
+    <Compile Include="Models\Organisation\OrganisationDetails.cs" />
+    <Compile Include="Models\User\RolesDetails.cs" />
+    <Compile Include="Models\User\UserJoinDetails.cs" />
+    <Compile Include="Models\User\UserLoginDetails.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

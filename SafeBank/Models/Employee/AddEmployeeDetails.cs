@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using SafeBank.Models.User;
 
-namespace SafeBank.Models
+namespace SafeBank.Models.Employee
 {
     public class AddEmployeeDetails : UserJoinDetails
     {

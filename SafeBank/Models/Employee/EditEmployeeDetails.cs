@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace SafeBank.Models
+namespace SafeBank.Models.Employee
 {
     public class EditEmployeeDetails
     {

@@ -1,6 +1,6 @@
-﻿namespace SafeBank.Models
+﻿namespace SafeBank.Models.Organisation
 {
-    public class BankDetails
+    public class OrganisationDetails
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using Security.Interfaces.SecurityQuestions;
 
-namespace SafeBank.Models
+namespace SafeBank.Models.User
 {
     public class UserJoinDetails
     {

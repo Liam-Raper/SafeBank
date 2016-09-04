@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Business.Interfaces;
 using SafeBank.Models;
+using SafeBank.Models.Customer;
 
 namespace SafeBank.Controllers
 {

@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SafeBank.Models
+namespace SafeBank.Models.Bank
 {
-    public class EditBankDetails
+    public class AddBankDetails
     {
-        public int Id { get; set; }
+        public int BranchId { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "You did not give a name for the new bank")]
         public string Name { get; set; }
