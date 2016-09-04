@@ -1,2 +1,23 @@
-﻿<h1>CustomerManager</h1>
-
+﻿@model SafeBank.Models.CustomersDetails
+<h1>Customer Manager</h1>
+<h2>Customers</h2>
+<div class="CustomListCenter">
+    @Html.ActionLink("Add new", "AddCustomer", new { BankId = Model.BankId })
+    <br />
+    <br />
+    @foreach (var customer in Model.CustomerDetailses)
+    {
+        <div>
+            <span>Name: @customer.FullName</span>
+            <br/>
+            <span>Phone: @customer.Phone</span>
+            <br/>
+            <span>Email: @customer.Email</span>
+            <br/>
+        </div>
+    }
+    @if (Model.CustomerDetailses.Count() >= 8)
+    {
+        @Html.ActionLink("Add new", "AddCustomer", new { BankId = Model.BankId })
+    }
+</div>

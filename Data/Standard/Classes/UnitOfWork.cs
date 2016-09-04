@@ -1,5 +1,7 @@
 ﻿using Data.Bank.Classes;
 using Data.Bank.Interfaces;
+using Data.Customer.Classes;
+using Data.Customer.Interfaces;
 using Data.DatabaseModel;
 using Data.Employees.Classes;
 using Data.Employees.Interfaces;
@@ -25,6 +27,7 @@ namespace Data.Standard.Classes
             BankTable = new BankTable(_database.BankDetails);
             EmployeeTable = new EmployeeTable(_database.Employees);
             EmployeeLocationTable = new EmployeeLocationTable(_database.EmployeeLocations);
+            CustomerTable = new CustomerTable(_database.Customers);
         }
 
         public IUserTables<int, User> User { get; }
@@ -35,6 +38,7 @@ namespace Data.Standard.Classes
         public IBankTable<int, BankDetail> BankTable { get; }
         public IEmployeeTable<int, Employee> EmployeeTable { get; }
         public IEmployeeLocationTable<int, EmployeeLocation> EmployeeLocationTable { get; }
+        public ICustomerTable<int, DatabaseModel.Customer> CustomerTable { get; }
 
         public void Commit()
         {

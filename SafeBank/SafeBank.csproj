@@ -159,6 +159,8 @@
     <Compile Include="Models\BanksDetails.cs" />
     <Compile Include="Models\BranchDetails.cs" />
     <Compile Include="Models\BranchesDetails.cs" />
+    <Compile Include="Models\CustomerDetails.cs" />
+    <Compile Include="Models\CustomersDetails.cs" />
     <Compile Include="Models\EditEmployeeDetails.cs" />
     <Compile Include="Models\EditBankDetails.cs" />
     <Compile Include="Models\EditBranchDetails.cs" />
@@ -276,6 +278,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\BankManager\AddEmployee.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Banker\AddCustomer.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

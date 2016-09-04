@@ -57,6 +57,8 @@
     <Compile Include="Bank\Interfaces\IBankTable.cs" />
     <Compile Include="Bank\Interfaces\IBranchTable.cs" />
     <Compile Include="Bank\Interfaces\IOrganisationTable.cs" />
+    <Compile Include="Customer\Classes\CustomerTable.cs" />
+    <Compile Include="Customer\Interfaces\ICustomerTable.cs" />
     <Compile Include="DatabaseModel\AccessLevel.cs">
       <DependentUpon>SafeBankDatabase.tt</DependentUpon>
     </Compile>

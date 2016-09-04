@@ -1,4 +1,5 @@
 ﻿using Data.Bank.Interfaces;
+using Data.Customer.Interfaces;
 using Data.DatabaseModel;
 using Data.Employees.Interfaces;
 using Data.Security.Membership.Interfaces;
@@ -15,6 +16,7 @@ namespace Data.Standard.Interfaces
         IBankTable<int, BankDetail> BankTable { get; }
         IEmployeeTable<int, Employee> EmployeeTable { get; }
         IEmployeeLocationTable<int, EmployeeLocation> EmployeeLocationTable { get; }
+        ICustomerTable<int,DatabaseModel.Customer> CustomerTable { get; }
         void Commit();
     }
 }
