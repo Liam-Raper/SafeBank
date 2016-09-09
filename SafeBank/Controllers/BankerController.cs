@@ -44,6 +44,13 @@ namespace SafeBank.Controllers
         [HttpPost]
         public ActionResult AddCustomer(AddCustomerDetails model)
         {
+            _customerService.AddCustomer(new Business.Models.CustomerBO
+            {
+                GivenName = model.GivenName,
+                FamilyName = model.FamilyName,
+                Email = model.UserDetails.Email,
+                Phone = model.Phone
+            });
             return View(model);
         }
     }

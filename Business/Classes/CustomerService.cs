@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Business.Interfaces;
 using Business.Models;
@@ -14,6 +15,11 @@ namespace Business.Classes
         public CustomerService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+        }
+
+        public void AddCustomer(CustomerBO customer)
+        {
+            throw new NotImplementedException();
         }
 
         public IEnumerable<CustomerBO> GetCustomers(int bankId)
