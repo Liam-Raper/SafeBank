@@ -22,8 +22,13 @@ namespace SafeBank.Controllers
         [HttpPost]
         public ActionResult LogIn(UserLoginDetails loginDetails)
         {
-            if (!ModelState.IsValid || !Membership.ValidateUser(loginDetails.Username,loginDetails.Password))
+            if (!ModelState.IsValid)
             {
+                return View("LogIn", loginDetails);
+            }
+            if(!Membership.ValidateUser(loginDetails.Username, loginDetails.Password))
+            {
+                ModelState.AddModelError("UserOrPasswordNoValid", "The username or password you gave are not valid so we can't log you in.");
                 return View("LogIn", loginDetails);
             }
             _userActivities.UpdateLoggedInDateTime(loginDetails.Username);

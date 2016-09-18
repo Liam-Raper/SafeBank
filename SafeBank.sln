@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SafeBank", "SafeBank\SafeBank.csproj", "{39CC2D0E-4240-42CE-9968-0F80622187AB}"
 EndProject
@@ -14,6 +14,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{147C6FA2-5222-4A3F-8003-D8DEEED0CDD2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{A933961D-40A6-4160-9360-4A60E69B4605}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7B55CD6F-ED30-415F-BED9-92097DC98849}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI Automation", "UI Automation", "{30BF6F6B-361D-4FB2-913E-B683ADEDAF73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UIAutomationTests", "UIAutomationTests\UIAutomationTests.csproj", "{95E7174F-128B-4FE6-B11D-766AB5ED6818}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,8 +53,16 @@ Global
 		{A933961D-40A6-4160-9360-4A60E69B4605}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A933961D-40A6-4160-9360-4A60E69B4605}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A933961D-40A6-4160-9360-4A60E69B4605}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95E7174F-128B-4FE6-B11D-766AB5ED6818}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95E7174F-128B-4FE6-B11D-766AB5ED6818}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95E7174F-128B-4FE6-B11D-766AB5ED6818}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95E7174F-128B-4FE6-B11D-766AB5ED6818}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{30BF6F6B-361D-4FB2-913E-B683ADEDAF73} = {7B55CD6F-ED30-415F-BED9-92097DC98849}
+		{95E7174F-128B-4FE6-B11D-766AB5ED6818} = {30BF6F6B-361D-4FB2-913E-B683ADEDAF73}
 	EndGlobalSection
 EndGlobal

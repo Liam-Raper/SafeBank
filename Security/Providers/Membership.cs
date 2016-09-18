@@ -18,6 +18,7 @@ namespace Security.Providers
 
         private static MembershipUser GetMembershipUserFromUser(User user)
         {
+            if (user == null) return null;
             return new MembershipUser(ProviderName, user.UserDetail.Username, user.Id, user.UserDetail.Email,
                 user.UserSecurityQuestionAndAnswer.SecurityQuestion.Text, user.UserDetail.Comment,
                 user.UserActivity.IsApproved, user.UserActivity.IsLockedOut, user.UserActivity.CreatedDate,
@@ -231,7 +232,7 @@ namespace Security.Providers
             {
                 allUser = allUser.Where(x => x.UserActivity.LastActiveDate > DateTime.Now.AddHours(-1));
             }
-            var user = allUser.Single();
+            var user = allUser.SingleOrDefault();
             return GetMembershipUserFromUser(user);
         }
 
