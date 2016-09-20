@@ -45,11 +45,16 @@ namespace SafeBank.Controllers
         [HttpPost]
         public ActionResult Join(UserJoinDetails joinDetails)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Join", joinDetails);
+            }
             MembershipCreateStatus status;
             Membership.CreateUser(joinDetails.Username, joinDetails.Password, joinDetails.Email, joinDetails.Question,
                 joinDetails.Answer, true, out status);
-            if (!ModelState.IsValid || status != MembershipCreateStatus.Success)
+            if (status != MembershipCreateStatus.Success)
             {
+                ModelState.AddModelError("UnableToAddUser", "Unable to create a user with the details you gave are you user your not already in the system?");
                 return View("Join", joinDetails);
             }
             return RedirectToAction("LogIn");

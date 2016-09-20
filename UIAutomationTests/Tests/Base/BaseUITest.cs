@@ -14,6 +14,7 @@ namespace UIAutomationTests.Tests
         public BaseUITest()
         {
             Playback.Initialize();
+            Playback.PlaybackSettings.DelayBetweenActions = 250;
         }
         
         [TestInitialize]

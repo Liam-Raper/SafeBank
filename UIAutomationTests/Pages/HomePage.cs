@@ -9,6 +9,7 @@ namespace UIAutomationTests.Pages
     {
         public HomePage(BrowserWindow browser) : base(browser)
         {
+            browser.WaitForControlReady(500);
             if (browser.Uri.LocalPath != "/home" && browser.Uri.LocalPath != "/")
             {
                 NavigateToHome();

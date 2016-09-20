@@ -106,7 +106,7 @@ namespace Security.Providers
             if (!_unitOfWork.User.Validate(user))
             {
                 status = MembershipCreateStatus.UserRejected;
-                return GetMembershipUserFromUser(user);
+                return null;
             }
             _unitOfWork.User.AddSingle(user);
             _unitOfWork.Commit();

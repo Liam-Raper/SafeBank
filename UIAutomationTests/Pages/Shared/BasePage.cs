@@ -45,11 +45,12 @@ namespace UIAutomationTests.Pages.Shared
             return new LogInPage(_browser);
         }
 
-        public void NavigateToJoin()
+        public JoinPage NavigateToJoin()
         {
             var link = new HtmlHyperlink(navbar);
             link.SearchProperties.Add(HtmlHyperlink.PropertyNames.InnerText, "Join");
             Mouse.Click(link);
+            return new JoinPage(_browser);
         }
 
         public void LogOut()

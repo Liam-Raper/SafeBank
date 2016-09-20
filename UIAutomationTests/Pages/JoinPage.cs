@@ -5,14 +5,14 @@ using UIAutomationTests.Pages.Shared;
 
 namespace UIAutomationTests.Pages
 {
-    public class LogInPage : BasePage
+    public class JoinPage : BasePage
     {
-        public LogInPage(BrowserWindow browser) : base(browser)
+        public JoinPage(BrowserWindow browser) : base(browser)
         {
             browser.WaitForControlReady(500);
-            if (browser.Uri.LocalPath != "/login")
+            if (browser.Uri.LocalPath != "/join")
             {
-                NavigateToLogIn();
+                NavigateToJoin();
             }
         }
 
@@ -42,12 +42,49 @@ namespace UIAutomationTests.Pages
             element.Text = password;
         }
 
-        public void ClickLogInButton()
+        public void EnterConfermePassword(string password)
+        {
+            var element = new HtmlEdit(mainpage);
+            element.SearchProperties.Add(HtmlEdit.PropertyNames.Id, "ConfermePassword");
+            element.SearchProperties.Add(HtmlEdit.PropertyNames.Name, "ConfermePassword");
+            element.SearchProperties.Add(HtmlEdit.PropertyNames.ControlType, "Edit");
+            element.Text = password;
+        }
+
+        public void EnterEmail(string email)
+        {
+            var element = new HtmlEdit(mainpage);
+            element.SearchProperties.Add(HtmlEdit.PropertyNames.Id, "Email");
+            element.SearchProperties.Add(HtmlEdit.PropertyNames.Name, "Email");
+            element.SearchProperties.Add(HtmlEdit.PropertyNames.ControlType, "Edit");
+            element.Text = email;
+        }
+
+        public void SelectQuestion(int questionIndex)
+        {
+            var element = new HtmlComboBox(mainpage);
+            element.SearchProperties.Add(HtmlEdit.PropertyNames.Id, "Question");
+            element.SearchProperties.Add(HtmlEdit.PropertyNames.Name, "Question");
+            element.SearchProperties.Add(HtmlEdit.PropertyNames.ControlType, "ComboBox");
+            element.SearchProperties.Add(HtmlEdit.PropertyNames.TagName, "SELECT");
+            element.SelectedIndex = questionIndex;
+        }
+
+        public void EnterAnswer(string answer)
+        {
+            var element = new HtmlEdit(mainpage);
+            element.SearchProperties.Add(HtmlEdit.PropertyNames.Id, "Answer");
+            element.SearchProperties.Add(HtmlEdit.PropertyNames.Name, "Answer");
+            element.SearchProperties.Add(HtmlEdit.PropertyNames.ControlType, "Edit");
+            element.Text = answer;
+        }
+
+        public void ClickJoinButton()
         {
             var element = new HtmlButton(mainpage);
             element.SearchProperties.Add(HtmlButton.PropertyNames.TagName, "INPUT");
             element.SearchProperties.Add(HtmlButton.PropertyNames.Type, "submit");
-            element.SearchProperties.Add(HtmlButton.PropertyNames.DisplayText, "Log In");
+            element.SearchProperties.Add(HtmlButton.PropertyNames.DisplayText, "Join");
             Mouse.Click(element);
         }
 

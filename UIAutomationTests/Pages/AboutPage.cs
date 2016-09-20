@@ -8,6 +8,7 @@ namespace UIAutomationTests.Pages
     {
         public AboutPage(BrowserWindow browser) : base(browser)
         {
+            browser.WaitForControlReady(500);
             if (browser.Uri.LocalPath != "/about")
             {
                 NavigateToAbout();

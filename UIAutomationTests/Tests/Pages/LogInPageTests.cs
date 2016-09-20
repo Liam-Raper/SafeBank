@@ -49,6 +49,9 @@ namespace UIAutomationTests.Tests.Pages
             page.ClickLogInButton();
             Browser.WaitForControlReady(5000);
             Assert.AreEqual(startURI, Browser.Uri.ToString());
+            var validation = page.GetValidation();
+            Assert.AreEqual(1, validation.Length);
+            Assert.AreEqual("The username or password you gave are not valid so we can't log you in.", validation[0].InnerText);
         }
 
     }

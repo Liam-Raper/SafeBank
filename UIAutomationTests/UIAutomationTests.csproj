@@ -55,12 +55,14 @@
   <ItemGroup>
     <Compile Include="Pages\AboutPage.cs" />
     <Compile Include="Pages\HomePage.cs" />
+    <Compile Include="Pages\JoinPage.cs" />
     <Compile Include="Pages\LogInPage.cs" />
     <Compile Include="Pages\Shared\BasePage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\Base\BaseUITest.cs" />
     <Compile Include="Tests\Pages\AboutPageTests.cs" />
     <Compile Include="Tests\Pages\HomePageTests.cs" />
+    <Compile Include="Tests\Pages\JoinPageTests.cs" />
     <Compile Include="Tests\Pages\LogInPageTests.cs" />
   </ItemGroup>
   <Choose>

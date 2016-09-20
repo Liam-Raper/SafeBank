@@ -125,6 +125,7 @@ namespace Data.Security.Membership.Classes
         public bool Validate(User validate)
         {
             if (string.IsNullOrEmpty(validate.UserDetail.Username)) return false;
+            if (GetAll().Any(x => x.UserDetail.Username == validate.UserDetail.Username)) return false;
             if (string.IsNullOrEmpty(validate.UserDetail.Email)) return false;
             if (string.IsNullOrEmpty(validate.UserAndPassword.Password)) return false;
             return !string.IsNullOrEmpty(validate.UserSecurityQuestionAndAnswer.Answer);
