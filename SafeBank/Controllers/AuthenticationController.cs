@@ -22,8 +22,13 @@ namespace SafeBank.Controllers
         [HttpPost]
         public ActionResult LogIn(UserLoginDetails loginDetails)
         {
-            if (!ModelState.IsValid || !Membership.ValidateUser(loginDetails.Username,loginDetails.Password))
+            if (!ModelState.IsValid)
             {
+                return View("LogIn", loginDetails);
+            }
+            if(!Membership.ValidateUser(loginDetails.Username, loginDetails.Password))
+            {
+                ModelState.AddModelError("UserOrPasswordNoValid", "The username or password you gave are not valid so we can't log you in.");
                 return View("LogIn", loginDetails);
             }
             _userActivities.UpdateLoggedInDateTime(loginDetails.Username);
@@ -40,11 +45,16 @@ namespace SafeBank.Controllers
         [HttpPost]
         public ActionResult Join(UserJoinDetails joinDetails)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Join", joinDetails);
+            }
             MembershipCreateStatus status;
             Membership.CreateUser(joinDetails.Username, joinDetails.Password, joinDetails.Email, joinDetails.Question,
                 joinDetails.Answer, true, out status);
-            if (!ModelState.IsValid || status != MembershipCreateStatus.Success)
+            if (status != MembershipCreateStatus.Success)
             {
+                ModelState.AddModelError("UnableToAddUser", "Unable to create a user with the details you gave are you user your not already in the system?");
                 return View("Join", joinDetails);
             }
             return RedirectToAction("LogIn");
