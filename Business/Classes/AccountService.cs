@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Business.Interfaces;
 using Business.Models;
 using Data.Standard.Interfaces;
+using Data.DatabaseModel;
 
 namespace Business.Classes
 {
@@ -16,12 +18,56 @@ namespace Business.Classes
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<AccountType> GetAllAccountTypes()
+        public bool AccountExist(int accountNumber, int bankId)
         {
-            return _unitOfWork.AccountTypeTable.GetAll().Select(x => new AccountType
+            return _unitOfWork.AccountTable.GetAll().Any(x => x.AccountDetail.AccountNumber == accountNumber && x.AccountDetail.BankId == bankId);
+        }
+
+        public void CreateAccountForCustomer(string customerUsername, int bankId, AccountBO account)
+        {
+            var accountData = new Account()
+            {
+                AccountDetail = new AccountDetail
+                {
+                    AccountName = account.Name,
+                    AccountNumber = account.Number,
+                    Balance = 0,
+                    Overdraft = 0,
+                    BankId = bankId
+                },
+                AccountType = _unitOfWork.AccountTypeTable.GetAll().Single(x => x.Name == account.Type.Name)
+            };
+            _unitOfWork.AccountTable.AddSingle(accountData);
+            _unitOfWork.Commit();
+        }
+
+        public IEnumerable<Models.AccountType> GetAllAccountTypes()
+        {
+            return _unitOfWork.AccountTypeTable.GetAll().Select(x => new Models.AccountType
             {
                 Name = x.Name
             });
+        }
+
+        public void GiveUserAccessToAccount(string username, string accessLevel, int accountNumber)
+        {
+            var account = _unitOfWork.AccountTable.GetAll().Single(x => x.AccountDetail.AccountNumber == accountNumber);
+            var access = _unitOfWork.AccessLevelTable.GetAll().Single(x => x.Name == accessLevel);
+            var user = _unitOfWork.User.GetAll().Single(x => x.UserDetail.Username == username);
+            if(account.UserAccountAccesses.Any(x => x.UserId == user.Id))
+            {
+                account.UserAccountAccesses.Single(x => x.UserId == user.Id).AccessLevelId = access.Id;
+            }
+            else
+            {
+                access.UserAccountAccesses.Add(new UserAccountAccess
+                {
+                    UserId = user.Id,
+                    AccountId = account.Id,
+                    AccessLevelId = access.Id
+                });
+            }
+            _unitOfWork.Commit();
         }
     }
 }

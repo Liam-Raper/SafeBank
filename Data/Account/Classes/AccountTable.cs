@@ -1,34 +1,47 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Data.Account.Interfaces;
+using System.Data.Entity;
 
 namespace Data.Account.Classes
 {
     public class AccountTable : IAccountTable<int,DatabaseModel.Account>
     {
+
+
+        private readonly DbSet<DatabaseModel.Account> _table;
+
+        public AccountTable(DbSet<DatabaseModel.Account> table)
+        {
+            _table = table;
+        }
+
+
         public IQueryable<DatabaseModel.Account> GetAll()
         {
-            throw new System.NotImplementedException();
+            return _table;
         }
 
         public IQueryable<DatabaseModel.Account> GetMany(IEnumerable<int> ids)
         {
-            throw new System.NotImplementedException();
+            var idList = ids.ToList();
+            return GetAll().Where(x => idList.Exists(y => y.Equals(x.Id)));
         }
 
         public DatabaseModel.Account GetSingle(int id)
         {
-            throw new System.NotImplementedException();
+            return GetAll().Single(x => x.Id == id);
         }
 
         public int AddSingle(DatabaseModel.Account set)
         {
-            throw new System.NotImplementedException();
+            var added = _table.Add(set);
+            return added.Id;
         }
 
         public IEnumerable<int> AddMany(IEnumerable<DatabaseModel.Account> set)
         {
-            throw new System.NotImplementedException();
+            return set.Select(AddSingle).ToList();
         }
 
         public bool UpdateAll(DatabaseModel.Account set)

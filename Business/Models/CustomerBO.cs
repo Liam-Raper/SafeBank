@@ -7,5 +7,6 @@
         public string FamilyName;
         public string Email;
         public string Phone;
+        public string Username;
     }
 }

@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Business.Interfaces;
 using Business.Models;
 using Data.Standard.Interfaces;
+using Data.DatabaseModel;
 
 namespace Business.Classes
 {
@@ -14,6 +16,23 @@ namespace Business.Classes
         public CustomerService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+        }
+
+        public void AddCustomer(CustomerBO customer)
+        {
+            var customerData = new Customer()
+            {
+                CustomerDetail = new CustomerDetail
+                {
+                    Given_name = customer.GivenName,
+                    Family_name = customer.FamilyName,
+                    Phone = customer.Phone,
+                    Email = customer.Email
+                },
+                User = _unitOfWork.User.GetAll().Single(x => x.UserDetail.Username == customer.Username)
+            };
+            _unitOfWork.CustomerTable.AddSingle(customerData);
+            _unitOfWork.Commit();
         }
 
         public IEnumerable<CustomerBO> GetCustomers(int bankId)

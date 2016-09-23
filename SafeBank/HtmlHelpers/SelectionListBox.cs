@@ -14,13 +14,13 @@ namespace SafeBank.HtmlHelpers
         {
             var metadata = ModelMetadata.FromLambdaExpression(expression, html.ViewData);
             var htmlFieldName = ExpressionHelper.GetExpressionText(expression);
-            var modelPropertyName = metadata.PropertyName ?? htmlFieldName.Split('.').Last();
+            var modelPropertyName = htmlFieldName.Replace(".","_");
             if (string.IsNullOrEmpty(modelPropertyName))
             {
                 return MvcHtmlString.Empty;
             }
             var selectList = new TagBuilder("select");
-            selectList.Attributes.Add("name", modelPropertyName);
+            selectList.Attributes.Add("name", htmlFieldName);
             selectList.Attributes.Add("id", modelPropertyName);
             if (listItems == null) return MvcHtmlString.Create(selectList.ToString());
             var options = new StringBuilder();

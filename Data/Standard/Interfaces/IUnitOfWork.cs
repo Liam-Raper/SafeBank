@@ -20,6 +20,7 @@ namespace Data.Standard.Interfaces
         ICustomerTable<int,DatabaseModel.Customer> CustomerTable { get; }
         IAccountTable<int,DatabaseModel.Account> AccountTable { get; }
         IAccountTypeTable<int,DatabaseModel.AccountType> AccountTypeTable { get; }
+        IAccountAccessLevelTable<int,DatabaseModel.AccessLevel> AccessLevelTable { get; }
         void Commit();
     }
 }

@@ -7,9 +7,25 @@ namespace SafeBank.Models.Customer
 {
     public class AddCustomerDetails
     {
+        private UserJoinDetails _userDetails;
+        public UserJoinDetails UserDetails
+        {
+            get
+            {
+                if (_userDetails == null) _userDetails = new UserJoinDetails();
+                return _userDetails;
+            }
+        }
 
-        public UserJoinDetails UserDetails = new UserJoinDetails();
-        public AddAccountDetails AccountDetails = new AddAccountDetails();
+        private AddAccountDetails _accountDetails;
+        public AddAccountDetails AccountDetails
+        {
+            get
+            {
+                if (_accountDetails == null) _accountDetails = new AddAccountDetails();
+                return _accountDetails;
+            }
+        }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "You did not give a given name for the new customer")]
         [DisplayName("Given name")]

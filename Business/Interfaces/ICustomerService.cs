@@ -6,5 +6,6 @@ namespace Business.Interfaces
     public interface ICustomerService
     {
         IEnumerable<CustomerBO> GetCustomers(int bankId);
+        void AddCustomer(CustomerBO customer);
     }
 }

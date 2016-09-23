@@ -52,6 +52,7 @@
     <Compile Include="Interfaces\ICustomerService.cs" />
     <Compile Include="Interfaces\IEmployeeService.cs" />
     <Compile Include="Interfaces\IOrganisationService.cs" />
+    <Compile Include="Models\AccountBO.cs" />
     <Compile Include="Models\AccountType.cs" />
     <Compile Include="Models\BankBO.cs" />
     <Compile Include="Models\BranchBO.cs" />

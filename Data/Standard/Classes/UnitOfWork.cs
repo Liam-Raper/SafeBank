@@ -1,4 +1,5 @@
-﻿using Data.Account.Classes;
+﻿using System;
+using Data.Account.Classes;
 using Data.Account.Interfaces;
 using Data.Bank.Classes;
 using Data.Bank.Interfaces;
@@ -30,8 +31,9 @@ namespace Data.Standard.Classes
             EmployeeTable = new EmployeeTable(_database.Employees);
             EmployeeLocationTable = new EmployeeLocationTable(_database.EmployeeLocations);
             CustomerTable = new CustomerTable(_database.Customers);
-            AccountTable = new AccountTable();
+            AccountTable = new AccountTable(_database.Accounts);
             AccountTypeTable = new AccountTypeTable(_database.AccountTypes);
+            AccessLevelTable = new AccountAccessLevelTable(_database.AccessLevels);
         }
 
         public IUserTables<int, User> User { get; }
@@ -45,7 +47,8 @@ namespace Data.Standard.Classes
         public ICustomerTable<int, DatabaseModel.Customer> CustomerTable { get; }
         public IAccountTable<int, DatabaseModel.Account> AccountTable { get; }
         public IAccountTypeTable<int, AccountType> AccountTypeTable { get; }
-
+        public IAccountAccessLevelTable<int, AccessLevel> AccessLevelTable { get; }
+        
         public void Commit()
         {
             _database.SaveChanges();
