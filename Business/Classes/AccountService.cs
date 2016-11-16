@@ -97,5 +97,13 @@ namespace Business.Classes
             }
             _unitOfWork.Commit();
         }
+
+        public void RemoveUserAccessToAccount(string username, int accountNumber)
+        {
+            var account = _unitOfWork.AccountTable.GetAll().Single(x => x.AccountDetail.AccountNumber == accountNumber);
+            var access = account.UserAccountAccesses.Single(x => x.User.UserDetail.Username == username);
+            _unitOfWork.UserAccountAccessTable.DeleteSingle(access.Id);
+            _unitOfWork.Commit();
+        }
     }
 }

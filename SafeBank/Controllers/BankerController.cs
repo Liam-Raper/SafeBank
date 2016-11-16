@@ -171,10 +171,12 @@ namespace SafeBank.Controllers
         }
 
         //TODO: Edit account
-        //TODO: Delete account
+
         public ActionResult DeleteAccount(int accountId, int customerId)
         {
-            //Remove access
+            var customer = _customerService.GetCustomer(customerId);
+            var account = _accountService.GetAccountsForACustomer(customerId).Single(x => x.Id == accountId);
+            _accountService.RemoveUserAccessToAccount(customer.Username, account.Number);
             _accountService.DeleteAccount(accountId);
             return RedirectToAction("CustomerAccounts", new { customerId = customerId });
         }
