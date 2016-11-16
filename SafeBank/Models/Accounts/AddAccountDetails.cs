@@ -29,5 +29,7 @@ namespace SafeBank.Models.Accounts
         [DisplayName("Account name")]
         public string AccountName { get; set; }
 
+        public int CustomerId { get; set; }
+
     }
 }

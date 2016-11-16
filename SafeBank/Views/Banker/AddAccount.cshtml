@@ -1,0 +1,19 @@
+﻿@using SafeBank.HtmlHelpers
+@model SafeBank.Models.Accounts.AddAccountDetails
+<h1>Customer Manager</h1>
+<h2>Add Account</h2>
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(x => x.AccountName)
+    @Html.TextBoxFor(x => x.AccountName)
+    @Html.LabelFor(x => x.AccountNumber)
+    @Html.TextBoxFor(x => x.AccountNumber)
+    @Html.LabelFor(x => x.AccountType)
+    @Html.SelectionListBoxFor(x => x.AccountType, Model.AccountTypesList)
+    <br />
+    <br />
+    <input type="submit" value="Add new" />
+    <br />
+    <br />
+    @Html.ValidationSummary()
+}

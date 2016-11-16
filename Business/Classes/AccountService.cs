@@ -41,6 +41,12 @@ namespace Business.Classes
             _unitOfWork.Commit();
         }
 
+        public void DeleteAccount(int id)
+        {
+            _unitOfWork.AccountTable.DeleteSingle(id);
+            _unitOfWork.Commit();
+        }
+
         public IEnumerable<AccountBO> GetAccountsForACustomer(int customerId)
         {
             var customer = _unitOfWork.CustomerTable.GetAll().Single(x => x.Id == customerId);

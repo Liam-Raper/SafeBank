@@ -139,9 +139,45 @@ namespace SafeBank.Controllers
             return View(model);
         }
 
-        //TODO: Add account
+        public ActionResult AddAccount(int CustomerId)
+        {
+            var model = new AddAccountDetails();
+            model.CustomerId = CustomerId;
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AddAccount(AddAccountDetails model)
+        {
+            var employeeId = _employeeService.GetEmployeeId(User.Identity.Name);
+            var bankId = _employeeService.GetBankId(employeeId);
+            var customer = _customerService.GetCustomer(model.CustomerId);
+            if (_accountService.AccountExist(model.AccountNumber.Value, bankId))
+            {
+                ModelState.AddModelError("Account", "The account number is already an account at this bank.");
+                return View(model);
+            }
+            _accountService.CreateAccountForCustomer(customer.Username, bankId, new AccountBO
+            {
+                Name = model.AccountName,
+                Number = model.AccountNumber.Value,
+                Type = new AccountType
+                {
+                    Name = model.AccountType
+                }
+            });
+            _accountService.GiveUserAccessToAccount(customer.Username, "Owner", model.AccountNumber.Value);
+            return RedirectToAction("CustomerAccounts",new { customerId = model.CustomerId });
+        }
+
         //TODO: Edit account
         //TODO: Delete account
+        public ActionResult DeleteAccount(int accountId, int customerId)
+        {
+            //Remove access
+            _accountService.DeleteAccount(accountId);
+            return RedirectToAction("CustomerAccounts", new { customerId = customerId });
+        }
         //TODO: View transactions
 
     }

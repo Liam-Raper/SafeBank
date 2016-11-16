@@ -10,5 +10,6 @@ namespace Business.Interfaces
         void GiveUserAccessToAccount(string username, string accessLevel, int accountNumber);
         bool AccountExist(int accountNumber, int bankId);
         IEnumerable<AccountBO> GetAccountsForACustomer(int customerId);
+        void DeleteAccount(int id);
     }
 }
