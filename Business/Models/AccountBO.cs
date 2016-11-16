@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Business.Models
+﻿namespace Business.Models
 {
     public class AccountBO
     {
+        public int Id;
         public AccountType Type;
         public int Number;
         public string Name;

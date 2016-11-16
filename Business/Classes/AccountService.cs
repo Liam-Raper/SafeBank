@@ -51,6 +51,7 @@ namespace Business.Classes
                 var account = accountAccess.Account;
                 resultList.Add(new AccountBO
                 {
+                    Id = account.Id,
                     Name = account.AccountDetail.AccountName,
                     Number = account.AccountDetail.AccountNumber,
                     Type = new Models.AccountType

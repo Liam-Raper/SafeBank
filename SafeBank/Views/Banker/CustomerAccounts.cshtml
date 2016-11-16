@@ -1,0 +1,27 @@
+﻿@model SafeBank.Models.Accounts.AccountsDetails
+<h1>Customer Manager</h1>
+<h2>Accounts</h2>
+<div class="CustomListCenter">
+    @Html.ActionLink("Add new", "AddAccount", new { CustomerId = Model.CustomerId })
+    <br />
+    <br />
+    @foreach (var account in Model.AccountDetailses)
+    {
+        <div>
+            <span>Name: @account.AccountName</span>
+            <br />
+            <span>Number: @account.AccountNumber</span>
+            <br />
+            <span>Type: @account.AccountType</span>
+            <br />
+            <span>@Html.ActionLink("Edit", "EditAccount", new { accountId = account.Id })</span>
+            <span>@Html.ActionLink("Delete", "DeleteAccount", new { accountId = account.Id })</span>
+            <span>@Html.ActionLink("Transactions", "AccountsTransactions", new { accountId = account.Id })</span>
+            <br />
+        </div>
+    }
+    @if (Model.AccountDetailses.Count() >= 8)
+    {
+        @Html.ActionLink("Add new", "AddAccount", new { CustomerId = Model.CustomerId })
+    }
+</div>

@@ -5,6 +5,7 @@ using SafeBank.Models.Customer;
 using Business.Models;
 using System.Web.Security;
 using Security.Interfaces.User;
+using SafeBank.Models.Accounts;
 
 namespace SafeBank.Controllers
 {
@@ -124,12 +125,24 @@ namespace SafeBank.Controllers
             return RedirectToAction("CustomerManager");
         }
         
-        //TODO: View accounts for customer
         public ActionResult CustomerAccounts(int customerId)
         {
             if (!_customerService.CustomerExist(customerId)) return RedirectToAction("CustomerManager");
-            _accountService.GetAccountsForACustomer(customerId);
-            return RedirectToAction("CustomerManager");
+            var model = new AccountsDetails();
+            model.CustomerId = customerId;
+            model.AccountDetailses = _accountService.GetAccountsForACustomer(customerId).Select(x => new AccountDetails {
+                Id = x.Id,
+                AccountName = x.Name,
+                AccountNumber = x.Number,
+                AccountType = x.Type.Name
+            });
+            return View(model);
         }
+
+        //TODO: Add account
+        //TODO: Edit account
+        //TODO: Delete account
+        //TODO: View transactions
+
     }
 }
