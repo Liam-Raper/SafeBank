@@ -77,6 +77,15 @@ namespace Business.Classes
             });
         }
 
+        public IEnumerable<TransactionBO> GetTransactionsForAccount(int id)
+        {
+            return _unitOfWork.AccoutTransactionTable.GetAll().Where(x => x.AccountId == id).Select(x => new TransactionBO
+            {
+                Deposeted = x.Deposeted,
+                Withdrawn = x.Withdrawn
+            });
+        }
+
         public void GiveUserAccessToAccount(string username, string accessLevel, int accountNumber)
         {
             var account = _unitOfWork.AccountTable.GetAll().Single(x => x.AccountDetail.AccountNumber == accountNumber);

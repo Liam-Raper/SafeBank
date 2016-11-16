@@ -54,10 +54,13 @@
     <Compile Include="Account\Classes\AccountAccessLevelTable.cs" />
     <Compile Include="Account\Classes\AccountTable.cs" />
     <Compile Include="Account\Classes\AccountTypeTable.cs" />
+    <Compile Include="Account\Classes\AccoutTransactionTable.cs" />
     <Compile Include="Account\Classes\UserAccountAccessTable.cs" />
     <Compile Include="Account\Interfaces\IAccountAccessLevelTable.cs" />
     <Compile Include="Account\Interfaces\IAccountTable.cs" />
     <Compile Include="Account\Interfaces\IAccountTypeTable.cs" />
+    <Compile Include="Account\Interfaces\IAccoutTransactionTable.cs" />
+    <Compile Include="Account\Interfaces\IAccoutTransactionTable1.cs" />
     <Compile Include="Account\Interfaces\IUserAccountAccessTable.cs" />
     <Compile Include="Bank\Classes\BankTable.cs" />
     <Compile Include="Bank\Classes\BranchTable.cs" />

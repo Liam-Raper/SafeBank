@@ -35,6 +35,7 @@ namespace Data.Standard.Classes
             AccountTypeTable = new AccountTypeTable(_database.AccountTypes);
             AccessLevelTable = new AccountAccessLevelTable(_database.AccessLevels);
             UserAccountAccessTable = new UserAccountAccessTable(_database.UserAccountAccesses);
+            AccoutTransactionTable = new AccoutTransactionTable(_database.Transactions);
         }
 
         public IUserTables<int, User> User { get; }
@@ -50,6 +51,7 @@ namespace Data.Standard.Classes
         public IAccountTypeTable<int, AccountType> AccountTypeTable { get; }
         public IAccountAccessLevelTable<int, AccessLevel> AccessLevelTable { get; }
         public IUserAccountAccessTable<int, UserAccountAccess> UserAccountAccessTable { get; }
+        public IAccoutTransactionTable<int, Transaction> AccoutTransactionTable { get; }
 
         public void Commit()
         {

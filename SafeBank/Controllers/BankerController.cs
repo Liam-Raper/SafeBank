@@ -204,7 +204,10 @@ namespace SafeBank.Controllers
             _accountService.DeleteAccount(accountId);
             return RedirectToAction("CustomerAccounts", new { customerId = customerId });
         }
+
         //TODO: View transactions
+        //TODO: Deposeted into a account
+        //TODO: Withdrawn from an account
 
     }
 }

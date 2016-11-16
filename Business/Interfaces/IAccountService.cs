@@ -13,5 +13,6 @@ namespace Business.Interfaces
         IEnumerable<AccountBO> GetAccountsForACustomer(int customerId);
         void DeleteAccount(int id);
         void UpdateAccount(AccountBO accountBo);
+        IEnumerable<TransactionBO> GetTransactionsForAccount(int id);
     }
 }

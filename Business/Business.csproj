@@ -59,6 +59,7 @@
     <Compile Include="Models\CustomerBO.cs" />
     <Compile Include="Models\EmployeeBO.cs" />
     <Compile Include="Models\OrganisationBO.cs" />
+    <Compile Include="Models\TransactionBO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -22,6 +22,7 @@ namespace Data.Standard.Interfaces
         IAccountTypeTable<int,DatabaseModel.AccountType> AccountTypeTable { get; }
         IAccountAccessLevelTable<int,DatabaseModel.AccessLevel> AccessLevelTable { get; }
         IUserAccountAccessTable<int,DatabaseModel.UserAccountAccess> UserAccountAccessTable { get; }
+        IAccoutTransactionTable<int,DatabaseModel.Transaction> AccoutTransactionTable { get; }
         void Commit();
     }
 }
