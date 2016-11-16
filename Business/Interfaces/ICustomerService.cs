@@ -7,5 +7,9 @@ namespace Business.Interfaces
     {
         IEnumerable<CustomerBO> GetCustomers(int bankId);
         void AddCustomer(CustomerBO customer);
+        bool CustomerExist(int customerId);
+        CustomerBO GetCustomer(int customerId);
+        void UpdateCustomer(CustomerBO employee);
+        void DeleteCustomer(int id);
     }
 }

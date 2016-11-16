@@ -93,5 +93,43 @@ namespace SafeBank.Controllers
             _accountService.GiveUserAccessToAccount(model.UserDetails.Username, "Owner", model.AccountDetails.AccountNumber.Value);
             return RedirectToAction("CustomerManager");
         }
+
+        public ActionResult EditCustomer(int customerId)
+        {
+            if (!_customerService.CustomerExist(customerId)) return RedirectToAction("CustomerManager");
+            var model = new EditCustomerDetails();
+            var customer = _customerService.GetCustomer(customerId);
+            model.Id = customer.id;
+            model.FamilyName = customer.FamilyName;
+            model.GivenName = customer.GivenName;
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult EditCustomer(EditCustomerDetails model)
+        {
+            if (!ModelState.IsValid || !_customerService.CustomerExist(model.Id)) return View(model);
+            _customerService.UpdateCustomer(new CustomerBO
+            {
+                id = model.Id,
+                FamilyName = model.FamilyName,
+                GivenName = model.GivenName
+            });
+            return RedirectToAction("CustomerManager");
+        }
+        
+        public ActionResult DeleteCustomer(int customerId)
+        {
+            _customerService.DeleteCustomer(customerId);
+            return RedirectToAction("CustomerManager");
+        }
+        
+        //TODO: View accounts for customer
+        public ActionResult CustomerAccounts(int customerId)
+        {
+            if (!_customerService.CustomerExist(customerId)) return RedirectToAction("CustomerManager");
+            _accountService.GetAccountsForACustomer(customerId);
+            return RedirectToAction("CustomerManager");
+        }
     }
 }

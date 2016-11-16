@@ -35,6 +35,32 @@ namespace Business.Classes
             _unitOfWork.Commit();
         }
 
+        public bool CustomerExist(int customerId)
+        {
+            return _unitOfWork.CustomerTable.GetAll().Any(x => x.Id == customerId);
+        }
+
+        public void DeleteCustomer(int id)
+        {
+            var customer = _unitOfWork.CustomerTable.GetSingle(id);
+            _unitOfWork.CustomerTable.DeleteSingle(customer.Id);
+            _unitOfWork.Commit();
+        }
+
+        public CustomerBO GetCustomer(int customerId)
+        {
+            var customer = _unitOfWork.CustomerTable.GetSingle(customerId);
+            return new CustomerBO
+            {
+                id = customer.Id,
+                Username = customer.User.UserDetail.Username,
+                Email = customer.CustomerDetail.Email,
+                FamilyName = customer.CustomerDetail.Family_name,
+                GivenName = customer.CustomerDetail.Given_name,
+                Phone = customer.CustomerDetail.Phone
+            };
+        }
+
         public IEnumerable<CustomerBO> GetCustomers(int bankId)
         {
             return _unitOfWork.CustomerTable.GetAll()
@@ -47,6 +73,14 @@ namespace Business.Classes
                         Phone = x.CustomerDetail.Phone,
                         Email = x.CustomerDetail.Email
                     }).ToList();
+        }
+
+        public void UpdateCustomer(CustomerBO customerBo)
+        {
+            var customer = _unitOfWork.CustomerTable.GetSingle(customerBo.id);
+            customer.CustomerDetail.Family_name = customerBo.FamilyName;
+            customer.CustomerDetail.Given_name = customerBo.GivenName;
+            _unitOfWork.Commit();
         }
     }
 }

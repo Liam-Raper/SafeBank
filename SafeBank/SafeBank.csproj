@@ -152,6 +152,7 @@
     <Compile Include="HtmlHelpers\SelectionListBox.cs" />
     <Compile Include="Models\Accounts\AddAccountDetails.cs" />
     <Compile Include="Models\Customer\AddCustomerDetails.cs" />
+    <Compile Include="Models\Customer\EditCustomerDetails.cs" />
     <Compile Include="Models\Employee\AddEmployeeDetails.cs" />
     <Compile Include="Models\Bank\AddBankDetails.cs" />
     <Compile Include="Models\Branch\AddBranchDetails.cs" />
@@ -287,6 +288,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Banker\AddCustomer.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Banker\EditCustomer.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

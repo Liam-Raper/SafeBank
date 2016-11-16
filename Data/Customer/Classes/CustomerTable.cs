@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Linq;
 using Data.Customer.Interfaces;
+using System;
 
 namespace Data.Customer.Classes
 {
@@ -44,32 +45,77 @@ namespace Data.Customer.Classes
 
         public bool UpdateAll(DatabaseModel.Customer set)
         {
-            throw new System.NotImplementedException();
+            var allRecords = GetAll().ToArray();
+            return allRecords.Select(all => all.Id).Select(singleId => UpdateSingle(singleId, set)).All(result => result);
         }
 
         public bool UpdateMany(IEnumerable<int> ids, DatabaseModel.Customer set)
         {
-            throw new System.NotImplementedException();
+            return ids.Select(intId => UpdateSingle(intId, set)).All(result => result);
         }
 
         public bool UpdateSingle(int id, DatabaseModel.Customer set)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                var record = GetSingle(id);
+                record.CustomerDetail.Family_name = set.CustomerDetail.Family_name;
+                record.CustomerDetail.Given_name = set.CustomerDetail.Given_name;
+                record.CustomerDetail.Phone = set.CustomerDetail.Phone;
+                record.CustomerDetail.Email = set.CustomerDetail.Email;
+                record.User.UserActivity.IsApproved = set.User.UserActivity.IsApproved;
+                record.User.UserActivity.IsLockedOut = set.User.UserActivity.IsLockedOut;
+                record.User.UserDetail.Email = set.User.UserDetail.Email;
+                record.User.UserDetail.Comment = set.User.UserDetail.Comment;
+                return true;
+            }
+            catch (Exception e)
+            {
+                //TODO: Log the exception
+                return false;
+            }
         }
 
         public bool DeleteAll()
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                _table.RemoveRange(GetAll());
+                return true;
+            }
+            catch (Exception e)
+            {
+                //TODO: log exception
+                return false;
+            }
         }
 
         public bool DeleteMany(IEnumerable<int> ids)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                _table.RemoveRange(GetMany(ids));
+                return true;
+            }
+            catch (Exception e)
+            {
+                //TODO: log exception
+                return false;
+            }
         }
 
         public bool DeleteSingle(int id)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                _table.Remove(GetSingle(id));
+                return true;
+            }
+            catch (Exception e)
+            {
+                //TODO: log exception
+                return false;
+            }
         }
     }
 }

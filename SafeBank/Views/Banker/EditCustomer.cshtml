@@ -1,0 +1,17 @@
+﻿@model SafeBank.Models.Customer.EditCustomerDetails
+<h1>Customer Manager</h1>
+<h2>Edit Customer</h2>
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(x => x.Id)
+    @Html.LabelFor(x => x.GivenName)
+    @Html.TextBoxFor(x => x.GivenName)
+    @Html.LabelFor(x => x.FamilyName)
+    @Html.TextBoxFor(x => x.FamilyName)
+    <br />
+    <br />
+    <input type="submit" value="Update now" />
+    <br />
+    <br />
+    @Html.ValidationSummary()
+}

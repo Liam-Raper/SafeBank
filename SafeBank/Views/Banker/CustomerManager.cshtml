@@ -14,9 +14,9 @@
             <br/>
             <span>Email: @customer.Email</span>
             <br/>
-            <span>@Html.ActionLink("Edit", "EditCustomer", new { bankId = Model.BankId, customerId = customer.id })</span>
-            <span>@Html.ActionLink("Delete", "DeleteCustomer", new { bankId = Model.BankId, customerId = customer.id })</span>
-            <span>@Html.ActionLink("Accounts", "CustomerAccounts", new { bankId = Model.BankId, customerId = customer.id })</span>
+            <span>@Html.ActionLink("Edit", "EditCustomer", new { customerId = customer.id })</span>
+            <span>@Html.ActionLink("Delete", "DeleteCustomer", new { customerId = customer.id })</span>
+            <span>@Html.ActionLink("Accounts", "CustomerAccounts", new { customerId = customer.id })</span>
             <br/>
         </div>
     }

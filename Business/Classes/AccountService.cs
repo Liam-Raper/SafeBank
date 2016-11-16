@@ -41,6 +41,27 @@ namespace Business.Classes
             _unitOfWork.Commit();
         }
 
+        public IEnumerable<AccountBO> GetAccountsForACustomer(int customerId)
+        {
+            var customer = _unitOfWork.CustomerTable.GetAll().Single(x => x.Id == customerId);
+            var accountAccessList = customer.User.UserAccountAccesses;
+            var resultList = new List<AccountBO>();
+            foreach (var accountAccess in accountAccessList)
+            {
+                var account = accountAccess.Account;
+                resultList.Add(new AccountBO
+                {
+                    Name = account.AccountDetail.AccountName,
+                    Number = account.AccountDetail.AccountNumber,
+                    Type = new Models.AccountType
+                    {
+                        Name = account.AccountType.Name
+                    }
+                });
+            }
+            return resultList;
+        }
+
         public IEnumerable<Models.AccountType> GetAllAccountTypes()
         {
             return _unitOfWork.AccountTypeTable.GetAll().Select(x => new Models.AccountType
