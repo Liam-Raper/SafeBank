@@ -170,7 +170,31 @@ namespace SafeBank.Controllers
             return RedirectToAction("CustomerAccounts",new { customerId = model.CustomerId });
         }
 
-        //TODO: Edit account
+        public ActionResult EditAccount(int accountId, int customerId)
+        {
+            var accounts = _accountService.GetAccountsForACustomer(customerId);
+            if (!accounts.Any(x => x.Id == accountId)) return RedirectToAction("CustomerAccounts", new { customerId = customerId });
+            var account = accounts.Single(x => x.Id == accountId);
+            var model = new EditAccountDetails();
+            model.CustomerId = customerId;
+            model.AccountId = accountId;
+            model.AccountName = account.Name;
+            return View(model);
+        }
+        
+        [HttpPost]
+        public ActionResult EditAccount(EditAccountDetails model)
+        {
+            if (!ModelState.IsValid || !_customerService.CustomerExist(model.CustomerId)) return View(model);
+            var accounts = _accountService.GetAccountsForACustomer(model.CustomerId);
+            if (!accounts.Any(x => x.Id == model.AccountId)) return RedirectToAction("CustomerAccounts", new { customerId = model.CustomerId });
+            _accountService.UpdateAccount(new AccountBO
+            {
+                Id = model.AccountId,
+                Name = model.AccountName
+            });
+            return RedirectToAction("CustomerAccounts", new { customerId = model.CustomerId });
+        }
 
         public ActionResult DeleteAccount(int accountId, int customerId)
         {

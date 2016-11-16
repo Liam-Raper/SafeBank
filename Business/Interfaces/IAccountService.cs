@@ -12,5 +12,6 @@ namespace Business.Interfaces
         bool AccountExist(int accountNumber, int bankId);
         IEnumerable<AccountBO> GetAccountsForACustomer(int customerId);
         void DeleteAccount(int id);
+        void UpdateAccount(AccountBO accountBo);
     }
 }

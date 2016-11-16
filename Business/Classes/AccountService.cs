@@ -105,5 +105,12 @@ namespace Business.Classes
             _unitOfWork.UserAccountAccessTable.DeleteSingle(access.Id);
             _unitOfWork.Commit();
         }
+
+        public void UpdateAccount(AccountBO accountBo)
+        {
+            var account = _unitOfWork.AccountTable.GetSingle(accountBo.Id);
+            account.AccountDetail.AccountName = accountBo.Name;
+            _unitOfWork.Commit();
+        }
     }
 }
