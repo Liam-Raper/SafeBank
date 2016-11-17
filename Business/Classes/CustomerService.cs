@@ -47,6 +47,11 @@ namespace Business.Classes
             _unitOfWork.Commit();
         }
 
+        public int GetCustomerId(string userName)
+        {
+            return _unitOfWork.CustomerTable.GetAll().Single(x => x.User.UserDetail.Username == userName).Id;
+        }
+
         public CustomerBO GetCustomer(int customerId)
         {
             var customer = _unitOfWork.CustomerTable.GetSingle(customerId);

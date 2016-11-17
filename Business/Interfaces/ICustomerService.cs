@@ -9,6 +9,7 @@ namespace Business.Interfaces
         void AddCustomer(CustomerBO customer);
         bool CustomerExist(int customerId);
         CustomerBO GetCustomer(int customerId);
+        int GetCustomerId(string userName);
         void UpdateCustomer(CustomerBO employee);
         void DeleteCustomer(int id);
     }
