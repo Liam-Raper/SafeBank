@@ -23,5 +23,12 @@ namespace SafeBank.Models.Accounts
         [Required(AllowEmptyStrings = false, ErrorMessage = "You must enter an account name")]
         [DisplayName("Account name")]
         public string AccountName { get; set; }
+
+        [DisplayName("Balance")]
+        public decimal AccountBalance { get; set; }
+
+        [DisplayName("Overdraft")]
+        public decimal AccountOverdraft { get; set; }
+
     }
 }

@@ -7,6 +7,8 @@
     @Html.HiddenFor(x => x.AccountId)
     @Html.LabelFor(x => x.AccountName)
     @Html.TextBoxFor(x => x.AccountName)
+    @Html.LabelFor(x => x.AccountOverdraft)
+    @Html.EditorFor(x => x.AccountOverdraft)
     <br />
     <br />
     <input type="submit" value="Update now" />

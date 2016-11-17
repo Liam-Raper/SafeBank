@@ -14,6 +14,10 @@
             <br />
             <span>Type: @account.AccountType</span>
             <br />
+            <span>Balance: @account.AccountBalance</span>
+            <br />
+            <span>Overdraft: @account.AccountOverdraft</span>
+            <br />
             <span>@Html.ActionLink("Edit", "EditAccount", new { accountId = account.Id, customerId = Model.CustomerId })</span>
             <span>@Html.ActionLink("Delete", "DeleteAccount", new { accountId = account.Id, customerId = Model.CustomerId })</span>
             <br />

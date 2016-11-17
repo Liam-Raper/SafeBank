@@ -1,0 +1,14 @@
+﻿@model SafeBank.Models.Accounts.AccountsTransactions
+<h1>Customer Manager</h1>
+<h2>Account transactions (@Model.AccountName)</h2>
+<div class="CustomListCenter">
+    @foreach (var transaction in Model.Transactions)
+    {
+        <div>
+            <span>Deposeted: @transaction.Deposeted</span>
+            <br />
+            <span>Withdrawn: @transaction.Withdrawn</span>
+            <br />
+        </div>
+    }
+</div>

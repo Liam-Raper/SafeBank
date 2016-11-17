@@ -63,7 +63,9 @@ namespace Business.Classes
                     Type = new Models.AccountType
                     {
                         Name = account.AccountType.Name
-                    }
+                    },
+                    Balance = account.AccountDetail.Balance,
+                    Overdraft = account.AccountDetail.Overdraft
                 });
             }
             return resultList;
@@ -119,6 +121,7 @@ namespace Business.Classes
         {
             var account = _unitOfWork.AccountTable.GetSingle(accountBo.Id);
             account.AccountDetail.AccountName = accountBo.Name;
+            account.AccountDetail.Overdraft = accountBo.Overdraft;
             _unitOfWork.Commit();
         }
 

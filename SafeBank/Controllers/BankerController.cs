@@ -134,7 +134,9 @@ namespace SafeBank.Controllers
                 Id = x.Id,
                 AccountName = x.Name,
                 AccountNumber = x.Number,
-                AccountType = x.Type.Name
+                AccountType = x.Type.Name,
+                AccountBalance = x.Balance,
+                AccountOverdraft = x.Overdraft
             });
             return View(model);
         }
@@ -179,6 +181,7 @@ namespace SafeBank.Controllers
             model.CustomerId = customerId;
             model.AccountId = accountId;
             model.AccountName = account.Name;
+            model.AccountOverdraft = account.Overdraft;
             return View(model);
         }
         
@@ -191,7 +194,8 @@ namespace SafeBank.Controllers
             _accountService.UpdateAccount(new AccountBO
             {
                 Id = model.AccountId,
-                Name = model.AccountName
+                Name = model.AccountName,
+                Overdraft = model.AccountOverdraft
             });
             return RedirectToAction("CustomerAccounts", new { customerId = model.CustomerId });
         }
@@ -205,7 +209,23 @@ namespace SafeBank.Controllers
             return RedirectToAction("CustomerAccounts", new { customerId = customerId });
         }
 
-        //TODO: View transactions
+        public ActionResult AccountsTransactions(int accountId, int customerId)
+        {
+            if (!_customerService.CustomerExist(customerId)) return RedirectToAction("CustomerAccounts", new { customerId = customerId });
+            var account = _accountService.GetAccountsForACustomer(customerId).SingleOrDefault(x => x.Id == accountId);
+            if(account == null) return RedirectToAction("CustomerAccounts", new { customerId = customerId });
+            var model = new AccountsTransactions();
+            model.accountId = accountId;
+            model.customerId = customerId;
+            model.AccountName = account.Name;
+            model.Transactions = _accountService.GetTransactionsForAccount(accountId).Select(x => new AccountsTransaction
+            {
+                Deposeted = x.Deposeted,
+                Withdrawn = x.Withdrawn
+            });
+            return View(model);
+        }
+        
         public ActionResult AccountsDeposeted(int accountId, int customerId)
         {
             if(!_customerService.CustomerExist(customerId)) return RedirectToAction("CustomerAccounts", new { customerId = customerId });
