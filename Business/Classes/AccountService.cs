@@ -121,5 +121,36 @@ namespace Business.Classes
             account.AccountDetail.AccountName = accountBo.Name;
             _unitOfWork.Commit();
         }
+
+        public bool Deposet(int id, decimal ammount)
+        {
+            var account = _unitOfWork.AccountTable.GetSingle(id);
+            account.AccountDetail.Balance += ammount;
+            account.Transactions.Add(new Transaction
+            {
+                Deposeted = ammount,
+                Withdrawn = 0
+            });
+            _unitOfWork.Commit();
+            return true;
+        }
+
+        public bool Withdrawn(int id, decimal ammount)
+        {
+            var account = _unitOfWork.AccountTable.GetSingle(id);
+            account.AccountDetail.Balance -= ammount;
+            if (-account.AccountDetail.Overdraft > account.AccountDetail.Balance)
+            {
+                account.AccountDetail.Balance += ammount;
+                return false;
+            }
+            account.Transactions.Add(new Transaction
+            {
+                Deposeted = 0,
+                Withdrawn = ammount
+            });
+            _unitOfWork.Commit();
+            return true;
+        }
     }
 }

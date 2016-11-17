@@ -151,6 +151,8 @@
     </Compile>
     <Compile Include="HtmlHelpers\SelectionListBox.cs" />
     <Compile Include="Models\Accounts\AccountDetails.cs" />
+    <Compile Include="Models\Accounts\AccountWithdrawn.cs" />
+    <Compile Include="Models\Accounts\AccountsDeposeted.cs" />
     <Compile Include="Models\Accounts\AccountsDetails.cs" />
     <Compile Include="Models\Accounts\AddAccountDetails.cs" />
     <Compile Include="Models\Accounts\EditAccountDetails.cs" />
@@ -303,6 +305,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Banker\EditAccount.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Banker\AccountsDeposeted.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Banker\AccountsWithdrawn.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

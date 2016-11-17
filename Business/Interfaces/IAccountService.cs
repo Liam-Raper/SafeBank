@@ -14,5 +14,7 @@ namespace Business.Interfaces
         void DeleteAccount(int id);
         void UpdateAccount(AccountBO accountBo);
         IEnumerable<TransactionBO> GetTransactionsForAccount(int id);
+        bool Deposet(int id, decimal ammount);
+        bool Withdrawn(int id, decimal ammount);
     }
 }

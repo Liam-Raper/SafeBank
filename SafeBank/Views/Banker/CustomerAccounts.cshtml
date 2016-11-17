@@ -16,7 +16,10 @@
             <br />
             <span>@Html.ActionLink("Edit", "EditAccount", new { accountId = account.Id, customerId = Model.CustomerId })</span>
             <span>@Html.ActionLink("Delete", "DeleteAccount", new { accountId = account.Id, customerId = Model.CustomerId })</span>
-            <span>@Html.ActionLink("Transactions", "AccountsTransactions", new { accountId = account.Id })</span>
+            <br />
+            <span>@Html.ActionLink("Transactions", "AccountsTransactions", new { accountId = account.Id, customerId = Model.CustomerId })</span>
+            <span>@Html.ActionLink("Deposet", "AccountsDeposeted", new { accountId = account.Id, customerId = Model.CustomerId })</span>
+            <span>@Html.ActionLink("Withdrawn", "AccountsWithdrawn", new { accountId = account.Id, customerId = Model.CustomerId })</span>
             <br />
         </div>
     }

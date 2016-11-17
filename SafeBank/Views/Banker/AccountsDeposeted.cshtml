@@ -1,0 +1,18 @@
+﻿@model SafeBank.Models.Accounts.AccountDeposeted
+<h1>Customer Manager</h1>
+<h2>Deposet into account</h2>
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(x => x.accountId)
+    @Html.HiddenFor(x => x.customerId)
+    @Html.LabelFor(x => x.accountName)
+    <label>@Html.DisplayFor(x => x.accountName)</label>
+    @Html.LabelFor(x => x.ammount)
+    @Html.EditorFor(x => x.ammount)
+    <br />
+    <br />
+    <input type="submit" value="Deposet" />
+    <br />
+    <br />
+    @Html.ValidationSummary()
+}

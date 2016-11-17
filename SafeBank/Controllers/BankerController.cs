@@ -206,8 +206,55 @@ namespace SafeBank.Controllers
         }
 
         //TODO: View transactions
-        //TODO: Deposeted into a account
-        //TODO: Withdrawn from an account
+        public ActionResult AccountsDeposeted(int accountId, int customerId)
+        {
+            if(!_customerService.CustomerExist(customerId)) return RedirectToAction("CustomerAccounts", new { customerId = customerId });
+            var accounts = _accountService.GetAccountsForACustomer(customerId);
+            var account = accounts.SingleOrDefault(x => x.Id == accountId);
+            if(account == null) return RedirectToAction("CustomerAccounts", new { customerId = customerId });
+            var model = new AccountDeposeted()
+            {
+                customerId = customerId,
+                accountId = account.Id,
+                accountName = account.Name
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AccountsDeposeted(AccountDeposeted model)
+        {
+            if (!ModelState.IsValid) return View(model);
+            _accountService.Deposet(model.accountId, model.ammount);
+            return RedirectToAction("CustomerAccounts", new { customerId = model.customerId });
+        }
+
+        public ActionResult AccountsWithdrawn(int accountId, int customerId)
+        {
+            if (!_customerService.CustomerExist(customerId)) return RedirectToAction("CustomerAccounts", new { customerId = customerId });
+            var accounts = _accountService.GetAccountsForACustomer(customerId);
+            var account = accounts.SingleOrDefault(x => x.Id == accountId);
+            if (account == null) return RedirectToAction("CustomerAccounts", new { customerId = customerId });
+            var model = new AccountWithdrawn()
+            {
+                customerId = customerId,
+                accountId = account.Id,
+                accountName = account.Name
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AccountsWithdrawn(AccountWithdrawn model)
+        {
+            if (!ModelState.IsValid) return View(model);
+            if(!_accountService.Withdrawn(model.accountId, model.ammount))
+            {
+                ModelState.AddModelError("ammount", "The ammount will take the customer below there overdraft.");
+                return View(model);
+            }
+            return RedirectToAction("CustomerAccounts", new { customerId = model.customerId });
+        }
 
     }
 }
