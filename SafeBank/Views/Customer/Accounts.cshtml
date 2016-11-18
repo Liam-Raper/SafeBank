@@ -1,5 +1,5 @@
 ﻿@model SafeBank.Models.Accounts.AccountsDetails
-<h1>Customer Manager</h1>
+<h1></h1>
 <h2>Accounts</h2>
 <div class="CustomListCenter">
     @foreach (var account in Model.AccountDetailses)
@@ -15,8 +15,14 @@
             <br />
             <span>Overdraft: @account.AccountOverdraft</span>
             <br />
-            <span>@Html.ActionLink("Transactions", "AccountsTransactions", new { accountId = account.Id, customerId = Model.CustomerId })</span>
+            <span>@Html.ActionLink("Transactions", "Transactions", new { accountId = account.Id, customerId = Model.CustomerId })</span>
             <br />
+        </div>
+    }
+    @if (Model.AccountDetailses.Count() == 0)
+    {
+        <div>
+            <span>You don't have any accounts please contact your bank to setup an account</span>
         </div>
     }
 </div>

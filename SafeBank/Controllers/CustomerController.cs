@@ -33,5 +33,23 @@ namespace SafeBank.Controllers
             });
             return View(model);
         }
+        
+        public ActionResult Transactions(int accountId, int customerId)
+        {
+            if (!_customerService.CustomerExist(customerId)) return RedirectToAction("CustomerAccounts", new { customerId = customerId });
+            var account = _accountService.GetAccountsForACustomer(customerId).SingleOrDefault(x => x.Id == accountId);
+            if (account == null) return RedirectToAction("CustomerAccounts", new { customerId = customerId });
+            var model = new AccountsTransactions();
+            model.accountId = accountId;
+            model.customerId = customerId;
+            model.AccountName = account.Name;
+            model.Transactions = _accountService.GetTransactionsForAccount(accountId).Select(x => new AccountsTransaction
+            {
+                Deposeted = x.Deposeted,
+                Withdrawn = x.Withdrawn
+            });
+            return View(model);
+        }
+
     }
 }

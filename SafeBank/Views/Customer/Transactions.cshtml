@@ -1,0 +1,20 @@
+﻿@model SafeBank.Models.Accounts.AccountsTransactions
+<h1></h1>
+<h2>Account transactions (@Model.AccountName)</h2>
+<div class="CustomListCenter">
+    @foreach (var transaction in Model.Transactions)
+    {
+        <div>
+            <span>Deposeted: @transaction.Deposeted</span>
+            <br />
+            <span>Withdrawn: @transaction.Withdrawn</span>
+            <br />
+        </div>
+    }
+    @if (Model.Transactions.Count() == 0)
+    {
+        <div>
+            <span>There are no transactions on this account</span>
+        </div>
+    }
+</div>
