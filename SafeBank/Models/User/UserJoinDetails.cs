@@ -18,6 +18,7 @@ namespace SafeBank.Models.User
         }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "You must enter a username")]
+        [AllowHtml]
         public string Username { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "You must enter a password")]

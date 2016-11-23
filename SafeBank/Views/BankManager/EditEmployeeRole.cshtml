@@ -7,7 +7,7 @@
     @Html.HiddenFor(x => x.EmployeeId)
     <span>Name: @Model.EmployeeName</span>
     <br />
-    <span>Username: @Model.Username</span>
+    <span>Username: @Html.Raw(Model.Username)</span>
     <br />
     @Html.LabelFor(x => x.Role)
     @Html.SelectionListBoxFor(x => x.Role, Model.Roles.Select(x => x.Name))
