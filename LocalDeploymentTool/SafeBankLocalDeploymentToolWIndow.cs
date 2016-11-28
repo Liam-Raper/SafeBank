@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
-using System.Net.Sockets;
+using System.Net;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Text;
@@ -484,6 +485,9 @@ namespace LocalDeploymentTool
             SetUpProgress.PerformStep();
             DeploySite(serverManager, safeBankAppPool, safebankFolder);
             SetUpProgress.PerformStep();
+            var webClient = new WebClient();
+            webClient.DownloadFile("https://github.com/TechLiam/SafeBank/raw/SafeBank/SafeBank/Deployment/safebank.zip","safebank.zip");
+            ZipFile.ExtractToDirectory("safebank.zip", safebankFolder);
             foreach (var tempFolder in _deploymentLog.TempFolders)
             {
                 Directory.Delete(tempFolder);
