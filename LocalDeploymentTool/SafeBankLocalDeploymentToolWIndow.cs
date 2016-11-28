@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
@@ -14,6 +15,7 @@ using LocalDeploymentTool.Properties;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using Microsoft.Web.Administration;
+using System.Data.Sql;
 
 namespace LocalDeploymentTool
 {
@@ -477,13 +479,19 @@ namespace LocalDeploymentTool
         {
             if (Directory.GetFileSystemEntries(safeBankFolder).Any())
             {
-                var result = MessageBox.Show("Some things are already in the SafeBank folder do you wan't to download and deploy the latest.", "Code already deployed?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly, false);
+                var result =
+                    MessageBox.Show(
+                        "Some things are already in the SafeBank folder do you wan't to download and deploy the latest.",
+                        "Code already deployed?", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                        MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly, false);
                 if(result != DialogResult.Yes)
                 {
                     AddMessageToProcessLog("No code deployed");
                     return;
                 }
-                var deleteConent = MessageBox.Show("Can we delete the content in the SafeBank folder?", "Code already deployed?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly, false);
+                var deleteConent = MessageBox.Show("Can we delete the content in the SafeBank folder?",
+                    "Code already deployed?", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                    MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly, false);
                 if(deleteConent == DialogResult.Yes)
                 {
                     AddMessageToProcessLog("Deleting all files and folders in SafeBank folder");
@@ -510,31 +518,88 @@ namespace LocalDeploymentTool
             AddMessageToProcessLog("Deployed code to the SafeBank folder");
         }
 
-        private void Deploy()
+        private void DeployDatabase()
         {
-            DeployIIS();
-            SetUpProgress.PerformStep();
-            var safebankFolder = DeployFolders();
-            if(safebankFolder == null) return;
-            SetUpProgress.PerformStep();
-            var serverManager = new ServerManager();
-            var safeBankAppPool = DeployAppPool(serverManager);
-            SetUpProgress.PerformStep();
-            DeploySite(serverManager, safeBankAppPool, safebankFolder);
-            SetUpProgress.PerformStep();
-            DeployCodeToSite(safebankFolder);
-            SetUpProgress.PerformStep();
+            AddMessageToProcessLog("Searching for SQL server instances");
+            var instances = SqlDataSourceEnumerator.Instance.GetDataSources();
+            var sqlServers = (from DataRow instance in instances.Rows
+                select new SqlServerData
+                {
+                    ServerName = instance["ServerName"].ToString(), InstanceName = instance["InstanceName"].ToString(), IsClustered = instance["IsClustered"].ToString(), Version = instance["Version"].ToString()
+                }).ToArray();
+            if (sqlServers.Any(x => x.SqlVersion() != null))
+            {
+                SqlServerData sqlServerToUse;
+                if (sqlServers.Length > 0)
+                {
+                    AddMessageToProcessLog("Found " + sqlServers.Length + " sql server instances");
+                    var sqlDictKey = 0;
+                    var sqlDict = sqlServers.ToDictionary(sqlServerData => sqlDictKey++,
+                        sqlServerData => sqlServerData.ConnectionName());
+                    var sqlPicked = new SqlServerPicker("Pick a SQL server to use", "SQL servers", sqlDict);
+                    var sqlPickedResult = sqlPicked.ShowDialog(this);
+                    if (sqlPickedResult == DialogResult.OK)
+                    {
+                        sqlServerToUse = sqlServers[sqlPicked.Pick.Key];
+                    }
+                    else
+                    {
+                        AddMessageToProcessLog("Did not detect a sql server the user wished to use");
+                    }
+                }
+                else
+                {
+                    sqlServerToUse = sqlServers.Single();
+                    AddMessageToProcessLog("SQL instance (" + sqlServerToUse.ConnectionName() + ") detected");
+                }
+            }
+            else
+            {
+                AddMessageToProcessLog("No SQL servers detected");
+            }
+        }
+
+        private void CleanUpTermFolders()
+        {
             AddMessageToProcessLog("Finishing deployment");
             foreach (var tempFolder in _deploymentLog.TempFolders)
             {
-                Directory.Delete(tempFolder,true);
+                Directory.Delete(tempFolder, true);
             }
             _deploymentLog.TempFolders.Clear();
             SaveDeploymentLog();
+        }
+
+        private void Deploy()
+        {
+
+            DeployDatabase();
+            return;
+
+            DeployIIS();
             SetUpProgress.PerformStep();
+
+            var safebankFolder = DeployFolders();
+            if(safebankFolder == null) return;
+            SetUpProgress.PerformStep();
+
+            var serverManager = new ServerManager();
+            var safeBankAppPool = DeployAppPool(serverManager);
+            SetUpProgress.PerformStep();
+
+            DeploySite(serverManager, safeBankAppPool, safebankFolder);
+            SetUpProgress.PerformStep();
+
+            DeployCodeToSite(safebankFolder);
+            SetUpProgress.PerformStep();
+
+            CleanUpTermFolders();
+            SetUpProgress.PerformStep();
+
             _deploymentLog.HaveDeployed = true;
             SaveDeploymentLog();
             SetUpProgress.PerformStep();
+
             AddMessageToProcessLog("Deployment finished");
         }
 
