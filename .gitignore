@@ -188,3 +188,4 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 *.jfm
+/SafeBank/Deployment/src

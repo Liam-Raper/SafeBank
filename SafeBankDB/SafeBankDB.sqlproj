@@ -63,7 +63,6 @@
     <Folder Include="Schema\Schemas" />
     <Folder Include="Schema\Views" />
     <Folder Include="Schema\StoredProcedure" />
-    <Folder Include="Security" />
     <Folder Include="Data" />
     <Folder Include="Schema\Tables\Accounts" />
     <Folder Include="Schema\Tables\Bank" />
@@ -78,7 +77,6 @@
     <Build Include="Schema\Tables\Memberships\UserAndPassword.sql" />
     <Build Include="Schema\Tables\Memberships\UserActivity.sql" />
     <Build Include="Schema\Tables\Memberships\UserDetails.sql" />
-    <Build Include="Security\SafeBankMembershipManager.sql" />
     <Build Include="Schema\Tables\Memberships\Roles.sql" />
     <Build Include="Schema\Schemas\Accounts.sql" />
     <Build Include="Schema\Tables\Accounts\Account.sql" />
@@ -112,9 +110,7 @@
     <RefactorLog Include="SafeBankDB.refactorlog" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="VS2015_Deployer.SafeBankDB.publish.publish.xml" />
     <None Include="ClearDownMembership.sql" />
-    <None Include="WithDrift_VS2015_Deployer.SafeBankDB.publish.publish.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\SecurityQuestions.sql" />

@@ -320,6 +320,10 @@
   <ItemGroup>
     <Content Include="Views\Customer\Transactions.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Deployment\safebank.zip" />
+    <None Include="Properties\PublishProfiles\ToDeploymentFolder.pubxml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -338,7 +342,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>10494</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:30000/</IISUrl>
+          <IISUrl>http://localhost:8000/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
@@ -355,10 +359,29 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>IF EXIST "C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe" (
+    SET MSBuild=C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe
+) ELSE (
+    IF EXIST "C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe" (
+        SET MSBuild=C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe
+    ) ELSE (
+        echo "Unable to publish MSBuild not found"
+        Exit 1
+    )
+)
+echo "Publishing website"
+%25MSBuild%25 $(ProjectPath) /p:DeployOnBuild=true /p:PublishProfile=ToDeploymentFolder /p:PostBuildEvent=
+echo "Zipping"
+powershell Set-ExecutionPolicy Unrestricted
+powershell $(ProjectDir)zipDeployment.ps1</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
+  -->
   <Target Name="AfterBuild">
-  </Target> -->
+    <Message Text="Copying to Deployment Dir:" />
+  </Target>
 </Project>
