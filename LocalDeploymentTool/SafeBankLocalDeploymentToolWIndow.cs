@@ -382,7 +382,7 @@ namespace LocalDeploymentTool
             var safeBankFolder = wwwrootFolder + "\\SafeBank";
             if (Directory.Exists(safeBankFolder))
             {
-                var redeploy = MessageBox.Show("The SafeBank folder already has thing in do you wan't to redeploy?",
+                var redeploy = MessageBox.Show("The SafeBank folder already has thing in do you wan't to replace it?",
                     "Already deployed?", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
                     MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly, false);
                 if (redeploy != DialogResult.Yes)
@@ -473,6 +473,43 @@ namespace LocalDeploymentTool
             }
         }
 
+        private void DeployCodeToSite(string safeBankFolder)
+        {
+            if (Directory.GetFileSystemEntries(safeBankFolder).Any())
+            {
+                var result = MessageBox.Show("Some things are already in the SafeBank folder do you wan't to download and deploy the latest.", "Code already deployed?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly, false);
+                if(result != DialogResult.Yes)
+                {
+                    AddMessageToProcessLog("No code deployed");
+                    return;
+                }
+                var deleteConent = MessageBox.Show("Can we delete the content in the SafeBank folder?", "Code already deployed?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly, false);
+                if(deleteConent == DialogResult.Yes)
+                {
+                    AddMessageToProcessLog("Deleting all files and folders in SafeBank folder");
+                    var folders = Directory.EnumerateDirectories(safeBankFolder);
+                    foreach(var folder in folders)
+                    {
+                        Directory.Delete(folder,true);
+                    }
+                    var files = Directory.EnumerateFiles(safeBankFolder);
+                    foreach (var file in files)
+                    {
+                        File.Delete(file);
+                    }
+                    AddMessageToProcessLog("Deleted all files and folders in SafeBank folder");
+                }else
+                {
+                    AddMessageToProcessLog("Although files exist in SafeBanks folder the user did not wan't to delete them");
+                }
+            }
+            AddMessageToProcessLog("Downloading site code");
+            var webClient = new WebClient();
+            webClient.DownloadFile("https://github.com/TechLiam/SafeBank/raw/SafeBank/SafeBank/Deployment/safebank.zip", "safebank.zip");
+            ZipFile.ExtractToDirectory("safebank.zip", safeBankFolder);
+            AddMessageToProcessLog("Deployed code to the SafeBank folder");
+        }
+
         private void Deploy()
         {
             DeployIIS();
@@ -485,12 +522,12 @@ namespace LocalDeploymentTool
             SetUpProgress.PerformStep();
             DeploySite(serverManager, safeBankAppPool, safebankFolder);
             SetUpProgress.PerformStep();
-            var webClient = new WebClient();
-            webClient.DownloadFile("https://github.com/TechLiam/SafeBank/raw/SafeBank/SafeBank/Deployment/safebank.zip","safebank.zip");
-            ZipFile.ExtractToDirectory("safebank.zip", safebankFolder);
+            DeployCodeToSite(safebankFolder);
+            SetUpProgress.PerformStep();
+            AddMessageToProcessLog("Finishing deployment");
             foreach (var tempFolder in _deploymentLog.TempFolders)
             {
-                Directory.Delete(tempFolder);
+                Directory.Delete(tempFolder,true);
             }
             _deploymentLog.TempFolders.Clear();
             SaveDeploymentLog();
@@ -498,7 +535,7 @@ namespace LocalDeploymentTool
             _deploymentLog.HaveDeployed = true;
             SaveDeploymentLog();
             SetUpProgress.PerformStep();
-            AddMessageToProcessLog("All deployed");
+            AddMessageToProcessLog("Deployment finished");
         }
 
         private void SafeBankLocalDeploymentToolWIndow_Load(object sender, EventArgs e)
