@@ -128,16 +128,19 @@ namespace SafeBank.Controllers
         public ActionResult CustomerAccounts(int customerId)
         {
             if (!_customerService.CustomerExist(customerId)) return RedirectToAction("CustomerManager");
-            var model = new AccountsDetails();
-            model.CustomerId = customerId;
-            model.AccountDetailses = _accountService.GetAccountsForACustomer(customerId).Select(x => new AccountDetails {
-                Id = x.Id,
-                AccountName = x.Name,
-                AccountNumber = x.Number,
-                AccountType = x.Type.Name,
-                AccountBalance = x.Balance,
-                AccountOverdraft = x.Overdraft
-            });
+            var model = new AccountsDetails
+            {
+                CustomerId = customerId,
+                AccountDetailses = _accountService.GetAccountsForACustomer(customerId).Select(x => new AccountDetails
+                {
+                    Id = x.Id,
+                    AccountName = x.Name,
+                    AccountNumber = x.Number,
+                    AccountType = x.Type.Name,
+                    AccountBalance = x.Balance,
+                    AccountOverdraft = x.Overdraft
+                })
+            };
             return View(model);
         }
 
