@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 using System.Web.Mvc;
 using Security.Interfaces.SecurityQuestions;
 
@@ -16,10 +17,15 @@ namespace SafeBank.Models.User
             var securityQuestions = DependencyResolver.Current.GetService<ISecurityQuestions>();
             QuestionsList = securityQuestions.GetAllSystemQuestions();
         }
+        private string _userName;
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "You must enter a username")]
         [AllowHtml]
-        public string Username { get; set; }
+        public string Username
+        {
+            get { return _userName; }
+            set { _userName = WebUtility.HtmlEncode(value); }
+        }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "You must enter a password")]
         [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d$@$!%*?&]{8,}", ErrorMessage = "The password you entered dose not have the required characters. You must have atleast 1 uppercase, 1 lowercase and 1 number, optionally a special character of $@$!%*?&")]

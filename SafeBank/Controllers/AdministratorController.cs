@@ -13,6 +13,7 @@ using Membership = System.Web.Security.Membership;
 
 namespace SafeBank.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class AdministratorController : Controller
     {
 

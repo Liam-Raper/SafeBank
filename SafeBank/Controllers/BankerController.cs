@@ -215,6 +215,12 @@ namespace SafeBank.Controllers
         public ActionResult AccountsTransactions(int accountId, int customerId)
         {
             if (!_customerService.CustomerExist(customerId)) return RedirectToAction("CustomerAccounts", new { customerId = customerId });
+            var employeeId = _employeeService.GetEmployeeId(User.Identity.Name);
+            var bankId = _employeeService.GetBankId(employeeId);
+            if (_employeeService.GetAllEmployeesAtABank(bankId).All(x => x.Id != customerId))
+            {
+                return RedirectToAction("CustomerManager");
+            }
             var account = _accountService.GetAccountsForACustomer(customerId).SingleOrDefault(x => x.Id == accountId);
             if(account == null) return RedirectToAction("CustomerAccounts", new { customerId = customerId });
             var model = new AccountsTransactions();
