@@ -16,6 +16,7 @@ using Microsoft.Win32;
 using Newtonsoft.Json;
 using Microsoft.Web.Administration;
 using System.Data.Sql;
+using System.Data.SqlClient;
 
 namespace LocalDeploymentTool
 {
@@ -527,6 +528,7 @@ namespace LocalDeploymentTool
                 {
                     ServerName = instance["ServerName"].ToString(), InstanceName = instance["InstanceName"].ToString(), IsClustered = instance["IsClustered"].ToString(), Version = instance["Version"].ToString()
                 }).ToArray();
+            var connectionString = string.Empty;
             if (sqlServers.Any(x => x.SqlVersion() != null))
             {
                 SqlServerData sqlServerToUse;
@@ -541,17 +543,103 @@ namespace LocalDeploymentTool
                     if (sqlPickedResult == DialogResult.OK)
                     {
                         sqlServerToUse = sqlServers[sqlPicked.Pick.Key];
+                        connectionString = "Data Source=" + sqlServerToUse.ConnectionName();
                     }
                     else
                     {
                         AddMessageToProcessLog("Did not detect a sql server the user wished to use");
+                        var input = new InputBox("Please give the address for a SQL server you wish to use.", "Please give the address for a SQL server you wish to use.");
+                        var inputResult = input.ShowDialog();
+                        if (inputResult == DialogResult.OK)
+                        {
+                            var tempSqlConnection = new SqlConnection
+                            {
+                                ConnectionString = "Data Source=" + input.Result + ";"
+                            };
+                            try
+                            {
+                                tempSqlConnection.Open();
+                                tempSqlConnection.Close();
+                                AddMessageToProcessLog("Connected to " + input.Result);
+                            }
+                            catch (SqlException e)
+                            {
+                                if (e.Message == "Login failed for user ''.")
+                                {
+                                    AddMessageToProcessLog("Connected to " + input.Result);
+                                    connectionString = "Data Source=" + input.Result + ";";
+                                }
+                                else
+                                {
+                                    AddMessageToProcessLog("SQL server " + input.Result + " could not be found");
+                                    return;
+                                }
+                            }
+                        }
                     }
                 }
                 else
                 {
                     sqlServerToUse = sqlServers.Single();
                     AddMessageToProcessLog("SQL instance (" + sqlServerToUse.ConnectionName() + ") detected");
+                    connectionString = "Data Source=" + sqlServerToUse.ConnectionName() + ";";
                 }
+                AddMessageToProcessLog("Connection will be maid with "+connectionString);
+                var sqlConnection = new SqlConnection
+                {
+                    ConnectionString = connectionString
+                };
+                try
+                {
+                    sqlConnection.Open();
+                }
+                catch (SqlException e)
+                {
+                    if (e.Message == "Login failed for user ''.")
+                    {
+                        AddMessageToProcessLog("Login required for SQL server");
+                        var sqlLogin = new SqlLogin();
+                        var loginResult = sqlLogin.ShowDialog();
+                        if (loginResult != DialogResult.OK)
+                        {
+                            AddMessageToProcessLog("User did not give any login details");
+                            return;
+                        }
+                        if (sqlLogin.useWindows)
+                        {
+                            sqlConnection.ConnectionString += "Integrated Security=SSPI;";
+                        }
+                        else
+                        {
+                            sqlConnection.ConnectionString += "User id=" + sqlLogin.Username + ";Password=" + sqlLogin.Password + ";";
+                        }
+                        AddMessageToProcessLog("Attempting login for SQL server");
+                        try
+                        {
+                            sqlConnection.Open();
+                        }
+                        catch (SqlException ie)
+                        {
+                            if (ie.Message == "Login failed for user ''.")
+                            {
+                                AddMessageToProcessLog("Wronge login");
+                                return;
+                            }
+                            else
+                            {
+                                AddMessageToProcessLog("Failed to connect to " + connectionString);
+                                return;
+                            }
+                        }
+                        AddMessageToProcessLog("Logged in");
+                    }
+                    else
+                    {
+                        AddMessageToProcessLog("Failed to connect to " + connectionString);
+                        return;
+                    }
+                }
+
             }
             else
             {
